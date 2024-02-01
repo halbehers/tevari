@@ -1,6 +1,6 @@
 {
   "name": "tevari",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Collection of various small helpers for javascript and typescript based projects",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "tevari"
+    "url": "https://github.com/halbehers/tevari"
   },
   "keywords": [
     "helpers",

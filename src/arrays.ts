@@ -35,12 +35,44 @@ export const arrayCleanStringArray = (
   return array.filter((value) => !stringIsBlank(value));
 };
 
+export const arrayShuffle = (array: any[]): any[] => {
+  let currentIndex: number = array.length;
+  let temporaryValue: any, randomIndex: number;
+
+  while (currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+
+export const arrayUniq = (array: any[]): any[] => {
+  return array.filter((v, i, a) => a.indexOf(v) === i);
+};
+
+export const arrayUniqObjectsByProperty = (
+  array: any[],
+  property: string
+): any[] => {
+  return array.filter(
+    (obj, i) => array.findIndex((a) => a[property] === obj[property]) === i
+  );
+};
+
 export const ArrayHelpers = {
   hasAtLeastOneElement: arrayHasAtLeastOneElement,
   allElements: arrayAllElements,
   same: arraysAreSame,
   cleanStringArray: arrayCleanStringArray,
   createSuite: arrayCreateSuite,
+  shuffle: arrayShuffle,
+  uniq: arrayUniq,
+  uniqObjectsByProperty: arrayUniqObjectsByProperty,
 };
 
 export const ArraySymbols = {

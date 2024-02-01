@@ -257,6 +257,18 @@ export const stringFilterBy = <T>(
   return filteredEntities;
 };
 
+export const stringCapitalize = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
+export const stringCapitalizeEachWord = (string: string): string => {
+  const eachWord = string
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+  return eachWord.join(" ");
+};
+
 export const StringHelpers = {
   plainify: stringPlainify,
   isString: stringIsString,
@@ -276,6 +288,8 @@ export const StringHelpers = {
   trimAndLower: stringTrimAndLower,
   getDelimiterParts: stringGetDelimiterParts,
   filterBy: stringFilterBy,
+  capitalize: stringCapitalize,
+  capitalizeEachWord: stringCapitalizeEachWord,
 };
 
 export const StringComparators = {
