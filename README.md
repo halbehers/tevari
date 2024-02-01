@@ -1,4 +1,4 @@
-# Tevari
+# Tevari 🪨
 
 (NPM Package) Collection of various small helpers for javascript and typescript based projects
 
@@ -18,4 +18,4 @@ npm install tevari
 yarn add tevari
 ```
 
-Then import Tévari functions wherever needed
+Then import Tévari functions wherever needed 🤓
