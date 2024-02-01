@@ -8,13 +8,13 @@ In Huichol, Tévari means small rocks. This library is just that, small rocks (h
 
 **Npm:**
 
-```sh
+```bash
 npm install tevari
 ```
 
 **Yarn:**
 
-```sh
+```bash
 yarn add tevari
 ```
 
