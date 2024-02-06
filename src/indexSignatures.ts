@@ -24,6 +24,20 @@ export const indexSignatureFromArrayValues = <T, U>(
   return result;
 };
 
+export const indexSignatureMap = <T, U>(
+  indexSignature: { [id: string]: T },
+  converter: (key: string, element: T) => U,
+  filter?: (key: string, element: T) => boolean
+): U[] => {
+  const result: U[] = [];
+  for (const [id, element] of Object.entries(indexSignature).filter(
+    ([id, element]) => !filter || filter(id, element)
+  )) {
+    result.push(converter(id, element));
+  }
+  return result;
+};
+
 export const indexSignatureMapValues = <T, U>(
   indexSignature: { [id: string]: T },
   converter: (element: T) => U,
@@ -149,6 +163,7 @@ export const indexSignatureGroupByAndMap = <T, U>(
 export const IndexSignatureHelpers = {
   fromArray: indexSignatureFromArray,
   fromArrayValues: indexSignatureFromArrayValues,
+  map: indexSignatureMap,
   mapValues: indexSignatureMapValues,
   same: indexSignaturesAreSame,
   includes: indexSignatureIncludes,
