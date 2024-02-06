@@ -2,11 +2,6 @@ import moment from "moment";
 
 import { FORWARD_SLASH } from "./strings";
 
-export const to2digits = (num: number): string =>
-  num.toLocaleString("fr-FR", {
-    minimumIntegerDigits: 2,
-  });
-
 export const DATE_DEFAULT_SEPARATOR = FORWARD_SLASH;
 
 export const dateToday = (separator = DATE_DEFAULT_SEPARATOR): string => {

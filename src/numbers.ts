@@ -75,9 +75,15 @@ export const numberFormatLarge = (
     .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandSeparator);
 };
 
+export const numberTo2digits = (num: number): string =>
+  num.toLocaleString("fr-FR", {
+    minimumIntegerDigits: 2,
+  });
+
 export const NumberHelpers = {
   average: numberAverage,
   getRandom: numberGetRandom,
+  to2digits: numberTo2digits,
 };
 
 export const NumberComparators = {

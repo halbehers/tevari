@@ -1,15 +1,15 @@
+import { Predicate } from "./functions";
 import { stringIsBlank } from "./strings";
 
-export const arrayHasAtLeastOneElement = <T>(
-  array: T[],
-  predicate: (element: T) => boolean
-) => {
+export const arrayMatchOneOrMore = <T>(array: T[], predicate: Predicate<T>) => {
   return array.filter((value) => !!value).filter(predicate).length > 0;
 };
-export const arrayAllElements = <T>(
-  array: T[],
-  predicate: (element: T) => boolean
-) => {
+
+export const arrayMatchOneOnly = <T>(array: T[], predicate: Predicate<T>) => {
+  return array.filter((value) => !!value).filter(predicate).length === 1;
+};
+
+export const arrayMatchAll = <T>(array: T[], predicate: Predicate<T>) => {
   const cleanedArray = array.filter((value) => !!value);
   return cleanedArray.filter(predicate).length === cleanedArray.length;
 };
@@ -65,8 +65,9 @@ export const arrayUniqObjectsByProperty = (
 };
 
 export const ArrayHelpers = {
-  hasAtLeastOneElement: arrayHasAtLeastOneElement,
-  allElements: arrayAllElements,
+  matchAll: arrayMatchAll,
+  matchOneOnly: arrayMatchOneOnly,
+  matchOneOrMore: arrayMatchOneOrMore,
   same: arraysAreSame,
   cleanStringArray: arrayCleanStringArray,
   createSuite: arrayCreateSuite,
