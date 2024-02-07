@@ -24,6 +24,7 @@ describe("#Array.helper.matchOneOrMore", () => {
       Arrays.helper.matchOneOrMore([245, 444, 4], numberPredicate)
     ).toBeTruthy();
   });
+
   it("should not match", () => {
     expect(
       Arrays.helper.matchOneOrMore(["test", "won", "blah"], stringPredicate)
@@ -71,6 +72,7 @@ describe("#Array.helper.matchOneExactly", () => {
       Arrays.helper.matchOneExactly([245, 444, 4], numberPredicate)
     ).toBeTruthy();
   });
+
   it("should not match", () => {
     expect(
       Arrays.helper.matchOneExactly(["test", "won", "blah"], stringPredicate)
@@ -111,6 +113,7 @@ describe("#Array.helper.matchAll", () => {
     expect(Arrays.helper.matchAll([4, 4, 4], numberPredicate)).toBeTruthy();
     expect(Arrays.helper.matchAll([4], numberPredicate)).toBeTruthy();
   });
+
   it("should not match", () => {
     expect(
       Arrays.helper.matchAll(["win", "win", "blah"], stringPredicate)
