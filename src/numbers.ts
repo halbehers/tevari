@@ -1,4 +1,4 @@
-import { Order } from "./dates";
+import { Order } from "./misc";
 import { SPACE } from "./strings";
 
 export const numberAverage = (array: number[], rounded = false): number => {
