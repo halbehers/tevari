@@ -1,43 +1,114 @@
-import { Predicate } from "./functions";
+import { Function2, Predicate } from "./functions";
 import { stringIsBlank } from "./strings";
 
-export const arrayMatchOneOrMore = <T>(array: T[], predicate: Predicate<T>) => {
+/**
+ * Tests if at least one element of the given array matches the predicate.
+ *
+ * @param array The array to test
+ * @param predicate The predicate used to test each element of the given array
+ * @returns `true` if at leat one element matches the given predicate, `false` otherwise.
+ */
+export const arrayMatchOneOrMore = <T>(
+  array: T[],
+  predicate: Predicate<T>
+): boolean => {
   return array.filter((value) => !!value).filter(predicate).length > 0;
 };
 
-export const arrayMatchOneOnly = <T>(array: T[], predicate: Predicate<T>) => {
+/**
+ * Tests if exactly one element of the given array matches the predicate.
+ *
+ * @param array The array to test
+ * @param predicate The predicate used to test each element of the given array
+ * @returns `true` if one element only matches the given predicate, `false` otherwise.
+ */
+export const arrayMatchOneExactly = <T>(
+  array: T[],
+  predicate: Predicate<T>
+): boolean => {
   return array.filter((value) => !!value).filter(predicate).length === 1;
 };
 
-export const arrayMatchAll = <T>(array: T[], predicate: Predicate<T>) => {
+/**
+ * Tests if all elements of the given array match the predicate.
+ *
+ * @param array The array to test
+ * @param predicate The predicate used to test each element of the given array
+ * @returns `true` if all of the elements match the given predicate, `false` otherwise.
+ */
+export const arrayMatchAll = <T>(
+  array: T[],
+  predicate: Predicate<T>
+): boolean => {
   const cleanedArray = array.filter((value) => !!value);
-  return cleanedArray.filter(predicate).length === cleanedArray.length;
+  
+  return cleanedArray.length > 0 && cleanedArray.filter(predicate).length === cleanedArray.length;
 };
 
-export const arraysAreSame = <T>(array1: T[], array2: T[]): boolean => {
+/**
+ * Tests whether the given arrays are exactly the same in length and content.
+ * If no predicate is given to compare the elements of the arrays, `===` will be used.
+ *
+ * @param array1 The first array to test
+ * @param array2 The second array to test
+ * @param comparator The predicate used to compare each element of the given arrays.
+ * @returns `true` if both arrays are equal, `false` otherwise.
+ */
+export const arraysAreSame = <T>(
+  array1: T[],
+  array2: T[],
+  comparator?: Function2<T, T, boolean>
+): boolean => {
   return (
     array1.length == array2.length &&
-    array1.every((element, index) => element === array2[index])
+    array1.every((element, index) =>
+      comparator !== undefined
+        ? comparator(element, array2[index])
+        : element === array2[index]
+    )
   );
 };
 
-export const arrayCreateSuite = (n: number): number[] => {
-  return Array.from({ length: n }, (_, i) => i + 1);
+/**
+ * Creates an array of the given length composed of a suite of numbers from `offset` to `offset + (length * step)`.
+ *
+ * @param length The length of the array to be created.
+ * @param offset The starting offset of the suite to be created. `1` is set by default.
+ * @returns the suite array from `offset` to `offset + (length * step)`.
+ */
+export const arrayCreateSuite = (
+  length: number,
+  offset = 1,
+  step = 1
+): number[] => {
+  return Array.from({ length }, (_, i) => offset + (i * step));
 };
 
 export const EMPTY_ARRAY = [];
 
+/**
+ * Strips the given string array of any blank values (either `null`, `undefined` of empty string).
+ *
+ * @param array The string array to be cleaned.
+ * @returns `undefined` if the given array was undefined, the cleaned up array otherwise.
+ */
 export const arrayCleanStringArray = (
-  array?: string[]
+  array?: (string | undefined | null)[]
 ): string[] | undefined => {
   if (!array) return;
 
-  return array.filter((value) => !stringIsBlank(value));
+  return array.filter((value) => !stringIsBlank(value)) as string[];
 };
 
-export const arrayShuffle = (array: any[]): any[] => {
+/**
+ * Shuffles the elements of the given array to a random order.
+ *
+ * @param array The array to shuffle.
+ * @returns An array with every elements of the given array but in a random order.
+ */
+export const arrayShuffle = <T>(array: T[]): T[] => {
   let currentIndex: number = array.length;
-  let temporaryValue: any, randomIndex: number;
+  let temporaryValue: T, randomIndex: number;
 
   while (currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
@@ -51,22 +122,42 @@ export const arrayShuffle = (array: any[]): any[] => {
   return array;
 };
 
-export const arrayUniq = (array: any[]): any[] => {
+/**
+ * Strips the given array of duplicate values.
+ *
+ * @param array The array with potential duplicates.
+ * @returns An array where of elements are uniq.
+ */
+export const arrayUniq = <T>(array: T[]): T[] => {
   return array.filter((v, i, a) => a.indexOf(v) === i);
 };
 
-export const arrayUniqObjectsByProperty = (
-  array: any[],
-  property: string
-): any[] => {
+/**
+ * Strips the given array of duplicate property values.
+ *
+ * @param array The array with potential duplicates.
+ * @param property The property to extract for the comparaison.
+ * @param comparator The predicate used to compare each element of the given arrays.
+ * @returns An array where of elements are uniq.
+ */
+export const arrayUniqObjectsByProperty = <T extends { [id: string]: any }>(
+  array: T[],
+  property: string,
+  comparator?: Function2<T, T, boolean>
+): T[] => {
   return array.filter(
-    (obj, i) => array.findIndex((a) => a[property] === obj[property]) === i
+    (obj, i) =>
+      array.findIndex((a) =>
+        comparator
+          ? comparator(a[property], obj[property])
+          : a[property] === obj[property]
+      ) === i
   );
 };
 
 export const ArrayHelpers = {
   matchAll: arrayMatchAll,
-  matchOneOnly: arrayMatchOneOnly,
+  matchOneExactly: arrayMatchOneExactly,
   matchOneOrMore: arrayMatchOneOrMore,
   same: arraysAreSame,
   cleanStringArray: arrayCleanStringArray,
