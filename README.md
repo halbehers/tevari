@@ -27,21 +27,23 @@ For each sections (strings, arrays, numbers, ...), there is 2 ways to use tévar
 - Import the helper object from the desired section:
 
   ```typescript
+  import assert from "assert";
   import { StringHelpers } from "tevari";
 
   // ...
 
-  StringHelpers.plainify("Weìrd");
+  assert(StringHelpers.plainify("Weìrd") === "Weird");
   ```
 
 - Import the desired helper method directly:
 
   ```typescript
+  import assert from "assert";
   import { stringPlainify } from "tevari";
 
   // ...
 
-  stringPlainify("Weìrd");
+  assert(stringPlainify("Weìrd") === "Weird");
   ```
 
   Every direct helper method are prefixed by the name of the section in singular. (ie. `StringHelpers.plainify` <=> `stringPlainify`)
