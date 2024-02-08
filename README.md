@@ -19,3 +19,30 @@ yarn add tevari
 ```
 
 Then import Tévari functions wherever needed 🤓
+
+## Using Tévari 📖
+
+For each sections (strings, arrays, numbers, ...), there is 2 ways to use tévari helpers:
+
+- Import the helper object from the desired section:
+
+  ```typescript
+  import { StringHelpers } from "tevari";
+
+  // ...
+
+  StringHelpers.plainify("Weìrd");
+  ```
+
+- Import the desired helper method directly:
+
+  ```typescript
+  import { stringPlainify } from "tevari";
+
+  // ...
+
+  stringPlainify("Weìrd");
+  ```
+
+  Every direct helper method are prefixed by the name of the section in singular. (ie. `StringHelpers.plainify` <=> `stringPlainify`)
+
