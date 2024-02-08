@@ -13,6 +13,10 @@ afterAll(() => {
   global.Date.now = NOW;
 });
 
+/*
+ * Helpers
+ */
+
 describe("#Dates.helper.today", () => {
   it("should return today's date well formated", () => {
     expect(Dates.helper.today()).toEqual("30/12/1992");
@@ -62,38 +66,6 @@ describe("#Dates.helper.format", () => {
     expect(Dates.helper.format(date, { format, separator })).toEqual(
       expectedStringWithSeparator
     );
-  });
-});
-
-describe("#Dates.comparator.asc", () => {
-  const randomArray = [
-    new Date("1992-12-29T15:15:00.000Z"),
-    new Date("1992-12-30T15:15:00.000Z"),
-    new Date("1992-12-28T15:15:00.000Z"),
-  ];
-
-  it("should sort correctly", () => {
-    expect(randomArray.sort(Dates.comparator.asc)).toEqual([
-      new Date("1992-12-28T15:15:00.000Z"),
-      new Date("1992-12-29T15:15:00.000Z"),
-      new Date("1992-12-30T15:15:00.000Z"),
-    ]);
-  });
-});
-
-describe("#Dates.comparator.desc", () => {
-  const randomArray = [
-    new Date("1992-12-29T15:15:00.000Z"),
-    new Date("1992-12-30T15:15:00.000Z"),
-    new Date("1992-12-28T15:15:00.000Z"),
-  ];
-
-  it("should sort correctly", () => {
-    expect(randomArray.sort(Dates.comparator.desc)).toEqual([
-      new Date("1992-12-30T15:15:00.000Z"),
-      new Date("1992-12-29T15:15:00.000Z"),
-      new Date("1992-12-28T15:15:00.000Z"),
-    ]);
   });
 });
 
@@ -571,5 +543,41 @@ describe("#Dates.helper.isInDays", () => {
     expect(
       Dates.helper.isInDays(new Date("1995-01-02T15:15:00.000Z"), 2)
     ).toBeFalsy();
+  });
+});
+
+/*
+ * Comparators
+ */
+
+describe("#Dates.comparator.asc", () => {
+  const randomArray = [
+    new Date("1992-12-29T15:15:00.000Z"),
+    new Date("1992-12-30T15:15:00.000Z"),
+    new Date("1992-12-28T15:15:00.000Z"),
+  ];
+
+  it("should sort correctly", () => {
+    expect(randomArray.sort(Dates.comparator.asc)).toEqual([
+      new Date("1992-12-28T15:15:00.000Z"),
+      new Date("1992-12-29T15:15:00.000Z"),
+      new Date("1992-12-30T15:15:00.000Z"),
+    ]);
+  });
+});
+
+describe("#Dates.comparator.desc", () => {
+  const randomArray = [
+    new Date("1992-12-29T15:15:00.000Z"),
+    new Date("1992-12-30T15:15:00.000Z"),
+    new Date("1992-12-28T15:15:00.000Z"),
+  ];
+
+  it("should sort correctly", () => {
+    expect(randomArray.sort(Dates.comparator.desc)).toEqual([
+      new Date("1992-12-30T15:15:00.000Z"),
+      new Date("1992-12-29T15:15:00.000Z"),
+      new Date("1992-12-28T15:15:00.000Z"),
+    ]);
   });
 });

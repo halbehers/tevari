@@ -1,6 +1,10 @@
 import Arrays from "../arrays";
 import "@testing-library/jest-dom";
 
+/*
+ * Helpers
+ */
+
 describe("#Array.helper.matchOneOrMore", () => {
   const stringPredicate = (value: string) => value === "win";
   const numberPredicate = (value: number) => value === 4;

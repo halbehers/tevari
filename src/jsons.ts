@@ -1,4 +1,53 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+export type JSONValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+
+export interface JSONObject {
+  [k: string]: JSONValue;
+}
+
+export interface JSONArray extends Array<JSONValue> {}
+
+export type JSON = JSONObject;
+
+/**
+ * Flattens the given JSON object.
+ * 
+ * For example the following JSON structure:
+ * 
+ * ```
+ *  {
+ *    "key1": {
+ *      "key2": "value1"
+ *    },
+ *    "key3": [
+ *      {
+ *        "key4": "value2",
+ *      },
+ *      {
+ *        "key5": "value3",
+ *      }
+ *    ]
+ *  }
+ * ```
+ * 
+ * Will be transformed into:
+ * 
+ * ```
+ *  {
+ *    "key1.key2": "value1",
+ *    "key3[0].key4": "value2",
+ *    "key3[1].key5": "value3"
+ *  }
+ * ```
+ * 
+ * @param JsonObject The JSON object to flatten.
+ * @returns the flattened version of the goven JSON object.
+ */
 export const jsonFlatten = (function (isArray, wrapped) {
   return function (table: any) {
     return reduce("", {}, table);

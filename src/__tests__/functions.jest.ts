@@ -1,6 +1,10 @@
 import "@testing-library/jest-dom";
 import Functions from "../functions";
 
+/*
+ * Helpers
+ */
+
 describe("#Functions.helper.identity", () => {
   it("should return the exact given value", () => {
     expect(Functions.helper.identity()("test")).toEqual("test");

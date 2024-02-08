@@ -1,6 +1,10 @@
 import "@testing-library/jest-dom";
 import { styleEm, styleRem } from "../styles";
 
+/*
+ * Helpers
+ */
+
 describe("#styleEm", () => {
   it("should return the correct em value", () => {
     expect(styleEm(16)).toEqual("1em");

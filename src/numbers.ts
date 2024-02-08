@@ -1,16 +1,29 @@
 import { Order } from "./misc";
-import { SPACE } from "./strings";
+import { DOT, SPACE } from "./strings";
 
-export const numberAverage = (array: number[], rounded = false): number => {
-  if (array.length === 0) return 0;
-  const total = array
+/**
+ * Calculates the average of all numbers given in the array.
+ *
+ * @param numbers The numbers to be averaged.
+ * @param rounded whether the result average should be rounded.
+ * @returns the average result.
+ */
+export const numberAverage = (numbers: number[], rounded = false): number => {
+  if (numbers.length === 0) return 0;
+  const total = numbers
     .filter((v) => v !== null)
     .reduce((total, current) => total + current, 0);
-  const average = total / array.length;
+  const average = total / numbers.length;
   const finalAverage = rounded ? Math.round(average) : average;
   return finalAverage >= 0 ? finalAverage : 0;
 };
 
+/**
+ * Gets a number comparator function in the given order.
+ *
+ * @param order The order of the result.
+ * @returns a comparator function in the given order.
+ */
 export const numberGetComparator =
   (order: Order = "desc") =>
   (a: number, b: number) => {
@@ -19,71 +32,163 @@ export const numberGetComparator =
     return b - a;
   };
 
+/**
+ * An ascendent number comparator.
+ */
 export const NUMBER_COMPARATOR_ASC = numberGetComparator("asc");
+/**
+ * An descendent number comparator.
+ */
 export const NUMBER_COMPARATOR_DESC = numberGetComparator("desc");
 
-export const numberGetRandom = (min: number, max: number): number => {
+/**
+ * Returns a random number contained between the given mion and max values inclusively.
+ *
+ * @param min The min value.
+ * @param max The max value.
+ * @returns the result random number.
+ */
+export const numberRandom = (min: number, max: number): number => {
   return Math.random() * (max - min) + min;
 };
 
+/**
+ * Number seperator accepted types.
+ */
+export type NumberSeparator = "." | ",";
+/**
+ * Number thousand seperator accepted types.
+ */
+export type NumberThousandSeparator = " " | ",";
+
+/**
+ * Number formatters options.
+ */
+export interface INumberFormatOptions {
+  /**
+   * The desired number of decimals to be displayed.
+   */
+  nbOfDecimals?: number;
+  /**
+   * The desired float number separator.
+   */
+  separator?: NumberSeparator;
+  /**
+   * The desired thousand number separator.
+   */
+  thousandSeparator?: NumberThousandSeparator;
+  /**
+   * Minimun number of digit to display on the integer side (before the decimals).
+   */
+  minDigits?: number;
+}
+
+/**
+ * Formats the given number into a percentage string representation.
+ *
+ * @param percentage The number to format.
+ * @param options The formatter options.
+ * @returns a percentage string representation of the given number.
+ */
 export const numberFormatPercentage = (
   percentage: number,
-  nbOfDecimals: number = 1
+  options?: INumberFormatOptions
 ) => {
-  const fixedPercentage = Number(percentage.toFixed(nbOfDecimals));
+  const { nbOfDecimals = 1, separator = DOT } = options ?? {};
 
-  if (Number.isNaN(fixedPercentage)) return "0%";
-  if (Number.isInteger(fixedPercentage)) return `${Math.round(percentage)}%`;
+  const fixedPercentage = Number(
+    percentage.toFixed(nbOfDecimals)
+  );
 
-  return `${fixedPercentage}%`;
+  if (Number.isNaN(fixedPercentage) || fixedPercentage <= 0) return "0%";
+  if (fixedPercentage >= 100) return "100%";
+  if (Number.isInteger(fixedPercentage)) return `${numberFormatInteger(Math.round(percentage), options)}%`;
+
+  return `${`${fixedPercentage}`.replace(DOT, separator)}%`;
 };
 
+/**
+ * Formats the given number into a float string representation with forced decimal.
+ *
+ * @param percentage The number to format.
+ * @param options The formatter options.
+ * @returns a float string representation of the given number.
+ */
 export const numberFormatFloatWithDecimals = (
   float?: number,
-  nbOfDecimals: number = 1
+  options?: INumberFormatOptions
 ) => {
-  if (!float || Number.isNaN(float)) return "0.0";
-  return numberFormatLarge(float.toFixed(nbOfDecimals));
+  const { separator = DOT, nbOfDecimals = 1 } = options ?? {};
+  if (!float || Number.isNaN(float)) return `0${separator}0`;
+  return numberFormatLarge(float, { ...options, nbOfDecimals });
 };
 
+/**
+ * Formats the given number into a float string representation. No decimal will be displayed of not needed.
+ *
+ * @param percentage The number to format.
+ * @param options The formatter options.
+ * @returns either a float or integer string representation of the given number.
+ */
 export const numberFormatFloat = (
   float?: number,
-  nbOfDecimals: number = 1
+  options?: INumberFormatOptions
 ): string => {
+  const { nbOfDecimals = 1 } = options ?? {};
   if (!float || Number.isNaN(float)) return "0";
   const fixed = Number(float.toFixed(nbOfDecimals));
 
   if (Number.isNaN(fixed)) return "0";
-  if (Number.isInteger(fixed)) return `${numberFormatLarge(Math.round(float))}`;
+  if (Number.isInteger(fixed)) return `${numberFormatInteger(float, options)}`;
 
-  return `${numberFormatLarge(fixed)}`;
+  return `${numberFormatLarge(fixed, { ...options, nbOfDecimals })}`;
 };
 
-export const numberFormatInteger = (integer: number, minDigits = 1): string => {
+/**
+ * Formats the given number into a integer string representation.
+ *
+ * @param percentage The number to format.
+ * @param options The formatter options.
+ * @returns either a float or integer string representation of the given number.
+ */
+export const numberFormatInteger = (
+  integer: number,
+  options?: INumberFormatOptions
+): string => {
+  const { minDigits = 1 } = options ?? {};
+
   const rounded = Math.round(integer);
   if (minDigits > 1) return String(rounded).padStart(minDigits, "0");
 
-  return `${numberFormatLarge(rounded)}`;
+  return `${numberFormatLarge(rounded, options)}`;
 };
 
+/**
+ * Formats the given number into a string representation handling thousand separators.
+ *
+ * @param value The number to format.
+ * @param options The formatter options.
+ * @returns the string representation of the given number.
+ */
 export const numberFormatLarge = (
-  value: number | string,
-  thousandSeparator = SPACE
+  value: number,
+  options?: INumberFormatOptions
 ) => {
-  return value
-    .toString()
-    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandSeparator);
-};
+  const {
+    nbOfDecimals = Number.isInteger(value) ? 0 : 1,
+    separator = DOT,
+    thousandSeparator = SPACE,
+  } = options ?? {};
 
-export const numberTo2digits = (num: number): string =>
-  num.toLocaleString("fr-FR", {
-    minimumIntegerDigits: 2,
-  });
+  return value
+    .toFixed(nbOfDecimals)
+    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandSeparator)
+    .replace(DOT, separator);
+};
 
 export const NumberHelpers = {
   average: numberAverage,
-  getRandom: numberGetRandom,
-  to2digits: numberTo2digits,
+  random: numberRandom,
 };
 
 export const NumberComparators = {
