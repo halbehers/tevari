@@ -1,6 +1,6 @@
 /**
  * Lists all static attributes of a given class.
- * 
+ *
  * @param classType The type of the class.
  * @param filter A predicate used to filter out unwanted methods or attributes.
  * @returns an array of result values.
@@ -23,10 +23,20 @@ export const reflectionListStaticAttributesAs = <T>(
 };
 
 export const ReflexionHelpers = {
+  /**
+   * Lists all static attributes of a given class.
+   *
+   * @param classType The type of the class.
+   * @param filter A predicate used to filter out unwanted methods or attributes.
+   * @returns an array of result values.
+   */
   listStaticAttributesAs: reflectionListStaticAttributesAs,
 };
 
 const Reflexions = {
+  /**
+   * Reflexion helper methods.
+   */
   helper: ReflexionHelpers,
 };
 

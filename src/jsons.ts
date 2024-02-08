@@ -16,9 +16,9 @@ export type JSON = JSONObject;
 
 /**
  * Flattens the given JSON object.
- * 
+ *
  * For example the following JSON structure:
- * 
+ *
  * ```
  *  {
  *    "key1": {
@@ -34,9 +34,9 @@ export type JSON = JSONObject;
  *    ]
  *  }
  * ```
- * 
+ *
  * Will be transformed into:
- * 
+ *
  * ```
  *  {
  *    "key1.key2": "value1",
@@ -44,7 +44,7 @@ export type JSON = JSONObject;
  *    "key3[1].key5": "value3"
  *  }
  * ```
- * 
+ *
  * @param JsonObject The JSON object to flatten.
  * @returns the flattened version of the goven JSON object.
  */
@@ -95,10 +95,47 @@ export const jsonFlatten = (function (isArray, wrapped) {
 })(Array.isArray, Object);
 
 export const JsonHelpers = {
+  /**
+   * Flattens the given JSON object.
+   *
+   * For example the following JSON structure:
+   *
+   * ```
+   *  {
+   *    "key1": {
+   *      "key2": "value1"
+   *    },
+   *    "key3": [
+   *      {
+   *        "key4": "value2",
+   *      },
+   *      {
+   *        "key5": "value3",
+   *      }
+   *    ]
+   *  }
+   * ```
+   *
+   * Will be transformed into:
+   *
+   * ```
+   *  {
+   *    "key1.key2": "value1",
+   *    "key3[0].key4": "value2",
+   *    "key3[1].key5": "value3"
+   *  }
+   * ```
+   *
+   * @param JsonObject The JSON object to flatten.
+   * @returns the flattened version of the goven JSON object.
+   */
   flatten: jsonFlatten,
 };
 
 const Jsons = {
+  /**
+   * JSON helper methods.
+   */
   helper: JsonHelpers,
 };
 

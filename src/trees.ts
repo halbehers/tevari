@@ -12,7 +12,7 @@ export type TreeComparator<T> = (a: T, b: T) => number;
 
 /**
  * Adds a new elements into the tree at the given node.
- * 
+ *
  * @param tree The tree to add the new element into.
  * @param at The node in the tree where to add the new element.
  * @param children The element to add.
@@ -54,7 +54,7 @@ const treeDoGenerateFromArray = <T extends { parent?: T }>(
 
 /**
  * Creates a tree structure from the given array.
- * 
+ *
  * @param array The array to create the tree from.
  * @param comparator The tree nodes comparator.
  * @returns the result tree.
@@ -75,7 +75,7 @@ export const treeFromArray = <T extends { parent?: T }>(
 
 /**
  * Truncates the given tree from the given node.
- * 
+ *
  * @param tree The tree to truncate.
  * @param from The node to truncate the tree from.
  * @param comparator The tree nodes comparator.
@@ -111,7 +111,7 @@ const treeDoGenerateArray = <T extends { parent?: T }>(
 
 /**
  * Gets an array containing all the ancestors of the given node in an ascending order.
- * 
+ *
  * @param node The node from which to extract the ancestor trail.
  * @param comparator The tree nodes comparator.
  * @returns an array containing all the ancestors of the given node in an ascending order.
@@ -126,13 +126,46 @@ export const treeGetAncestorsTrail = <T extends { parent?: T }>(
 };
 
 export const TreeHelpers = {
+  /**
+   * Adds a new elements into the tree at the given node.
+   *
+   * @param tree The tree to add the new element into.
+   * @param at The node in the tree where to add the new element.
+   * @param children The element to add.
+   * @param comparator The tree node comparator.
+   */
   push: treePush,
+  /**
+   * Creates a tree structure from the given array.
+   *
+   * @param array The array to create the tree from.
+   * @param comparator The tree nodes comparator.
+   * @returns the result tree.
+   */
   fromArray: treeFromArray,
+  /**
+   * Truncates the given tree from the given node.
+   *
+   * @param tree The tree to truncate.
+   * @param from The node to truncate the tree from.
+   * @param comparator The tree nodes comparator.
+   * @returns the truncated tree.
+   */
   truncate: treeTruncate,
+  /**
+   * Gets an array containing all the ancestors of the given node in an ascending order.
+   *
+   * @param node The node from which to extract the ancestor trail.
+   * @param comparator The tree nodes comparator.
+   * @returns an array containing all the ancestors of the given node in an ascending order.
+   */
   getAncestorsTrail: treeGetAncestorsTrail,
 };
 
 const Trees = {
+  /**
+   * Tree helper methods.
+   */
   helper: TreeHelpers,
 };
 

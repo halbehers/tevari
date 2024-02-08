@@ -54,7 +54,7 @@ const DATE_TO_FORMATED: {
 
 /**
  * Formats a date.
- * 
+ *
  * @param date The date to format.
  * @param options Options.
  * @returns The given date formated accordingly to the given options.
@@ -74,7 +74,7 @@ export const dateFormat = (
 
 /**
  * Gets a date comparator function in the given order.
- * 
+ *
  * @param order The order of the result.
  * @returns a comparator function in the given order.
  */
@@ -100,7 +100,7 @@ export const DATE_COMPARATOR_DESC = dateGetComparator("desc");
 
 /**
  * Gets a formated date comparator function in the given order.
- * 
+ *
  * @param order The order of the result.
  * @returns a comparator function in the given order.
  */
@@ -124,14 +124,14 @@ export const DATE_AS_STRING_COMPARATOR_DESC = dateGetAsStringComparator("desc");
 
 /**
  * Gets a Date corresponding to now.
- * 
+ *
  * @returns a `Date` object.
  */
 export const dateNow = (): Date => moment(Date.now()).toDate();
 
 /**
  * Gets a Date corresponding to the given number of days in the past.
- * 
+ *
  * @param nbOfDays The number of days in the past.
  * @returns a `Date` object.
  */
@@ -143,7 +143,7 @@ export const dateDaysAgo = (nbOfDays: number = 1): Date => {
 
 /**
  * Gets a Date corresponding to the given number of days in the future.
- * 
+ *
  * @param nbOfDays The number of days in the future.
  * @returns a `Date` object.
  */
@@ -155,41 +155,45 @@ export const dateInDays = (nbOfDays: number = 1): Date => {
 
 /**
  * Gets a Date corresponding to yesterday.
- * 
+ *
  * @returns a `Date` object.
  */
 export const dateYesterday = (): Date => dateDaysAgo();
 
 /**
  * Gets a Date corresponding to yesterday.
- * 
+ *
  * @returns a `Date` object.
  */
 export const dateTomorrow = (): Date => dateInDays();
 
 /**
  * Tests whether the first given date is before the second given date.
- * 
+ *
  * @param date The first date to compare.
  * @param date The second date to compare.
  * @returns `true` if the first given date is before the second given date, `false` otherwise.
  */
-export const dateIsBefore = (date1: Date | number, date2: Date | number): boolean =>
-  date1 < date2;
+export const dateIsBefore = (
+  date1: Date | number,
+  date2: Date | number
+): boolean => date1 < date2;
 
 /**
  * Tests whether the first given date is after the second given date.
- * 
+ *
  * @param date The first date to compare.
  * @param date The second date to compare.
  * @returns `true` if the first given date is after the second given date, `false` otherwise.
  */
-export const dateIsAfter = (date1: Date | number, date2: Date | number): boolean =>
-  date1 > date2;
+export const dateIsAfter = (
+  date1: Date | number,
+  date2: Date | number
+): boolean => date1 > date2;
 
 /**
  * Tests whether the first given date is the same as the second given date.
- * 
+ *
  * @param date The first date to compare.
  * @param date The second date to compare.
  * @returns `true` if the first given date is the same as the second given date, `false` otherwise.
@@ -204,7 +208,7 @@ export const dateIsSameDay = (date1: Date, date2: Date): boolean => {
 
 /**
  * Tests whether the given date happened before the given number of days in the future relatively to today.
- * 
+ *
  * @param date The date to compare.
  * @param nbOfDays The number of days in the future.
  * @returns `true` if the given date happened before `today + nbOfDays`, `false` otherwise.
@@ -214,7 +218,7 @@ export const dateIsBeforeInDays = (date: Date, nbOfDays: number = 1): boolean =>
 
 /**
  * Tests whether the given date happens after the given number of days in the future relatively to today.
- * 
+ *
  * @param date The date to compare.
  * @param nbOfDays The number of days in the future.
  * @returns `true` if the given date happens after `today + nbOfDays`, `false` otherwise.
@@ -224,17 +228,19 @@ export const dateIsAfterInDays = (date: Date, nbOfDays: number = 1): boolean =>
 
 /**
  * Tests whether the given date happened before the given number of days in the past relatively to today.
- * 
+ *
  * @param date The date to compare.
  * @param nbOfDays The number of days in the future.
  * @returns `true` if the given date happened before `today - nbOfDays`, `false` otherwise.
  */
-export const dateIsBeforeDaysAgo = (date: Date, nbOfDays: number = 1): boolean =>
-  dateIsBefore(date, dateDaysAgo(nbOfDays));
+export const dateIsBeforeDaysAgo = (
+  date: Date,
+  nbOfDays: number = 1
+): boolean => dateIsBefore(date, dateDaysAgo(nbOfDays));
 
 /**
  * Tests whether the given date happens after the given number of days in the past relatively to today.
- * 
+ *
  * @param date The date to compare.
  * @param nbOfDays The number of days in the future.
  * @returns `true` if the given date happens after `today - nbOfDays`, `false` otherwise.
@@ -244,15 +250,16 @@ export const dateIsAfterDaysAgo = (date: Date, nbOfDays: number = 1): boolean =>
 
 /**
  * Tests whether the given date happens today.
- * 
+ *
  * @param date The date to compare.
  * @returns `true` if the given date happens today, `false` otherwise.
  */
-export const dateIsToday = (date: Date): boolean => dateIsSameDay(date, dateNow());
+export const dateIsToday = (date: Date): boolean =>
+  dateIsSameDay(date, dateNow());
 
 /**
  * Tests whether the given date happened before today.
- * 
+ *
  * @param date The date to compare.
  * @returns `true` if the given date happened before today, `false` otherwise.
  */
@@ -261,7 +268,7 @@ export const dateIsPast = (date: Date): boolean =>
 
 /**
  * Tests whether the given date happens after today.
- * 
+ *
  * @param date The date to compare.
  * @returns `true` if the given date happens after today, `false` otherwise.
  */
@@ -270,7 +277,7 @@ export const dateIsFuture = (date: Date): boolean =>
 
 /**
  * Tests whether the given date happens tomorrow.
- * 
+ *
  * @param date The date to compare.
  * @returns `true` if the given date happens tomorrow, `false` otherwise.
  */
@@ -279,7 +286,7 @@ export const dateIsTomorrow = (date: Date) =>
 
 /**
  * Tests whether the given date happened yesterday.
- * 
+ *
  * @param date The date to compare.
  * @returns `true` if the given date happened yesterday, `false` otherwise.
  */
@@ -288,7 +295,7 @@ export const dateIsYesterday = (date: Date) =>
 
 /**
  * Tests whether the given date happened the given number of days in the past.
- * 
+ *
  * @param date The date to compare.
  * @returns `true` if the given date happened `today - nbOfDays`, `false` otherwise.
  */
@@ -297,7 +304,7 @@ export const dateIsDaysAgo = (date: Date, nbOfDays: number = 1) =>
 
 /**
  * Tests whether the given date happens the given number of days in the future.
- * 
+ *
  * @param date The date to compare.
  * @returns `true` if the given date happens `today + nbOfDays`, `false` otherwise.
  */
@@ -305,38 +312,187 @@ export const dateIsInDays = (date: Date, nbOfDays: number = 1) =>
   dateIsSameDay(date, dateInDays(nbOfDays));
 
 export const DateHelpers = {
+  /**
+   * Formats a date.
+   *
+   * @param date The date to format.
+   * @param options Options.
+   * @returns The given date formated accordingly to the given options.
+   */
   format: dateFormat,
+  /**
+   * Gets today's date as a string formated in french format.
+   *
+   * @param separator The separator between day, month and year.
+   * @returns today's date as a string.
+   */
   today: dateToday,
+  /**
+   * Gets a Date corresponding to now.
+   *
+   * @returns a `Date` object.
+   */
   now: dateNow,
+  /**
+   * Gets a Date corresponding to the given number of days in the past.
+   *
+   * @param nbOfDays The number of days in the past.
+   * @returns a `Date` object.
+   */
   daysAgo: dateDaysAgo,
+  /**
+   * Gets a Date corresponding to the given number of days in the future.
+   *
+   * @param nbOfDays The number of days in the future.
+   * @returns a `Date` object.
+   */
   inDays: dateInDays,
+  /**
+   * Gets a Date corresponding to yesterday.
+   *
+   * @returns a `Date` object.
+   */
   yesterday: dateYesterday,
+  /**
+   * Gets a Date corresponding to yesterday.
+   *
+   * @returns a `Date` object.
+   */
   tomorrow: dateTomorrow,
+  /**
+   * Tests whether the first given date is before the second given date.
+   *
+   * @param date The first date to compare.
+   * @param date The second date to compare.
+   * @returns `true` if the first given date is before the second given date, `false` otherwise.
+   */
   isBefore: dateIsBefore,
+  /**
+   * Tests whether the first given date is after the second given date.
+   *
+   * @param date The first date to compare.
+   * @param date The second date to compare.
+   * @returns `true` if the first given date is after the second given date, `false` otherwise.
+   */
   isAfter: dateIsAfter,
+  /**
+   * Tests whether the first given date is the same as the second given date.
+   *
+   * @param date The first date to compare.
+   * @param date The second date to compare.
+   * @returns `true` if the first given date is the same as the second given date, `false` otherwise.
+   */
   isSameDay: dateIsSameDay,
+  /**
+   * Tests whether the given date happened before the given number of days in the future relatively to today.
+   *
+   * @param date The date to compare.
+   * @param nbOfDays The number of days in the future.
+   * @returns `true` if the given date happened before `today + nbOfDays`, `false` otherwise.
+   */
   isBeforeInDays: dateIsBeforeInDays,
+  /**
+   * Tests whether the given date happens after the given number of days in the future relatively to today.
+   *
+   * @param date The date to compare.
+   * @param nbOfDays The number of days in the future.
+   * @returns `true` if the given date happens after `today + nbOfDays`, `false` otherwise.
+   */
   isAfterInDays: dateIsAfterInDays,
+  /**
+   * Tests whether the given date happened before the given number of days in the past relatively to today.
+   *
+   * @param date The date to compare.
+   * @param nbOfDays The number of days in the future.
+   * @returns `true` if the given date happened before `today - nbOfDays`, `false` otherwise.
+   */
   isBeforeDaysAgo: dateIsBeforeDaysAgo,
+  /**
+   * Tests whether the given date happens after the given number of days in the past relatively to today.
+   *
+   * @param date The date to compare.
+   * @param nbOfDays The number of days in the future.
+   * @returns `true` if the given date happens after `today - nbOfDays`, `false` otherwise.
+   */
   isAfterDaysAgo: dateIsAfterDaysAgo,
+  /**
+   * Tests whether the given date happens today.
+   *
+   * @param date The date to compare.
+   * @returns `true` if the given date happens today, `false` otherwise.
+   */
   isToday: dateIsToday,
+  /**
+   * Tests whether the given date happened before today.
+   *
+   * @param date The date to compare.
+   * @returns `true` if the given date happened before today, `false` otherwise.
+   */
   isPast: dateIsPast,
+  /**
+   * Tests whether the given date happens after today.
+   *
+   * @param date The date to compare.
+   * @returns `true` if the given date happens after today, `false` otherwise.
+   */
   isFuture: dateIsFuture,
+  /**
+   * Tests whether the given date happens tomorrow.
+   *
+   * @param date The date to compare.
+   * @returns `true` if the given date happens tomorrow, `false` otherwise.
+   */
   isTomorrow: dateIsTomorrow,
+  /**
+   * Tests whether the given date happened yesterday.
+   *
+   * @param date The date to compare.
+   * @returns `true` if the given date happened yesterday, `false` otherwise.
+   */
   isYesterday: dateIsYesterday,
+  /**
+   * Tests whether the given date happened the given number of days in the past.
+   *
+   * @param date The date to compare.
+   * @returns `true` if the given date happened `today - nbOfDays`, `false` otherwise.
+   */
   isDaysAgo: dateIsDaysAgo,
+  /**
+   * Tests whether the given date happens the given number of days in the future.
+   *
+   * @param date The date to compare.
+   * @returns `true` if the given date happens `today + nbOfDays`, `false` otherwise.
+   */
   isInDays: dateIsInDays,
 };
 
 export const DateComparators = {
+  /**
+   * An ascendent date comparator.
+   */
   asc: DATE_COMPARATOR_ASC,
+  /**
+   * An descendent date comparator.
+   */
   desc: DATE_COMPARATOR_DESC,
+  /**
+   * An ascendent formated date comparator.
+   */
   asStringAsc: DATE_AS_STRING_COMPARATOR_ASC,
+  /**
+   * An descendent formated date comparator.
+   */
   asStringDesc: DATE_AS_STRING_COMPARATOR_DESC,
 };
 
 const Dates = {
+  /**
+   * Date helper methods.
+   */
   helper: DateHelpers,
+  /**
+   * Date comparators.
+   */
   comparator: DateComparators,
 };
 

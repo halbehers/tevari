@@ -1,11 +1,9 @@
 /**
  * Generates a UID.
- * 
+ *
  * @returns the generated UID.
  */
 export const uidGenerate = () => {
-  // I generate the UID from two parts here
-  // to ensure the random number provide enough bits.
   const firstPart = (Math.random() * 46656) | 0;
   const secondPart = (Math.random() * 46656) | 0;
   const stringFirstPart = ("000" + firstPart.toString(36)).slice(-3);
@@ -14,10 +12,18 @@ export const uidGenerate = () => {
 };
 
 export const UIDHelpers = {
+  /**
+   * Generates a UID.
+   *
+   * @returns the generated UID.
+   */
   generate: uidGenerate,
 };
 
 const UIDs = {
+  /**
+   * UID helper methods.
+   */
   helper: UIDHelpers,
 };
 

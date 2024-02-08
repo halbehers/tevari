@@ -41,8 +41,11 @@ export const arrayMatchAll = <T>(
   predicate: Predicate<T>
 ): boolean => {
   const cleanedArray = array.filter((value) => !!value);
-  
-  return cleanedArray.length > 0 && cleanedArray.filter(predicate).length === cleanedArray.length;
+
+  return (
+    cleanedArray.length > 0 &&
+    cleanedArray.filter(predicate).length === cleanedArray.length
+  );
 };
 
 /**
@@ -81,7 +84,7 @@ export const arrayCreateSuite = (
   offset = 1,
   step = 1
 ): number[] => {
-  return Array.from({ length }, (_, i) => offset + (i * step));
+  return Array.from({ length }, (_, i) => offset + i * step);
 };
 
 export const EMPTY_ARRAY = [];
@@ -156,23 +159,95 @@ export const arrayUniqObjectsByProperty = <T extends { [id: string]: any }>(
 };
 
 export const ArrayHelpers = {
+  /**
+   * Tests if all elements of the given array match the predicate.
+   *
+   * @param array The array to test
+   * @param predicate The predicate used to test each element of the given array
+   * @returns `true` if all of the elements match the given predicate, `false` otherwise.
+   */
   matchAll: arrayMatchAll,
+  /**
+   * Tests if exactly one element of the given array matches the predicate.
+   *
+   * @param array The array to test
+   * @param predicate The predicate used to test each element of the given array
+   * @returns `true` if one element only matches the given predicate, `false` otherwise.
+   */
   matchOneExactly: arrayMatchOneExactly,
+  /**
+   * Tests if at least one element of the given array matches the predicate.
+   *
+   * @param array The array to test
+   * @param predicate The predicate used to test each element of the given array
+   * @returns `true` if at leat one element matches the given predicate, `false` otherwise.
+   */
   matchOneOrMore: arrayMatchOneOrMore,
+  /**
+   * Tests whether the given arrays are exactly the same in length and content.
+   * If no predicate is given to compare the elements of the arrays, `===` will be used.
+   *
+   * @param array1 The first array to test
+   * @param array2 The second array to test
+   * @param comparator The predicate used to compare each element of the given arrays.
+   * @returns `true` if both arrays are equal, `false` otherwise.
+   */
   same: arraysAreSame,
+  /**
+   * Strips the given string array of any blank values (either `null`, `undefined` of empty string).
+   *
+   * @param array The string array to be cleaned.
+   * @returns `undefined` if the given array was undefined, the cleaned up array otherwise.
+   */
   cleanStringArray: arrayCleanStringArray,
+  /**
+   * Creates an array of the given length composed of a suite of numbers from `offset` to `offset + (length * step)`.
+   *
+   * @param length The length of the array to be created.
+   * @param offset The starting offset of the suite to be created. `1` is set by default.
+   * @returns the suite array from `offset` to `offset + (length * step)`.
+   */
   createSuite: arrayCreateSuite,
+  /**
+   * Shuffles the elements of the given array to a random order.
+   *
+   * @param array The array to shuffle.
+   * @returns An array with every elements of the given array but in a random order.
+   */
   shuffle: arrayShuffle,
+  /**
+   * Strips the given array of duplicate values.
+   *
+   * @param array The array with potential duplicates.
+   * @returns An array where of elements are uniq.
+   */
   uniq: arrayUniq,
+  /**
+   * Strips the given array of duplicate property values.
+   *
+   * @param array The array with potential duplicates.
+   * @param property The property to extract for the comparaison.
+   * @param comparator The predicate used to compare each element of the given arrays.
+   * @returns An array where of elements are uniq.
+   */
   uniqObjectsByProperty: arrayUniqObjectsByProperty,
 };
 
 export const ArraySymbols = {
+  /**
+   * An empty array.
+   */
   empty: EMPTY_ARRAY,
 };
 
 const Arrays = {
+  /**
+   * Array helper methods.
+   */
   helper: ArrayHelpers,
+  /**
+   * Array symbols.
+   */
   symbol: ArraySymbols,
 };
 

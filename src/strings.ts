@@ -199,7 +199,7 @@ export const stringIsString = <T>(data: T | string): data is string => {
 
 /**
  * Humanize the given string.
- * 
+ *
  * @param value the string to humanize.
  * @returns the formatted result.
  */
@@ -211,7 +211,7 @@ export const stringHumanize = (value: string) => {
 
 /**
  * Extract a boolean value from the given string.
- * 
+ *
  * @param input The boolean-string to parse.
  * @returns the boolean value corresponding to the given string. If the given input is `null`, this methid resturns `undefined`.
  */
@@ -229,7 +229,7 @@ export const stringParseBoolean = (
 /**
  * Formats the given string value to contain at least the given number of characters,
  * adding the given padding character at the end of the value if needed.
- * 
+ *
  * @param value the value to format.
  * @param nbOfCharacters The desired minimum number of characters.
  * @param paddingCharacter The padding character.
@@ -261,7 +261,7 @@ export const stringEquals = (value1: string, value2?: string) => {
 
 /**
  * Converted any given blank values to an empty string (""). If the given value contains a string, the method will return it unarmed.
- * 
+ *
  * @param value The value to convert.
  * @returns the exact given string if not blank, an empty string otherwise.
  */
@@ -273,7 +273,7 @@ export const stringValueOrEmpty = (value?: string | false): string => {
 
 /**
  * Extract the domain name from the given email address.
- * 
+ *
  * @param email The email address.
  * @returns the corresponding domain name.
  */
@@ -284,7 +284,7 @@ export const stringExtractEmailDomain = (email: string): string | undefined => {
 
 /**
  * Capitalizes the first letter of the given string.
- * 
+ *
  * @param string the string to compute.
  * @returns the result string.
  */
@@ -294,7 +294,7 @@ export const stringCapitalize = (string: string): string => {
 
 /**
  * Capitalizes the first letter of each word of the given string.
- * 
+ *
  * @param string the string to compute.
  * @returns the result string.
  */
@@ -307,35 +307,152 @@ export const stringCapitalizeEachWord = (string: string): string => {
 };
 
 export const StringHelpers = {
+  /**
+   * Plainify the given string, converting every special character into its plain brother.
+   *
+   * @param value The string to convert.
+   * @returns a plainified string.
+   */
   plainify: stringPlainify,
+  /**
+   * Tests whether the given data parameter is a string.
+   *
+   * @param data The data to test.
+   * @returns `true` if the given data is a string, `false` otherwise.
+   */
   isString: stringIsString,
+  /**
+   * Converts the given snake case formatted string into a camel case format.
+   *
+   * @param text The string to convert.
+   * @returns the converted string result.
+   */
   snakeCaseToCamelCase: stringSnakeCaseToCamelCase,
+  /**
+   * Converts the given kebab case formatted string into a camel case format.
+   *
+   * @param text The string to convert.
+   * @returns the converted string result.
+   */
   kebabCaseToCamelCase: stringKebabCaseToCamelCase,
+  /**
+   * Converts the given camel case formatted string into a snake case format.
+   *
+   * @param text The string to convert.
+   * @returns the converted string result.
+   */
   camelCaseToSnakeCase: stringCamelCaseToSnakeCase,
+  /**
+   * Humanize the given string.
+   *
+   * @param value the string to humanize.
+   * @returns the formatted result.
+   */
   humanize: stringHumanize,
+  /**
+   * Tests whether the given string contains only alpha characters.
+   *
+   * @param value The string to check.
+   * @returns `true` if the given string only contains alpha characters, `false` otherwise.
+   */
   isAlpha: stringIsAlpha,
+  /**
+   * Tests whether the given string contains only numeric characters.
+   *
+   * @param value The string to check.
+   * @returns `true` if the given string only contains numeric characters, `false` otherwise.
+   */
   isNumeric: stringIsNumeric,
+  /**
+   * Test whether the two given string trimed value are equal.
+   * @param value1 The first value to compare.
+   * @param value2 The second value to compare.
+   * @returns `true` if the two values are equal once trimed, `false` otherwise.
+   */
   equals: stringEquals,
+  /**
+   * Converted any given blank values to an empty string (""). If the given value contains a string, the method will return it unarmed.
+   *
+   * @param value The value to convert.
+   * @returns the exact given string if not blank, an empty string otherwise.
+   */
   valueOrEmpty: stringValueOrEmpty,
+  /**
+   * Formats the given string value to contain at least the given number of characters,
+   * adding the given padding character at the end of the value if needed.
+   *
+   * @param value the value to format.
+   * @param nbOfCharacters The desired minimum number of characters.
+   * @param paddingCharacter The padding character.
+   * @returns the formatted result.
+   */
   pad: stringPad,
+  /**
+   * Test whether the given string is strictly equal to an empty string.
+   *
+   * @param value The string to test.
+   * @returns `true` if the given string is empty, `false` otherwise.
+   */
   isEmpty: stringIsEmpty,
+  /**
+   * Test whether the given string is either `undefined`, `null` or equal to an empty string.
+   *
+   * @param value The string to test.
+   * @returns `true` if the given string is blank, `false` otherwise.
+   */
   isBlank: stringIsBlank,
+  /**
+   * Extract the domain name from the given email address.
+   *
+   * @param email The email address.
+   * @returns the corresponding domain name.
+   */
   extractEmailDomain: stringExtractEmailDomain,
+  /**
+   * Capitalizes the first letter of the given string.
+   *
+   * @param string the string to compute.
+   * @returns the result string.
+   */
   capitalize: stringCapitalize,
+  /**
+   * Capitalizes the first letter of each word of the given string.
+   *
+   * @param string the string to compute.
+   * @returns the result string.
+   */
   capitalizeEachWord: stringCapitalizeEachWord,
 };
 
 export const StringComparators = {
+  /**
+   * An ascendent natural string comparator.
+   */
   naturalAsc: STRING_NATURAL_COMPARATOR_ASC,
+  /**
+   * An descendent natural string comparator.
+   */
   naturalDesc: STRING_NATURAL_COMPARATOR_DESC,
 };
 
 export const StringParsers = {
+  /**
+   * Extract a boolean value from the given string.
+   *
+   * @param input The boolean-string to parse.
+   * @returns the boolean value corresponding to the given string. If the given input is `null`, this methid resturns `undefined`.
+   */
   parseBoolean: stringParseBoolean,
 };
 
 export const StringRegexs = {
+  /**
+   * Regex pattern that matches string containing only alpha characters.
+   */
   alpha: STRING_ONLY_ALPHA_CHARS_REGEX,
+  /**
+   * Regex pattern that matches string containing only numeric characters.
+   */
   numeric: STRING_ONLY_NUMERIC_CHARS_REGEX,
 };
 
@@ -358,10 +475,25 @@ export const StringSymbols = {
 };
 
 const Strings = {
+  /**
+   * String symbols.
+   */
   symbol: StringSymbols,
+  /**
+   * String helper methods.
+   */
   helper: StringHelpers,
+  /**
+   * String comparators.
+   */
   comparator: StringComparators,
+  /**
+   * String parsers.
+   */
   parser: StringParsers,
+  /**
+   * String regexs.
+   */
   regex: StringRegexs,
 };
 

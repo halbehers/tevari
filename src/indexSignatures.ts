@@ -4,7 +4,7 @@ import { stringIsString } from "./strings";
 
 /**
  * Creates an index signature from the given array.
- * 
+ *
  * @param array The array to convert.
  * @param idExtractor A function to extract the id from each array elements.
  * @returns the created index signature.
@@ -22,7 +22,7 @@ export const indexSignatureFromArray = <T>(
 
 /**
  * Creates an index signature from the given array with every elements mapped using the given valueExtractor.
- * 
+ *
  * @param array The array to convert.
  * @param idExtractor A function to extract the id from each array elements.
  * @param valueExtractor A mapper function to convert each element of the array from T to U.
@@ -42,7 +42,7 @@ export const indexSignatureFromArrayValues = <T, U>(
 
 /**
  * Apply the provided mapping function to all values of the given index signature, and extract all values into an array.
- * 
+ *
  * @param indexSignature The index signature to map.
  * @param mapper The mapper function.
  * @param filter (optional) A filter predicate used to filter out unwanted values.
@@ -64,7 +64,7 @@ export const indexSignatureMapToArray = <T, U>(
 
 /**
  * Apply the provided mapping function to all values of the given index signature, and extract all values into an array.
- * 
+ *
  * @param indexSignature The index signature to map.
  * @param mapper The mapper function.
  * @param filter (optional) A filter predicate used to filter out unwanted values.
@@ -86,7 +86,7 @@ export const indexSignatureMapValues = <T, U>(
 
 /**
  * Tests whether the two given index signatures are equals.
- * 
+ *
  * @param indexSignature1 The first index signature to compare.
  * @param indexSignature2 The second index signature to compare.
  * @returns `true` if the index signatures are equal, `false` otherwise.
@@ -111,7 +111,7 @@ export const indexSignaturesAreSame = <T>(
 
 /**
  * Tests whether the given index signature is included into the given array of index signatures.
- * 
+ *
  * @param indexSignature The index signature to compare.
  * @param indexSignature2 An array of index signatures to test against the first parameter.
  * @returns `true` if the given index signatures is included into the array, `false` otherwise.
@@ -130,11 +130,11 @@ export const indexSignatureIncludes = <T>(
 
 /**
  * Converts the given index signature into a string formated as follow:
- * 
+ *
  * ```
  *    { key1: value1, key2: value2, key3: value3, ...}
  * ```
- * 
+ *
  * @param indexSignature The index signature to convert.
  * @returns a string representation of the given index signature.
  */
@@ -151,7 +151,7 @@ export const indexSignatureToString = <T>(indexSignature: {
 
 /**
  * Converts an index signature's values into an array.
- * 
+ *
  * @param indexSignature The index signature to convert.
  * @returns an array of all values of the given index signature.
  */
@@ -165,7 +165,7 @@ export const indexSignatureToArray = <T>(indexSignature: {
 
 /**
  * Converts an index signature' keys and values converted by applying the given mapping function into an array.
- * 
+ *
  * @param indexSignature The index signature to convert.
  * @param mapper The mapper function.
  * @returns an array corresponding to all entries of the given index signature using the given mapper function.
@@ -182,7 +182,7 @@ export const indexSignatureEntriesToArray = <T, U>(
 
 /**
  * Converts an index signature's keys into an array.
- * 
+ *
  * @param indexSignature The index signature to convert.
  * @returns an array of all keys of the given index signature.
  */
@@ -196,7 +196,7 @@ export const indexSignatureKeysToArray = <T>(indexSignature: {
 
 /**
  * Filters out all entries from the given index signature that doesn't match the given predicate.
- * 
+ *
  * @param indexSignature The index signture to filter.
  * @param filter Predicate to filter the entries.
  * @returns an index signature containing only the element that match the given predicate.
@@ -216,7 +216,7 @@ export const indexSignatureFilter = <T>(
 
 /**
  * Groups all elements of the given array by the key extracted using the given indexExtractor.
- * 
+ *
  * @param array The array to convert.
  * @param indexExtractor The extractor function to extract a key from each element.
  * @returns an index signature with arrays of values grouped by keys.
@@ -237,7 +237,7 @@ export const indexSignatureGroupBy = <T>(
 
 /**
  * Apply the given mapping function to every elements and groups all elements of the given array by the key extracted using the given indexExtractor
- * 
+ *
  * @param array The array to convert.
  * @param indexExtractor The extractor function to extract a key from each element.
  * @param mapper The mapper function.
@@ -259,22 +259,121 @@ export const indexSignatureGroupByAndMap = <T, U>(
 };
 
 export const IndexSignatureHelpers = {
+  /**
+   * Creates an index signature from the given array.
+   *
+   * @param array The array to convert.
+   * @param idExtractor A function to extract the id from each array elements.
+   * @returns the created index signature.
+   */
   fromArray: indexSignatureFromArray,
+  /**
+   * Creates an index signature from the given array with every elements mapped using the given valueExtractor.
+   *
+   * @param array The array to convert.
+   * @param idExtractor A function to extract the id from each array elements.
+   * @param valueExtractor A mapper function to convert each element of the array from T to U.
+   * @returns the created index signature.
+   */
   fromArrayValues: indexSignatureFromArrayValues,
+  /**
+   * Apply the provided mapping function to all values of the given index signature, and extract all values into an array.
+   *
+   * @param indexSignature The index signature to map.
+   * @param mapper The mapper function.
+   * @param filter (optional) A filter predicate used to filter out unwanted values.
+   * @returns the result array of mapped values.
+   */
   mapToArray: indexSignatureMapToArray,
+  /**
+   * Apply the provided mapping function to all values of the given index signature, and extract all values into an array.
+   *
+   * @param indexSignature The index signature to map.
+   * @param mapper The mapper function.
+   * @param filter (optional) A filter predicate used to filter out unwanted values.
+   * @returns the result array of mapped values.
+   */
   mapValues: indexSignatureMapValues,
+  /**
+   * Tests whether the two given index signatures are equals.
+   *
+   * @param indexSignature1 The first index signature to compare.
+   * @param indexSignature2 The second index signature to compare.
+   * @returns `true` if the index signatures are equal, `false` otherwise.
+   */
   same: indexSignaturesAreSame,
+  /**
+   * Tests whether the given index signature is included into the given array of index signatures.
+   *
+   * @param indexSignature The index signature to compare.
+   * @param indexSignature2 An array of index signatures to test against the first parameter.
+   * @returns `true` if the given index signatures is included into the array, `false` otherwise.
+   */
   includes: indexSignatureIncludes,
+  /**
+   * Converts the given index signature into a string formated as follow:
+   *
+   * ```
+   *    { key1: value1, key2: value2, key3: value3, ...}
+   * ```
+   *
+   * @param indexSignature The index signature to convert.
+   * @returns a string representation of the given index signature.
+   */
   toString: indexSignatureToString,
+  /**
+   * Converts an index signature's values into an array.
+   *
+   * @param indexSignature The index signature to convert.
+   * @returns an array of all values of the given index signature.
+   */
   toArray: indexSignatureToArray,
+  /**
+   * Converts an index signature' keys and values converted by applying the given mapping function into an array.
+   *
+   * @param indexSignature The index signature to convert.
+   * @param mapper The mapper function.
+   * @returns an array corresponding to all entries of the given index signature using the given mapper function.
+   */
   entriesToArray: indexSignatureEntriesToArray,
+  /**
+   * Converts an index signature's keys into an array.
+   *
+   * @param indexSignature The index signature to convert.
+   * @returns an array of all keys of the given index signature.
+   */
   keysToArray: indexSignatureKeysToArray,
+  /**
+   * Filters out all entries from the given index signature that doesn't match the given predicate.
+   *
+   * @param indexSignature The index signture to filter.
+   * @param filter Predicate to filter the entries.
+   * @returns an index signature containing only the element that match the given predicate.
+   */
   filter: indexSignatureFilter,
+  /**
+   * Groups all elements of the given array by the key extracted using the given indexExtractor.
+   *
+   * @param array The array to convert.
+   * @param indexExtractor The extractor function to extract a key from each element.
+   * @returns an index signature with arrays of values grouped by keys.
+   */
   groupBy: indexSignatureGroupBy,
+  /**
+   * Apply the given mapping function to every elements and groups all elements of the given array by the key extracted using the given indexExtractor
+   *
+   * @param array The array to convert.
+   * @param indexExtractor The extractor function to extract a key from each element.
+   * @param mapper The mapper function.
+   * @returns an index signature with arrays of converted values grouped by keys.
+   */
   groupByAndMap: indexSignatureGroupByAndMap,
 };
 
 const IndexSignatures = {
+  /**
+   * Index signatures helper methods.
+   */
   helper: IndexSignatureHelpers,
 };
 

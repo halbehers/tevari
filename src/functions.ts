@@ -1,22 +1,28 @@
 /**
  * A function that returns the exact given value.
- * 
+ *
  * @param value The value parameter of the function.
  * @returns a function that returns the exact given value.
  */
-export const functionIdentity = () => <T>(value: T) => value;
+export const functionIdentity =
+  () =>
+  <T>(value: T) =>
+    value;
 
 /**
  * A function that returns the given value casted to the given type.
- * 
+ *
  * @param value The value parameter of the function.
  * @returns a function that returns the given value casted to the given type.
  */
-export const functionIdentityAs = () => <T>(value: unknown) => value as T;
+export const functionIdentityAs =
+  () =>
+  <T>(value: unknown) =>
+    value as T;
 
 /**
  * A function that extracts an attribute from the given value.
- * 
+ *
  * @param attributeName The name of the attribute to extract.
  * @returns a function that extract the attrobute from the given object.
  */
@@ -35,17 +41,40 @@ export const functionAttribute = <T, U>(attributeName: string) => {
 
 /**
  * A void function.
- * 
- * @returns a void function. 
+ *
+ * @returns a void function.
  */
 export const functionVoid = () => () => {
   // Nothing to do.
 };
 
 export const FunctionHelpers = {
+  /**
+   * A function that returns the exact given value.
+   *
+   * @param value The value parameter of the function.
+   * @returns a function that returns the exact given value.
+   */
   identity: functionIdentity,
+  /**
+   * A function that returns the given value casted to the given type.
+   *
+   * @param value The value parameter of the function.
+   * @returns a function that returns the given value casted to the given type.
+   */
   identityAs: functionIdentityAs,
+  /**
+   * A function that extracts an attribute from the given value.
+   *
+   * @param attributeName The name of the attribute to extract.
+   * @returns a function that extract the attrobute from the given object.
+   */
   attribute: functionAttribute,
+  /**
+   * A void function.
+   *
+   * @returns a void function.
+   */
   void: functionVoid,
 };
 
@@ -99,6 +128,9 @@ export type Predicate0 = Supplier<boolean>;
 export type Predicate<T> = (value: T) => boolean;
 
 const Functions = {
+  /**
+   * Function helper methods.
+   */
   helper: FunctionHelpers,
 };
 

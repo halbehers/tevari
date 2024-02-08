@@ -96,13 +96,12 @@ export const numberFormatPercentage = (
 ) => {
   const { nbOfDecimals = 1, separator = DOT } = options ?? {};
 
-  const fixedPercentage = Number(
-    percentage.toFixed(nbOfDecimals)
-  );
+  const fixedPercentage = Number(percentage.toFixed(nbOfDecimals));
 
   if (Number.isNaN(fixedPercentage) || fixedPercentage <= 0) return "0%";
   if (fixedPercentage >= 100) return "100%";
-  if (Number.isInteger(fixedPercentage)) return `${numberFormatInteger(Math.round(percentage), options)}%`;
+  if (Number.isInteger(fixedPercentage))
+    return `${numberFormatInteger(Math.round(percentage), options)}%`;
 
   return `${`${fixedPercentage}`.replace(DOT, separator)}%`;
 };
@@ -187,26 +186,90 @@ export const numberFormatLarge = (
 };
 
 export const NumberHelpers = {
+  /**
+   * Calculates the average of all numbers given in the array.
+   *
+   * @param numbers The numbers to be averaged.
+   * @param rounded whether the result average should be rounded.
+   * @returns the average result.
+   */
   average: numberAverage,
+  /**
+   * Returns a random number contained between the given mion and max values inclusively.
+   *
+   * @param min The min value.
+   * @param max The max value.
+   * @returns the result random number.
+   */
   random: numberRandom,
 };
 
 export const NumberComparators = {
+  /**
+   * An ascendent number comparator.
+   */
   asc: NUMBER_COMPARATOR_ASC,
+  /**
+   * An descendent number comparator.
+   */
   desc: NUMBER_COMPARATOR_DESC,
 };
 
 export const NumberFormatters = {
+  /**
+   * Formats the given number into a percentage string representation.
+   *
+   * @param percentage The number to format.
+   * @param options The formatter options.
+   * @returns a percentage string representation of the given number.
+   */
   percentage: numberFormatPercentage,
+  /**
+   * Formats the given number into a float string representation with forced decimal.
+   *
+   * @param percentage The number to format.
+   * @param options The formatter options.
+   * @returns a float string representation of the given number.
+   */
   floatWithDecimal: numberFormatFloatWithDecimals,
+  /**
+   * Formats the given number into a float string representation. No decimal will be displayed of not needed.
+   *
+   * @param percentage The number to format.
+   * @param options The formatter options.
+   * @returns either a float or integer string representation of the given number.
+   */
   float: numberFormatFloat,
+  /**
+   * Formats the given number into a integer string representation.
+   *
+   * @param percentage The number to format.
+   * @param options The formatter options.
+   * @returns either a float or integer string representation of the given number.
+   */
   integer: numberFormatInteger,
+  /**
+   * Formats the given number into a string representation handling thousand separators.
+   *
+   * @param value The number to format.
+   * @param options The formatter options.
+   * @returns the string representation of the given number.
+   */
   large: numberFormatLarge,
 };
 
 const Numbers = {
+  /**
+   * Number helper methods.
+   */
   helper: NumberHelpers,
+  /**
+   * Number comparators.
+   */
   comparator: NumberComparators,
+  /**
+   * Number formatters.
+   */
   formatter: NumberFormatters,
 };
 
