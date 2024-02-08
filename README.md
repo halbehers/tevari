@@ -24,7 +24,7 @@ Then import Tévari functions wherever needed 🤓
 
 For each sections (strings, arrays, numbers, ...), there is 2 ways to use tévari helpers:
 
-- Import the helper object from the desired section:
+### Import the helper object from the desired section:
 
   ```typescript
   import assert from "assert";
@@ -35,7 +35,7 @@ For each sections (strings, arrays, numbers, ...), there is 2 ways to use tévar
   assert(StringHelpers.plainify("Weìrd") === "Weird");
   ```
 
-- Import the desired helper method directly:
+### Import the desired helper method directly:
 
   ```typescript
   import assert from "assert";
