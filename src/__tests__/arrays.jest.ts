@@ -1,5 +1,4 @@
 import Arrays from "../arrays";
-import "@testing-library/jest-dom";
 
 /*
  * Helpers

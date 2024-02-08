@@ -1,5 +1,4 @@
 import Strings, { EMPTY } from "../strings";
-import "@testing-library/jest-dom";
 
 /*
  * Helpers

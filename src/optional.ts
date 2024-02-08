@@ -75,6 +75,7 @@ export default class Optional<T> {
    */
   public set(value: T) {
     this.value = value;
+    return this;
   }
 
   /**
@@ -144,7 +145,7 @@ export default class Optional<T> {
    * @returns `true` if there is a value present, otherwise `false`.
    */
   public isPresent(): boolean {
-    if (!this.value) return false;
+    if (this.isEmpty()) return false;
 
     return true;
   }

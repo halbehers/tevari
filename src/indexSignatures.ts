@@ -1,5 +1,6 @@
 import { arraysAreSame } from "./arrays";
 import { Function1 } from "./functions";
+import { stringIsString } from "./strings";
 
 /**
  * Creates an index signature from the given array.
@@ -47,7 +48,7 @@ export const indexSignatureFromArrayValues = <T, U>(
  * @param filter (optional) A filter predicate used to filter out unwanted values.
  * @returns the result array of mapped values.
  */
-export const indexSignatureMap = <T, U>(
+export const indexSignatureMapToArray = <T, U>(
   indexSignature: { [id: string]: T },
   mapper: (key: string, element: T) => U,
   filter?: (key: string, element: T) => boolean
@@ -142,7 +143,8 @@ export const indexSignatureToString = <T>(indexSignature: {
 }): string => {
   const resultArray = [];
   for (const [id, element] of Object.entries(indexSignature)) {
-    resultArray.push(`${id}: '${element}'`);
+    const value = stringIsString(element) ? `'${element}'` : `${element}`;
+    resultArray.push(`${id}: ${value}`);
   }
   return `{ ${resultArray.join(", ")} }`;
 };
@@ -259,7 +261,7 @@ export const indexSignatureGroupByAndMap = <T, U>(
 export const IndexSignatureHelpers = {
   fromArray: indexSignatureFromArray,
   fromArrayValues: indexSignatureFromArrayValues,
-  map: indexSignatureMap,
+  mapToArray: indexSignatureMapToArray,
   mapValues: indexSignatureMapValues,
   same: indexSignaturesAreSame,
   includes: indexSignatureIncludes,

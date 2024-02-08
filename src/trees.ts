@@ -1,9 +1,23 @@
+/**
+ * A Tree type.
+ */
 export type Tree<T> = T & {
   children?: Tree<T>[];
 };
 
+/**
+ * Type for a tree node comparator.
+ */
 export type TreeComparator<T> = (a: T, b: T) => number;
 
+/**
+ * Adds a new elements into the tree at the given node.
+ * 
+ * @param tree The tree to add the new element into.
+ * @param at The node in the tree where to add the new element.
+ * @param children The element to add.
+ * @param comparator The tree node comparator.
+ */
 export const treePush = <T>(
   tree: Tree<T>,
   at: Tree<T>,
@@ -38,10 +52,17 @@ const treeDoGenerateFromArray = <T extends { parent?: T }>(
   }
 };
 
+/**
+ * Creates a tree structure from the given array.
+ * 
+ * @param array The array to create the tree from.
+ * @param comparator The tree nodes comparator.
+ * @returns the result tree.
+ */
 export const treeFromArray = <T extends { parent?: T }>(
   array: T[],
   comparator: TreeComparator<T>
-) => {
+): Tree<T> | undefined => {
   const root = array.find(({ parent }) => !parent);
 
   if (!root) return;
@@ -52,6 +73,14 @@ export const treeFromArray = <T extends { parent?: T }>(
   return tree;
 };
 
+/**
+ * Truncates the given tree from the given node.
+ * 
+ * @param tree The tree to truncate.
+ * @param from The node to truncate the tree from.
+ * @param comparator The tree nodes comparator.
+ * @returns the truncated tree.
+ */
 export const treeTruncate = <T>(
   tree: Tree<T>,
   from: T,
@@ -80,10 +109,17 @@ const treeDoGenerateArray = <T extends { parent?: T }>(
   treeDoGenerateArray(node.parent, array, comparator);
 };
 
+/**
+ * Gets an array containing all the ancestors of the given node in an ascending order.
+ * 
+ * @param node The node from which to extract the ancestor trail.
+ * @param comparator The tree nodes comparator.
+ * @returns an array containing all the ancestors of the given node in an ascending order.
+ */
 export const treeGetAncestorsTrail = <T extends { parent?: T }>(
   node: T,
   comparator: TreeComparator<T>
-) => {
+): T[] => {
   const array: T[] = [];
   treeDoGenerateArray(node, array, comparator);
   return array.reverse();

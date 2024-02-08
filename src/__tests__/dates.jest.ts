@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import moment from "moment";
 
 import Dates from "../dates";
