@@ -46,5 +46,7 @@ For each sections (strings, arrays, numbers, ...), there is 2 ways to use tévar
   assert(stringPlainify("Weìrd") === "Weird");
   ```
 
-  Every direct helper method are prefixed by the name of the section in singular. (ie. `StringHelpers.plainify` <=> `stringPlainify`)
+  Every direct helper method are prefixed by the name of the section in singular. (ie. `StringHelpers.plainify` <=> `stringPlainify`).
+
+Simple isn't it ? 🪄
 
