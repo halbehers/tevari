@@ -4,7 +4,6 @@ export * from "./src/functions";
 export * from "./src/indexSignatures";
 export * from "./src/jsons";
 export * from "./src/numbers";
-export * from "./src/promises";
 export * from "./src/reflexions";
 export * from "./src/strings";
 export * from "./src/styles";
