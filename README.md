@@ -4,7 +4,7 @@
 
 In Huichol, Tévari means small rocks. This library is just that, small rocks (helpers) designed to ease the development of javascript or typescript projects.
 
-## Install Tévari 🕺
+## Installing Tévari 🕺
 
 **Npm:**
 
