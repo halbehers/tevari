@@ -48,5 +48,5 @@ For each sections (strings, arrays, numbers, ...), there is 2 ways to use tévar
 
   Every direct helper method are prefixed by the name of the section in singular. (ie. `StringHelpers.plainify` <=> `stringPlainify`).
 
-Simple isn't it ? 🪄
+Simple, isn't it ? 🪄
 
