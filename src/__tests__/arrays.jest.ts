@@ -222,3 +222,47 @@ describe("#Array.helper.uniqObjectsByProperty", () => {
     expect(Arrays.helper.uniqObjectsByProperty([], "n")).toEqual([]);
   });
 });
+
+describe("#Array.helper.last", () => {
+  it("should return the last element", () => {
+    expect(Arrays.helper.last([0, 4, 6, 3, 89])).toEqual(89);
+    expect(Arrays.helper.last(["toto", "titi", "banana"])).toEqual("banana");
+  });
+  it("should return undefined", () => {
+    expect(Arrays.helper.last([])).toEqual(undefined);
+  });
+});
+
+describe("#Array.helper.lastOptional", () => {
+  it("should return the last element as an Optional", () => {
+    expect(Arrays.helper.lastOptional([0, 4, 6, 3, 89]).get()).toEqual(89);
+    expect(
+      Arrays.helper.lastOptional(["toto", "titi", "banana"]).get()
+    ).toEqual("banana");
+  });
+  it("should return an empty optional", () => {
+    expect(Arrays.helper.lastOptional([]).isEmpty()).toBeTruthy();
+  });
+});
+
+describe("#Array.helper.first", () => {
+  it("should return the first element", () => {
+    expect(Arrays.helper.first([0, 4, 6, 3, 89])).toEqual(0);
+    expect(Arrays.helper.first(["toto", "titi", "banana"])).toEqual("toto");
+  });
+  it("should return undefined", () => {
+    expect(Arrays.helper.first([])).toEqual(undefined);
+  });
+});
+
+describe("#Array.helper.firstOptional", () => {
+  it("should return the first element as an Optional", () => {
+    expect(Arrays.helper.firstOptional([0, 4, 6, 3, 89]).get()).toEqual(0);
+    expect(
+      Arrays.helper.firstOptional(["toto", "titi", "banana"]).get()
+    ).toEqual("toto");
+  });
+  it("should return an empty optional", () => {
+    expect(Arrays.helper.firstOptional([]).isEmpty()).toBeTruthy();
+  });
+});

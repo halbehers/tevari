@@ -37,7 +37,9 @@ describe("#Numbers.comparator.asc", () => {
   const randomArray = [420, 65, 42, 22, 1312];
 
   it("should sort correctly", () => {
-    expect(randomArray.sort(Numbers.comparator.asc)).toEqual([22, 42, 65, 420, 1312]);
+    expect(randomArray.sort(Numbers.comparator.asc)).toEqual([
+      22, 42, 65, 420, 1312,
+    ]);
   });
 });
 
@@ -45,13 +47,59 @@ describe("#Numbers.comparator.desc", () => {
   const randomArray = [420, 65, 42, 22, 1312];
 
   it("should sort correctly", () => {
-    expect(randomArray.sort(Numbers.comparator.desc)).toEqual([1312, 420, 65, 42, 22]);
+    expect(randomArray.sort(Numbers.comparator.desc)).toEqual([
+      1312, 420, 65, 42, 22,
+    ]);
+  });
+});
+
+describe("#Numbers.comparator.valueAsc", () => {
+  const randomArray = [
+    { value: 420 },
+    { value: 65 },
+    { value: 42 },
+    { value: 22 },
+    { value: 1312 },
+  ];
+
+  it("should sort correctly", () => {
+    expect(
+      randomArray.sort(Numbers.comparator.valueAsc(({ value }) => value))
+    ).toEqual([
+      { value: 22 },
+      { value: 42 },
+      { value: 65 },
+      { value: 420 },
+      { value: 1312 },
+    ]);
+  });
+});
+
+describe("#Numbers.comparator.valueDesc", () => {
+  const randomArray = [
+    { value: 420 },
+    { value: 65 },
+    { value: 42 },
+    { value: 22 },
+    { value: 1312 },
+  ];
+
+  it("should sort correctly", () => {
+    expect(
+      randomArray.sort(Numbers.comparator.valueDesc(({ value }) => value))
+    ).toEqual([
+      { value: 1312 },
+      { value: 420 },
+      { value: 65 },
+      { value: 42 },
+      { value: 22 },
+    ]);
   });
 });
 
 /*
-* Formatters
-*/
+ * Formatters
+ */
 
 describe("#Numbers.formatter.percentage", () => {
   it("should format correctly", () => {
@@ -60,30 +108,52 @@ describe("#Numbers.formatter.percentage", () => {
     expect(Numbers.formatter.percentage(45)).toEqual("45%");
     expect(Numbers.formatter.percentage(45, { minDigits: 3 })).toEqual("045%");
     expect(Numbers.formatter.percentage(45.678)).toEqual("45.7%");
-    expect(Numbers.formatter.percentage(45.678, { nbOfDecimals: 3 })).toEqual("45.678%");
-    expect(Numbers.formatter.percentage(45.678, { nbOfDecimals: 3, separator: COMMA })).toEqual("45,678%");
+    expect(Numbers.formatter.percentage(45.678, { nbOfDecimals: 3 })).toEqual(
+      "45.678%"
+    );
+    expect(
+      Numbers.formatter.percentage(45.678, {
+        nbOfDecimals: 3,
+        separator: COMMA,
+      })
+    ).toEqual("45,678%");
   });
 });
 
 describe("#Numbers.formatter.floatWithDecimal", () => {
   it("should format correctly", () => {
     expect(Numbers.formatter.floatWithDecimal()).toEqual("0.0");
-    expect(Numbers.formatter.floatWithDecimal(undefined, { separator: COMMA })).toEqual("0,0");
+    expect(
+      Numbers.formatter.floatWithDecimal(undefined, { separator: COMMA })
+    ).toEqual("0,0");
     expect(Numbers.formatter.floatWithDecimal(4514)).toEqual("4 514.0");
-    expect(Numbers.formatter.floatWithDecimal(4514.420)).toEqual("4 514.4");
-    expect(Numbers.formatter.floatWithDecimal(4514.420, { nbOfDecimals: 3 })).toEqual("4 514.420");
-    expect(Numbers.formatter.floatWithDecimal(4514, { separator: COMMA, nbOfDecimals: 3 })).toEqual("4 514,000");
+    expect(Numbers.formatter.floatWithDecimal(4514.42)).toEqual("4 514.4");
+    expect(
+      Numbers.formatter.floatWithDecimal(4514.42, { nbOfDecimals: 3 })
+    ).toEqual("4 514.420");
+    expect(
+      Numbers.formatter.floatWithDecimal(4514, {
+        separator: COMMA,
+        nbOfDecimals: 3,
+      })
+    ).toEqual("4 514,000");
   });
 });
 
 describe("#Numbers.formatter.float", () => {
   it("should format correctly", () => {
     expect(Numbers.formatter.float()).toEqual("0");
-    expect(Numbers.formatter.float(undefined, { separator: COMMA })).toEqual("0");
+    expect(Numbers.formatter.float(undefined, { separator: COMMA })).toEqual(
+      "0"
+    );
     expect(Numbers.formatter.float(4514)).toEqual("4 514");
-    expect(Numbers.formatter.float(4514.420)).toEqual("4 514.4");
-    expect(Numbers.formatter.float(4514.420, { nbOfDecimals: 3 })).toEqual("4 514.420");
-    expect(Numbers.formatter.float(4514, { separator: COMMA, nbOfDecimals: 3 })).toEqual("4 514,000");
+    expect(Numbers.formatter.float(4514.42)).toEqual("4 514.4");
+    expect(Numbers.formatter.float(4514.42, { nbOfDecimals: 3 })).toEqual(
+      "4 514.420"
+    );
+    expect(
+      Numbers.formatter.float(4514, { separator: COMMA, nbOfDecimals: 3 })
+    ).toEqual("4 514,000");
   });
 });
 
@@ -102,10 +172,26 @@ describe("#Numbers.formatter.large", () => {
     expect(Numbers.formatter.large(0)).toEqual("0");
     expect(Numbers.formatter.large(42)).toEqual("42");
     expect(Numbers.formatter.large(4206763)).toEqual("4 206 763");
-    expect(Numbers.formatter.large(4206763, { thousandSeparator: COMMA})).toEqual("4,206,763");
-    expect(Numbers.formatter.large(4206763.67, { thousandSeparator: COMMA })).toEqual("4,206,763.7");
-    expect(Numbers.formatter.large(4206763.67, { thousandSeparator: COMMA, nbOfDecimals: 3 })).toEqual("4,206,763.670");
-    expect(Numbers.formatter.large(4206763.67, { thousandSeparator: COMMA, nbOfDecimals: 2 })).toEqual("4,206,763.67");
-    expect(Numbers.formatter.large(4206763.67, { separator: COMMA, nbOfDecimals: 2 })).toEqual("4 206 763,67");
+    expect(
+      Numbers.formatter.large(4206763, { thousandSeparator: COMMA })
+    ).toEqual("4,206,763");
+    expect(
+      Numbers.formatter.large(4206763.67, { thousandSeparator: COMMA })
+    ).toEqual("4,206,763.7");
+    expect(
+      Numbers.formatter.large(4206763.67, {
+        thousandSeparator: COMMA,
+        nbOfDecimals: 3,
+      })
+    ).toEqual("4,206,763.670");
+    expect(
+      Numbers.formatter.large(4206763.67, {
+        thousandSeparator: COMMA,
+        nbOfDecimals: 2,
+      })
+    ).toEqual("4,206,763.67");
+    expect(
+      Numbers.formatter.large(4206763.67, { separator: COMMA, nbOfDecimals: 2 })
+    ).toEqual("4 206 763,67");
   });
 });

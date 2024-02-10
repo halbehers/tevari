@@ -6,24 +6,14 @@ import { Order } from "./misc";
 export const DATE_DEFAULT_SEPARATOR = FORWARD_SLASH;
 
 /**
- * Gets today's date as a string formated in french format.
- *
- * @param separator The separator between day, month and year.
- * @returns today's date as a string.
- */
-export const dateToday = (separator = DATE_DEFAULT_SEPARATOR): string => {
-  const now = new Date(Date.now());
-  return dateFormat(now, { separator, format: "short-date-fr" });
-};
-
-/**
  * Type of handled date formats.
  */
 export type DateFormat =
   | "short-date-fr"
   | "short-date-us"
   | "short-date-time-fr"
-  | "short-date-time-us";
+  | "short-date-time-us"
+  | "reverse";
 
 /**
  * Options for date fomatters.
@@ -50,6 +40,8 @@ const DATE_TO_FORMATED: {
     moment.format(`DD${separator}MM${separator}YYYY HH:mm`),
   ["short-date-time-us"]: (moment, separator) =>
     moment.format(`MM${separator}DD${separator}YYYY HH:mm`),
+  ["reverse"]: (moment, separator) =>
+    moment.format(`YYYY${separator}MM${separator}DD`),
 };
 
 /**
@@ -70,6 +62,17 @@ export const dateFormat = (
     return "-";
   }
   return DATE_TO_FORMATED[format](moment(date), separator);
+};
+
+/**
+ * Gets today's date as a string formated in the format specified in the given options parameter
+ *
+ * @param separator The separator between day, month and year.
+ * @returns today's date as a string.
+ */
+export const dateTodayAsString = (options?: DateFormatOptions): string => {
+  const now = new Date(Date.now());
+  return dateFormat(now, options);
 };
 
 /**
@@ -321,12 +324,12 @@ export const DateHelpers = {
    */
   format: dateFormat,
   /**
-   * Gets today's date as a string formated in french format.
+   * Gets today's date as a string formated in the format specified in the given options parameter.
    *
    * @param separator The separator between day, month and year.
    * @returns today's date as a string.
    */
-  today: dateToday,
+  today: dateTodayAsString,
   /**
    * Gets a Date corresponding to now.
    *

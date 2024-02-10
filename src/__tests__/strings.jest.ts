@@ -235,3 +235,47 @@ describe("#Strings.comparator.naturalDesc", () => {
     ).toEqual(sortedStringArray);
   });
 });
+
+describe("#Strings.comparator.naturalValueAsc", () => {
+  it("should be sorted", () => {
+    const unorderedArray = [
+      { name: "íam" },
+      { name: "Vald" },
+      { name: "åkhenaton" },
+      { name: "Asterix" },
+    ];
+    const sortedArray = [
+      { name: "åkhenaton" },
+      { name: "Asterix" },
+      { name: "íam" },
+      { name: "Vald" },
+    ];
+    expect(
+      unorderedArray.sort(
+        Strings.comparator.naturalValueAsc(({ name }) => name)
+      )
+    ).toEqual(sortedArray);
+  });
+});
+
+describe("#Strings.comparator.naturalValueDesc", () => {
+  it("should be sorted", () => {
+    const unorderedArray = [
+      { name: "íam" },
+      { name: "Vald" },
+      { name: "åkhenaton" },
+      { name: "Asterix" },
+    ];
+    const sortedArray = [
+      { name: "Vald" },
+      { name: "íam" },
+      { name: "Asterix" },
+      { name: "åkhenaton" },
+    ];
+    expect(
+      unorderedArray.sort(
+        Strings.comparator.naturalValueDesc(({ name }) => name)
+      )
+    ).toEqual(sortedArray);
+  });
+});

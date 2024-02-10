@@ -1,3 +1,4 @@
+import { Function1 } from "./functions";
 import { Order } from "./misc";
 
 export const EMPTY = "";
@@ -12,6 +13,7 @@ export const COLON = ":";
 export const WILDCARD = "*";
 export const PERCENTAGE = "%";
 export const COMMA = ",";
+export const QUESTION_MARK = "?";
 export const UNIT_NORMAL_METRIC = "Nm";
 export const UNIT_MASS = "g/m²";
 export const UNIT_WEIGHT = "g";
@@ -125,6 +127,27 @@ export const stringGetNaturalComparator =
   };
 
 /**
+ * Gets a string comparator function in the given order from the values extracted using the given supplier function.
+ *
+ * @param order The order of the result.
+ * @returns a comparator function in the given order.
+ */
+export const stringGetNaturalValueComparator =
+  <T>(order: Order = "desc", extractor: Function1<T, string>) =>
+  (a: T, b: T): number => {
+    const stringA = extractor(a);
+    const stringB = extractor(b);
+    if (order === "asc") {
+      return stringPlainify(stringA.toLowerCase()).localeCompare(
+        stringPlainify(stringB.toLowerCase())
+      );
+    }
+    return stringPlainify(stringB.toLowerCase()).localeCompare(
+      stringPlainify(stringA.toLowerCase())
+    );
+  };
+
+/**
  * An ascendent natural string comparator.
  */
 export const STRING_NATURAL_COMPARATOR_ASC = stringGetNaturalComparator("asc");
@@ -133,6 +156,19 @@ export const STRING_NATURAL_COMPARATOR_ASC = stringGetNaturalComparator("asc");
  */
 export const STRING_NATURAL_COMPARATOR_DESC =
   stringGetNaturalComparator("desc");
+
+/**
+ * An ascendent natural string comparator from extracted values.
+ */
+export const STRING_NATURAL_VALUE_COMPARATOR_ASC = <T>(
+  extractor: Function1<T, string>
+) => stringGetNaturalValueComparator("asc", extractor);
+/**
+ * An descendent natural string comparator from extracted values.
+ */
+export const STRING_NATURAL_VALUE_COMPARATOR_DESC = <T>(
+  extractor: Function1<T, string>
+) => stringGetNaturalValueComparator("desc", extractor);
 
 /**
  * Test whether the given string is strictly equal to an empty string.
@@ -433,6 +469,14 @@ export const StringComparators = {
    * An descendent natural string comparator.
    */
   naturalDesc: STRING_NATURAL_COMPARATOR_DESC,
+  /**
+   * An ascendent natural string comparator from extracted values.
+   */
+  naturalValueAsc: STRING_NATURAL_VALUE_COMPARATOR_ASC,
+  /**
+   * An descendent natural string comparator from extracted values.
+   */
+  naturalValueDesc: STRING_NATURAL_VALUE_COMPARATOR_DESC,
 };
 
 export const StringParsers = {
@@ -469,6 +513,7 @@ export const StringSymbols = {
   WILDCARD,
   PERCENTAGE,
   COMMA,
+  QUESTION_MARK,
   UNIT_NORMAL_METRIC,
   UNIT_MASS,
   UNIT_WEIGHT,

@@ -1,3 +1,4 @@
+import { Function1 } from "./functions";
 import { Order } from "./misc";
 import { DOT, SPACE } from "./strings";
 
@@ -33,6 +34,22 @@ export const numberGetComparator =
   };
 
 /**
+ * Gets a number comparator function in the given order from the values extracted using the given supplier function.
+ *
+ * @param order The order of the result.
+ * @returns a comparator function in the given order.
+ */
+export const numberGetValueComparator =
+  <T>(order: Order = "desc", extractor: Function1<T, number>) =>
+  (a: T, b: T, ): number => {
+    const numberA = extractor(a);
+    const numberB = extractor(b);
+    if (order === "asc") return numberA - numberB;
+
+    return numberB - numberA;
+  };
+
+/**
  * An ascendent number comparator.
  */
 export const NUMBER_COMPARATOR_ASC = numberGetComparator("asc");
@@ -40,6 +57,15 @@ export const NUMBER_COMPARATOR_ASC = numberGetComparator("asc");
  * An descendent number comparator.
  */
 export const NUMBER_COMPARATOR_DESC = numberGetComparator("desc");
+
+/**
+ * An ascendent number comparator from extracted values.
+ */
+export const NUMBER_VALUE_COMPARATOR_ASC = <T> ( extractor: Function1<T, number>) => numberGetValueComparator("asc", extractor);
+/**
+ * An descendent number comparator from extracted values.
+ */
+export const NUMBER_VALUE_COMPARATOR_DESC = <T> ( extractor: Function1<T, number>) => numberGetValueComparator("desc", extractor);
 
 /**
  * Returns a random number contained between the given mion and max values inclusively.
@@ -213,6 +239,14 @@ export const NumberComparators = {
    * An descendent number comparator.
    */
   desc: NUMBER_COMPARATOR_DESC,
+  /**
+   * An ascendent number comparator from extracted values.
+   */
+  valueAsc: NUMBER_VALUE_COMPARATOR_ASC,
+  /**
+   * An descendent number comparator from extracted values.
+   */
+  valueDesc: NUMBER_VALUE_COMPARATOR_DESC,
 };
 
 export const NumberFormatters = {

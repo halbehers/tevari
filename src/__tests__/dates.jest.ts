@@ -19,7 +19,8 @@ afterAll(() => {
 describe("#Dates.helper.today", () => {
   it("should return today's date well formated", () => {
     expect(Dates.helper.today()).toEqual("30/12/1992");
-    expect(Dates.helper.today("-")).toEqual("30-12-1992");
+    expect(Dates.helper.today({ separator: "-" })).toEqual("30-12-1992");
+    expect(Dates.helper.today({ separator: "-", format: "reverse" })).toEqual("1992-12-30");
   });
 });
 

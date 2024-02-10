@@ -1,4 +1,5 @@
 import { Function2, Predicate } from "./functions";
+import { Optional } from "./optional";
 import { stringIsBlank } from "./strings";
 
 /**
@@ -158,6 +159,58 @@ export const arrayUniqObjectsByProperty = <T extends { [id: string]: any }>(
   );
 };
 
+/**
+ * Extracts the last element from the given array.
+ *
+ * @param array The array to extract the last element from.
+ * @returns the last element.
+ */
+export const arrayLast = <T>(array: T[]): T | undefined => {
+  const length = array.length;
+
+  if (length === 0) return;
+
+  return array[array.length - 1];
+};
+
+/**
+ * Extracts the last element from the given array as an optional.
+ *
+ * @param array The array to extract the last element from.
+ * @returns the last element as an optional.
+ */
+export const arrayLastOptional = <T>(array: T[]): Optional<T> => {
+  const length = array.length;
+
+  if (length === 0) return Optional.empty();
+
+  return Optional.filled(array[array.length - 1]);
+};
+
+/**
+ * Extracts the first element from the given array.
+ *
+ * @param array The array to extract the first element from.
+ * @returns the first element.
+ */
+export const arrayFirst = <T>(array: T[]): T | undefined => {
+  if (array.length === 0) return;
+
+  return array[0];
+};
+
+/**
+ * Extracts the first element from the given array as an optional.
+ *
+ * @param array The array to extract the first element from.
+ * @returns the first element as an optional.
+ */
+export const arrayFirstOptional = <T>(array: T[]): Optional<T> => {
+  if (array.length === 0) return Optional.empty();
+
+  return Optional.filled(array[0]);
+};
+
 export const ArrayHelpers = {
   /**
    * Tests if all elements of the given array match the predicate.
@@ -231,6 +284,34 @@ export const ArrayHelpers = {
    * @returns An array where of elements are uniq.
    */
   uniqObjectsByProperty: arrayUniqObjectsByProperty,
+  /**
+   * Extracts the last element from the given array.
+   *
+   * @param array The array to extract the last element from.
+   * @returns the last element.
+   */
+  last: arrayLast,
+  /**
+   * Extracts the last element from the given array as an optional.
+   *
+   * @param array The array to extract the last element from.
+   * @returns the last element as an optional.
+   */
+  lastOptional: arrayLastOptional,
+  /**
+   * Extracts the first element from the given array.
+   *
+   * @param array The array to extract the first element from.
+   * @returns the first element.
+   */
+  first: arrayFirst,
+  /**
+   * Extracts the first element from the given array as an optional.
+   *
+   * @param array The array to extract the first element from.
+   * @returns the first element as an optional.
+   */
+  firstOptional: arrayFirstOptional,
 };
 
 export const ArraySymbols = {
