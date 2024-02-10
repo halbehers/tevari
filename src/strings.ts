@@ -246,6 +246,20 @@ export const stringHumanize = (value: string) => {
 };
 
 /**
+ * Camelize the given string.
+ *
+ * @param value the string to camelize.
+ * @returns the formatted result.
+ */
+export const stringCamelize = (value: string) => {
+  return value
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+      return index === 0 ? word.toLowerCase() : word.toUpperCase();
+    })
+    .replace(/\s+/g, "");
+};
+
+/**
  * Extract a boolean value from the given string.
  *
  * @param input The boolean-string to parse.
@@ -385,6 +399,13 @@ export const StringHelpers = {
    * @returns the formatted result.
    */
   humanize: stringHumanize,
+  /**
+   * Camelize the given string.
+   *
+   * @param value the string to camelize.
+   * @returns the formatted result.
+   */
+  camelize: stringCamelize,
   /**
    * Tests whether the given string contains only alpha characters.
    *

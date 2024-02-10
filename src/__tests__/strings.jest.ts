@@ -135,6 +135,20 @@ describe("#Strings.helper.humanize", () => {
   );
 });
 
+const TEST_CASES_CAMELIZE = [
+  ["", ""],
+  ["hello world", "helloWorld"],
+  ["capitalized name", "capitalizedName"],
+];
+
+describe("#Strings.helper.camelize", () => {
+  test.each(TEST_CASES_CAMELIZE)(
+    "given %s string, returns %s camelCased",
+    (inputStr, camelCaseExpectedStr) =>
+      expect(Strings.helper.camelize(inputStr)).toEqual(camelCaseExpectedStr)
+  );
+});
+
 describe("#Strings.helper.pad", () => {
   it("should pad correctly", () => {
     expect(Strings.helper.pad("Dog", 5, " ")).toEqual("Dog  ");
