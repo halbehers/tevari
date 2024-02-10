@@ -127,11 +127,9 @@ export type Predicate0 = Supplier<boolean>;
  */
 export type Predicate<T> = (value: T) => boolean;
 
-const Functions = {
+export const Functions = {
   /**
    * Function helper methods.
    */
   helper: FunctionHelpers,
 };
-
-export default Functions;

@@ -1,4 +1,4 @@
-import JSONs from "../jsons";
+import { Jsons } from "../jsons";
 
 /*
  * Helpers
@@ -17,7 +17,7 @@ describe("#JSONs.helper.flatten", () => {
     },
   };
   it("should return the exact given value", () => {
-    expect(JSONs.helper.flatten(jsonTestObj)).toEqual({
+    expect(Jsons.helper.flatten(jsonTestObj)).toEqual({
       "banana.color": "yellow",
       "orange.color": "orange",
       "peach.color[0]": "red",

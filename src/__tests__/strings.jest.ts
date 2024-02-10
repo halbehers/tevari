@@ -1,4 +1,4 @@
-import Strings, { EMPTY } from "../strings";
+import { Strings, EMPTY } from "../strings";
 
 /*
  * Helpers

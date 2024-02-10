@@ -132,11 +132,9 @@ export const JsonHelpers = {
   flatten: jsonFlatten,
 };
 
-const Jsons = {
+export const Jsons = {
   /**
    * JSON helper methods.
    */
   helper: JsonHelpers,
 };
-
-export default Jsons;

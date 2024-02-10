@@ -474,7 +474,7 @@ export const StringSymbols = {
   UNIT_WEIGHT,
 };
 
-const Strings = {
+export const Strings = {
   /**
    * String symbols.
    */
@@ -496,5 +496,3 @@ const Strings = {
    */
   regex: StringRegexs,
 };
-
-export default Strings;

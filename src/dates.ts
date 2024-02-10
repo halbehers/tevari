@@ -485,7 +485,7 @@ export const DateComparators = {
   asStringDesc: DATE_AS_STRING_COMPARATOR_DESC,
 };
 
-const Dates = {
+export const Dates = {
   /**
    * Date helper methods.
    */
@@ -495,5 +495,3 @@ const Dates = {
    */
   comparator: DateComparators,
 };
-
-export default Dates;

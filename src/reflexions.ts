@@ -33,11 +33,9 @@ export const ReflexionHelpers = {
   listStaticAttributesAs: reflectionListStaticAttributesAs,
 };
 
-const Reflexions = {
+export const Reflexions = {
   /**
    * Reflexion helper methods.
    */
   helper: ReflexionHelpers,
 };
-
-export default Reflexions;

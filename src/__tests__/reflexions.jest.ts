@@ -1,4 +1,4 @@
-import Reflexions from "../reflexions";
+import { Reflexions } from "../reflexions";
 
 /*
  * Helpers

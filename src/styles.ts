@@ -35,11 +35,9 @@ export const StyleHelpers = {
   rem: styleRem,
 };
 
-const Styles = {
+export const Styles = {
   /**
    * Style helper methods.
    */
   helper: StyleHelpers,
 };
-
-export default Styles;

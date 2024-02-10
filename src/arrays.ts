@@ -240,7 +240,7 @@ export const ArraySymbols = {
   empty: EMPTY_ARRAY,
 };
 
-const Arrays = {
+export const Arrays = {
   /**
    * Array helper methods.
    */
@@ -250,5 +250,3 @@ const Arrays = {
    */
   symbol: ArraySymbols,
 };
-
-export default Arrays;

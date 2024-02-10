@@ -1,4 +1,4 @@
-import Optional from "../optional";
+import { Optional } from "../optional";
 
 describe("#Optional::empty", () => {
   it("should return an empty optional", () => {

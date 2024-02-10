@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import Dates from "../dates";
+import { Dates } from "../dates";
 
 const NOW = Date.now;
 

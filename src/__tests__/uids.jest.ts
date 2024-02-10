@@ -1,4 +1,4 @@
-import UIDs from "../uids";
+import { UIDs } from "../uids";
 
 describe("#UIDs.helper.generate", () => {
   test("should generate a UID", () => {

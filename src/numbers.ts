@@ -258,7 +258,7 @@ export const NumberFormatters = {
   large: numberFormatLarge,
 };
 
-const Numbers = {
+export const Numbers = {
   /**
    * Number helper methods.
    */
@@ -272,5 +272,3 @@ const Numbers = {
    */
   formatter: NumberFormatters,
 };
-
-export default Numbers;

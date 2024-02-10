@@ -13,7 +13,7 @@ import { NoSuchElementException } from "./exceptions";
  *
  * This is a value-based class; use of identity-sensitive operations (including reference equality (==), identity hash code, or synchronization) on instances of Optional may have unpredictable results and should be avoided.
  */
-export default class Optional<T> {
+export class Optional<T> {
   private constructor(private value?: T) {}
 
   /**

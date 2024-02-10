@@ -1,4 +1,4 @@
-import IndexSignatures from "../indexSignatures";
+import { IndexSignatures } from "../indexSignatures";
 
 /*
  * Helpers

@@ -162,11 +162,9 @@ export const TreeHelpers = {
   getAncestorsTrail: treeGetAncestorsTrail,
 };
 
-const Trees = {
+export const Trees = {
   /**
    * Tree helper methods.
    */
   helper: TreeHelpers,
 };
-
-export default Trees;

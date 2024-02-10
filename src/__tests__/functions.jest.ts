@@ -1,4 +1,4 @@
-import Functions from "../functions";
+import { Functions } from "../functions";
 
 /*
  * Helpers

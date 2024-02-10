@@ -20,11 +20,9 @@ export const UIDHelpers = {
   generate: uidGenerate,
 };
 
-const UIDs = {
+export const UIDs = {
   /**
    * UID helper methods.
    */
   helper: UIDHelpers,
 };
-
-export default UIDs;

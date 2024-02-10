@@ -370,11 +370,9 @@ export const IndexSignatureHelpers = {
   groupByAndMap: indexSignatureGroupByAndMap,
 };
 
-const IndexSignatures = {
+export const IndexSignatures = {
   /**
    * Index signatures helper methods.
    */
   helper: IndexSignatureHelpers,
 };
-
-export default IndexSignatures;

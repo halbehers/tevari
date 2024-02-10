@@ -1,4 +1,4 @@
-import Numbers from "../numbers";
+import { Numbers } from "../numbers";
 import { COMMA } from "../strings";
 
 /*
