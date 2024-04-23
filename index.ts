@@ -9,3 +9,4 @@ export * from "./src/strings";
 export * from "./src/styles";
 export * from "./src/trees";
 export * from "./src/uids";
+export * from "./src/optional";
