@@ -8,5 +8,5 @@ export * from "./src/reflexions";
 export * from "./src/strings";
 export * from "./src/styles";
 export * from "./src/trees";
-export * from "./src/uids";
+export * from "./src/cryptos";
 export * from "./src/optional";
