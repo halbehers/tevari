@@ -1,4 +1,4 @@
-import { Cryptos } from "../crypto";
+import { Cryptos } from "../cryptos";
 
 describe("#Cryptos.helper.generate", () => {
   test("should generate a UID", () => {

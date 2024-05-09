@@ -200,6 +200,45 @@ export const arrayFirst = <T>(array: T[]): T | undefined => {
 };
 
 /**
+ * Calculate the sum of the extracted values.
+ *
+ * @param array The array.
+ * @param valueExtractor The extractor used to retrieve values to be sum up.
+ * @returns the total.
+ */
+export const arraySum = <T>(
+  array: T[],
+  valueExtractor: (item: T) => number
+) => {
+  if (array.length === 0) return 0;
+
+  return array
+    .filter((v) => v !== null && v !== undefined)
+    .map(valueExtractor)
+    .reduce((total, current) => total + current, 0);
+};
+
+/**
+ * Calculate the average of the extracted values.
+ *
+ * @param array The array.
+ * @param valueExtractor The extractor used to retrieve values to be averaged up.
+ * @returns the average.
+ */
+export const arrayAverage = <T>(
+  array: T[],
+  valueExtractor: (item: T) => number,
+  rounded: boolean = true
+) => {
+  if (array.length === 0) return 0;
+
+  const total = arraySum(array, valueExtractor);
+  const average = total / array.length;
+  const finalAverage = rounded ? Math.round(average) : average;
+  return finalAverage >= 0 ? finalAverage : 0;
+};
+
+/**
  * Extracts the first element from the given array as an optional.
  *
  * @param array The array to extract the first element from.
@@ -312,6 +351,22 @@ export const ArrayHelpers = {
    * @returns the first element as an optional.
    */
   firstOptional: arrayFirstOptional,
+  /**
+   * Calculate the sum of the extracted values.
+   *
+   * @param array The array.
+   * @param valueExtractor The extractor used to retrieve values to be sum up.
+   * @returns the total.
+   */
+  sum: arraySum,
+  /**
+   * Calculate the average of the extracted values.
+   *
+   * @param array The array.
+   * @param valueExtractor The extractor used to retrieve values to be averaged up.
+   * @returns the average.
+   */
+  average: arrayAverage,
 };
 
 export const ArraySymbols = {
