@@ -266,3 +266,145 @@ describe("#Array.helper.firstOptional", () => {
     expect(Arrays.helper.firstOptional([]).isEmpty()).toBeTruthy();
   });
 });
+
+describe("#Array.helper.sum", () => {
+  it("should return the sum", () => {
+    expect(Arrays.helper.sum([0, 4, 6, 3, 89])).toEqual(102);
+    expect(
+      Arrays.helper.sum(
+        [{ value: 0 }, { value: 4 }, { value: 6 }, { value: 3 }, { value: 89 }],
+        ({ value }) => value
+      )
+    ).toEqual(102);
+  });
+  it("should return Nan", () => {
+    expect(
+      Arrays.helper.sum([
+        { value: 0 },
+        { value: 4 },
+        { value: 6 },
+        { value: 3 },
+        { value: 89 },
+      ])
+    ).toEqual(NaN);
+  });
+});
+
+describe("#Array.helper.average", () => {
+  it("should return the average", () => {
+    expect(Arrays.helper.average([0, 4, 6, 3, 89])).toEqual(20);
+    expect(
+      Arrays.helper.average(
+        [{ value: 0 }, { value: 4 }, { value: 6 }, { value: 3 }, { value: 89 }],
+        ({ value }) => value
+      )
+    ).toEqual(20);
+  });
+  it("should return Nan", () => {
+    expect(
+      Arrays.helper.sum([
+        { value: 0 },
+        { value: 4 },
+        { value: 6 },
+        { value: 3 },
+        { value: 89 },
+      ])
+    ).toEqual(NaN);
+  });
+});
+
+describe("#Array.helper.pushNewValue", () => {
+  it("should push number value", () => {
+    const array = [0, 4, 6, 3, 89];
+    Arrays.helper.pushNewValue(array, 42);
+    expect(array).toEqual([0, 4, 6, 3, 89, 42]);
+  });
+  it("should push string value", () => {
+    const array = ["banana", "kiwi", "coco", "caca"];
+    Arrays.helper.pushNewValue(array, "popo");
+    expect(array).toEqual(["banana", "kiwi", "coco", "caca", "popo"]);
+  });
+  it("should push object value", () => {
+    const array = [
+      { value: "banana" },
+      { value: "kiwi" },
+      { value: "coco" },
+      { value: "caca" },
+    ];
+    Arrays.helper.pushNewValue(
+      array,
+      { value: "popo" },
+      (v1, v2) => v1.value === v2.value
+    );
+    expect(array).toEqual([
+      { value: "banana" },
+      { value: "kiwi" },
+      { value: "coco" },
+      { value: "caca" },
+      { value: "popo" },
+    ]);
+  });
+  it("should not push number value", () => {
+    const array = [0, 4, 6, 3, 89];
+    Arrays.helper.pushNewValue(array, 6);
+    expect(array).toEqual([0, 4, 6, 3, 89]);
+  });
+  it("should not push string value", () => {
+    const array = ["banana", "kiwi", "coco", "caca"];
+    Arrays.helper.pushNewValue(array, "kiwi");
+    expect(array).toEqual(["banana", "kiwi", "coco", "caca"]);
+  });
+  it("should not push object value", () => {
+    const array = [
+      { value: "banana" },
+      { value: "kiwi" },
+      { value: "coco" },
+      { value: "caca" },
+    ];
+    Arrays.helper.pushNewValue(
+      array,
+      { value: "coco" },
+      (v1, v2) => v1.value === v2.value
+    );
+    expect(array).toEqual([
+      { value: "banana" },
+      { value: "kiwi" },
+      { value: "coco" },
+      { value: "caca" },
+    ]);
+  });
+});
+
+describe("#Array.helper.pushNewValues", () => {
+  it("should push only new number values", () => {
+    const array = [0, 4, 6, 3, 89];
+    Arrays.helper.pushNewValues(array, [42, 6, 89, 104]);
+    expect(array).toEqual([0, 4, 6, 3, 89, 42, 104]);
+  });
+  it("should push only new string values", () => {
+    const array = ["banana", "kiwi", "coco", "caca"];
+    Arrays.helper.pushNewValues(array, ["popo", "kiwi", "mama"]);
+    expect(array).toEqual(["banana", "kiwi", "coco", "caca", "popo", "mama"]);
+  });
+  it("should push only new object values", () => {
+    const array = [
+      { value: "banana" },
+      { value: "kiwi" },
+      { value: "coco" },
+      { value: "caca" },
+    ];
+    Arrays.helper.pushNewValues(
+      array,
+      [{ value: "popo" }, { value: "kiwi" }, { value: "mama" }],
+      (v1, v2) => v1.value === v2.value
+    );
+    expect(array).toEqual([
+      { value: "banana" },
+      { value: "kiwi" },
+      { value: "coco" },
+      { value: "caca" },
+      { value: "popo" },
+      { value: "mama" },
+    ]);
+  });
+});

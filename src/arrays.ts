@@ -208,13 +208,13 @@ export const arrayFirst = <T>(array: T[]): T | undefined => {
  */
 export const arraySum = <T>(
   array: T[],
-  valueExtractor: (item: T) => number
+  valueExtractor?: (item: T) => number
 ) => {
   if (array.length === 0) return 0;
 
   return array
     .filter((v) => v !== null && v !== undefined)
-    .map(valueExtractor)
+    .map((value) => valueExtractor ? valueExtractor(value) : Number(value))
     .reduce((total, current) => total + current, 0);
 };
 
@@ -227,7 +227,7 @@ export const arraySum = <T>(
  */
 export const arrayAverage = <T>(
   array: T[],
-  valueExtractor: (item: T) => number,
+  valueExtractor?: (item: T) => number,
   rounded: boolean = true
 ) => {
   if (array.length === 0) return 0;
@@ -248,6 +248,55 @@ export const arrayFirstOptional = <T>(array: T[]): Optional<T> => {
   if (array.length === 0) return Optional.empty();
 
   return Optional.filled(array[0]);
+};
+
+/**
+ * Push the given value to the given array only if the value is not already present in the given array.
+ *
+ * @param array The array in which to insert the new value.
+ * @param newValue The new value to insert.
+ * @param valueComparator The comparator used to compare values from the array.
+ */
+export const arrayPushNewValue = <T>(
+  array: T[],
+  newValue: T,
+  valueComparator?: (value1: T, value2: T) => boolean
+) => {
+  if (array.length === 0) {
+    array.push(newValue);
+    return;
+  }
+
+  if (
+    !array.find((value) =>
+      valueComparator ? valueComparator(value, newValue) : value === newValue
+    )
+  ) {
+    array.push(newValue);
+  }
+};
+
+/**
+ * Push the given values to the given array only if the values are not already present in the given array.
+ * The duplicate values will not be pushed but any other values will be.
+ *
+ * @param array The array in which to insert the new value.
+ * @param newValue The new values to insert.
+ * @param valueComparator The comparator used to compare values from the array.
+ */
+export const arrayPushNewValues = <T>(
+  array: T[],
+  newValues: T[],
+  valueComparator?: (value1: T, value2: T) => boolean
+) => {
+  if (array.length === 0) {
+    array.push(...newValues);
+    return;
+  }
+
+  for (const newValue of newValues) {
+    arrayPushNewValue(array, newValue, valueComparator);
+  }
 };
 
 export const ArrayHelpers = {
@@ -367,6 +416,23 @@ export const ArrayHelpers = {
    * @returns the average.
    */
   average: arrayAverage,
+  /**
+   * Push the given value to the given array only if the value is not already present in the given array.
+   *
+   * @param array The array in which to insert the new value.
+   * @param newValue The new value to insert.
+   * @param valueComparator The comparator used to compare values from the array.
+   */
+  pushNewValue: arrayPushNewValue,
+  /**
+   * Push the given values to the given array only if the values are not already present in the given array.
+   * The duplicate values will not be pushed but any other values will be.
+   *
+   * @param array The array in which to insert the new value.
+   * @param newValue The new values to insert.
+   * @param valueComparator The comparator used to compare values from the array.
+   */
+  pushNewValues: arrayPushNewValues,
 };
 
 export const ArraySymbols = {
