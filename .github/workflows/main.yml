@@ -18,4 +18,5 @@ jobs:
           cache: "pnpm"
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint && pnpm run citest && pnpm run build
+      - run: pnpm install -D jest-junit
+      - run: pnpm run lint && pnpm run test:ci && pnpm run build
