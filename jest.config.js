@@ -1,9 +1,8 @@
-import type { Config } from 'jest';
 import { TextEncoder, TextDecoder } from "util";
 
 Object.assign(global, { TextDecoder, TextEncoder });
 
-const customJestConfig: Config = {
+const customJestConfig = {
   transform: {
     "^.+\\.m?tsx?$": "ts-jest",
   },

@@ -19,4 +19,5 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm install -D jest-junit
-      - run: pnpm run lint && pnpm run test:ci && pnpm run build
+      - run: pnpm run test:ci --config=jest.config.js
+      - run: pnpm run lint && pnpm run build
