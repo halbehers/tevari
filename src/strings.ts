@@ -191,6 +191,16 @@ export const stringIsBlank = (value?: string | null): boolean => {
 };
 
 /**
+ * Test whether the given string is neither `undefined`, `null` nor equal to an empty string.
+ *
+ * @param value The string to test.
+ * @returns `true` if the given string is filled, `false` otherwise.
+ */
+export const stringIsFilled = (value?: string | null): boolean => {
+  return !stringIsBlank(value);
+};
+
+/**
  * Converts the given camel case formatted string into a snake case format.
  *
  * @param text The string to convert.
@@ -458,6 +468,13 @@ export const StringHelpers = {
    * @returns `true` if the given string is blank, `false` otherwise.
    */
   isBlank: stringIsBlank,
+  /**
+   * Test whether the given string is neither `undefined`, `null` nor equal to an empty string.
+   *
+   * @param value The string to test.
+   * @returns `true` if the given string is filled, `false` otherwise.
+   */
+  isFilled: stringIsFilled,
   /**
    * Extract the domain name from the given email address.
    *

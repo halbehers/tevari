@@ -10,3 +10,4 @@ export * from "./src/styles";
 export * from "./src/trees";
 export * from "./src/cryptos";
 export * from "./src/optional";
+export * from "./src/types";

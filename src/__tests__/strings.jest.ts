@@ -52,8 +52,26 @@ describe("#Strings.helper.isBlank", () => {
   it("should return true", () => {
     expect(Strings.helper.isBlank()).toBeTruthy();
   });
+  it("should return true", () => {
+    expect(Strings.helper.isBlank(null)).toBeTruthy();
+  });
   it("should return false", () => {
     expect(Strings.helper.isBlank("yo mama")).toBeFalsy();
+  });
+});
+
+describe("#Strings.helper.isFilled", () => {
+  it("should return true", () => {
+    expect(Strings.helper.isFilled("Yo mama")).toBeTruthy();
+  });
+  it("should return false", () => {
+    expect(Strings.helper.isFilled()).toBeFalsy();
+  });
+  it("should return false", () => {
+    expect(Strings.helper.isFilled(null)).toBeFalsy();
+  });
+  it("should return false", () => {
+    expect(Strings.helper.isFilled("")).toBeFalsy();
   });
 });
 
