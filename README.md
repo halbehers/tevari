@@ -9,13 +9,20 @@ In Huichol, Tévari means small rocks. This library is just that, small rocks (h
 **Npm:**
 
 ```bash
-npm install tevari
+npm install @tevari/helpers
 ```
 
 **Yarn:**
 
 ```bash
-yarn add tevari
+yarn add @tevari/helpers
+```
+```
+
+**Pnpm:**
+
+```bash
+pnpm install @tevari/helpers
 ```
 
 Then import Tévari functions wherever needed 🤓
