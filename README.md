@@ -17,7 +17,6 @@ npm install @tevari/helpers
 ```bash
 yarn add @tevari/helpers
 ```
-```
 
 **Pnpm:**
 
