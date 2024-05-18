@@ -11,7 +11,7 @@
     "test": "jest --watch",
     "test:ci": "jest --ci --runInBand --coverage --reporters=default --reporters=jest-junit",
     "docs": "typedoc index.ts",
-    "release": "pnpm run build && changeset publish --access public"
+    "release": "pnpm run build && changeset publish"
   },
   "repository": {
     "type": "git",
