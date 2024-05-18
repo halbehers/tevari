@@ -1,12 +1,12 @@
 # tevari
 
-## 1.8.1
+## 1.7.1
 
 ### Patch Changes
 
 - aae8387: Fix automatic publish
 
-## 1.8.0
+## 1.7.0
 
 ### Minor Changes
 
