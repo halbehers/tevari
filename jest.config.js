@@ -1,13 +1,10 @@
-import type { Config } from 'jest';
-import { TextEncoder, TextDecoder } from "util";
+const { TextEncoder, TextDecoder } = require("util");
 
 Object.assign(global, { TextDecoder, TextEncoder });
 
-const customJestConfig: Config = {
+module.exports = {
   transform: {
     "^.+\\.m?tsx?$": "ts-jest",
   },
   moduleDirectories: ["node_modules", "<rootDir>/"],
 };
-
-export default customJestConfig;

@@ -5,11 +5,11 @@ import { Dates } from "../dates";
 const NOW = Date.now;
 
 beforeAll(() => {
-  global.Date.now = jest.fn(() => new Date("1992-12-30T15:15:00Z").getTime());
+  Date.now = jest.fn(() => new Date("1992-12-30T15:15:00Z").getTime());
 });
 
 afterAll(() => {
-  global.Date.now = NOW;
+  Date.now = NOW;
 });
 
 /*

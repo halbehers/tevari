@@ -1,0 +1,17 @@
+# prevent check for built files
+/.next
+
+# yarn.lock
+pnpm-lock.yaml
+
+.lintstagedrc
+.prettierignore
+functions/.gitignore
+
+/public/*
+/test-files/*
+
+# Ignore all snapshot files
+*.snap
+
+.gitignore
