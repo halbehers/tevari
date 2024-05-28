@@ -27,6 +27,12 @@ export const STRING_ONLY_ALPHA_CHARS_REGEX = /^[a-z]+$/i;
  */
 export const STRING_ONLY_NUMERIC_CHARS_REGEX = /^[1-9]+$/i;
 
+/**
+ * Regex pattern that matches an email addess.
+ */
+export const STRING_EMAIL_VALIDATION_REGEXP =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const SPECIALS_TO_PLAIN_CHARS: Map<string, string> = new Map([
   ["á", "a"],
   ["à", "a"],
@@ -536,6 +542,10 @@ export const StringRegexs = {
    * Regex pattern that matches string containing only numeric characters.
    */
   numeric: STRING_ONLY_NUMERIC_CHARS_REGEX,
+  /**
+   * Regex pattern that matches an email addess.
+   */
+  email: STRING_EMAIL_VALIDATION_REGEXP
 };
 
 export const StringSymbols = {
