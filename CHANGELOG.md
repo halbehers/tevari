@@ -1,5 +1,11 @@
 # tevari
 
+## 1.8.0
+
+### Minor Changes
+
+- c9a45d6: Branded Type helpers
+
 ## 1.7.1
 
 ### Patch Changes
