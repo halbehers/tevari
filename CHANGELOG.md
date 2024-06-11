@@ -1,5 +1,11 @@
 # tevari
 
+## 1.8.1
+
+### Patch Changes
+
+- 4e2870a: Minor libraries update
+
 ## 1.8.0
 
 ### Minor Changes
