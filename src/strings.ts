@@ -3,8 +3,11 @@ import { Order } from "./misc";
 
 export const EMPTY = "";
 export const FORWARD_SLASH = "/";
+export const BACKSLASH = "\\";
 export const HASHTAG = "#";
 export const SPACE = " ";
+export const TAB = "\t";
+export const NEW_LINE = "\n";
 export const UNDERSCORE = "_";
 export const MINUS = "-";
 export const PLUS = "+";
