@@ -1,5 +1,11 @@
 # tevari
 
+## 1.9.1
+
+### Patch Changes
+
+- 75ac8d2: Add branded type creation by array
+
 ## 1.9.0
 
 ### Minor Changes
