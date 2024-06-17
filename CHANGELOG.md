@@ -1,5 +1,11 @@
 # tevari
 
+## 1.9.0
+
+### Minor Changes
+
+- f01d8ed: Improved Branded types
+
 ## 1.8.1
 
 ### Patch Changes
