@@ -35,7 +35,7 @@ export type ValidatorCreateBrandOptions = {
  * Creates a `Branded` type from the given value.
  * 
  * @param value The value from which to create the `Branded` type.
- * @param validator (optional) A custom validator to validate the given type.
+ * @param validator (optional) A custom validator to validate the given value.
  * @returns The `Branded` type.
  */
 export const typeCreateBranded = <B extends Branded<T, string>, T> (value: T, validator?: (v: T) => v is B): B => {
@@ -43,6 +43,17 @@ export const typeCreateBranded = <B extends Branded<T, string>, T> (value: T, va
     throw new TypeError(`TypeError: [${value}] doesn't match the desired brand.`)
   }
   return value as unknown as B;
+}
+
+/**
+ * Creates an array of `Branded` types from the given values.
+ * 
+ * @param values The values from which to create the `Branded` types.
+ * @param validator (optional) A custom validator to validate the given values.
+ * @returns The `Branded` types.
+ */
+export const typeCreateBrandedArray = <B extends Branded<T, string>, T> (values: T[], validator?: (v: T) => v is B): B[] => {
+  return values.map((value) => typeCreateBranded(value, validator));
 }
 
 export type EmailAddress = Branded<string, "EmailAddress">;
@@ -82,10 +93,18 @@ export const TypeHelpers = {
    * Creates a `Branded` type from the given value.
    * 
    * @param value The value from which to create the `Branded` type.
-   * @param validator (optional) A custom validator to validate the given type.
+   * @param validator (optional) A custom validator to validate the given value.
    * @returns The `Branded` type.
    */
   createBranded: typeCreateBranded,
+  /**
+   * Creates an array of `Branded` types from the given values.
+   * 
+   * @param values The values from which to create the `Branded` types.
+   * @param validator (optional) A custom validator to validate the given values.
+   * @returns The `Branded` types.
+   */
+  createBrandedArray: typeCreateBrandedArray,
   /**
    * Check whether the given string is an email address.
    * 
