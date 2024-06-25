@@ -1,5 +1,11 @@
 # tevari
 
+## 1.9.2
+
+### Patch Changes
+
+- 3a95eb7: (Types) Add isCallable helper
+
 ## 1.9.1
 
 ### Patch Changes
