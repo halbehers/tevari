@@ -1,6 +1,6 @@
 {
   "name": "@tevari/helpers",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "description": "Collection of various small helpers for javascript and typescript based projects",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

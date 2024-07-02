@@ -1,5 +1,11 @@
 # tevari
 
+## 1.10.0
+
+### Minor Changes
+
+- e621bf5: Style helpers
+
 ## 1.9.2
 
 ### Patch Changes
