@@ -126,13 +126,9 @@ export const stringGetNaturalComparator =
   (order: Order = "desc") =>
   (a: string, b: string): number => {
     if (order === "asc") {
-      return stringPlainify(a.toLowerCase()).localeCompare(
-        stringPlainify(b.toLowerCase())
-      );
+      return stringPlainify(a.toLowerCase()).localeCompare(stringPlainify(b.toLowerCase()));
     }
-    return stringPlainify(b.toLowerCase()).localeCompare(
-      stringPlainify(a.toLowerCase())
-    );
+    return stringPlainify(b.toLowerCase()).localeCompare(stringPlainify(a.toLowerCase()));
   };
 
 /**
@@ -147,13 +143,9 @@ export const stringGetNaturalValueComparator =
     const stringA = extractor(a);
     const stringB = extractor(b);
     if (order === "asc") {
-      return stringPlainify(stringA.toLowerCase()).localeCompare(
-        stringPlainify(stringB.toLowerCase())
-      );
+      return stringPlainify(stringA.toLowerCase()).localeCompare(stringPlainify(stringB.toLowerCase()));
     }
-    return stringPlainify(stringB.toLowerCase()).localeCompare(
-      stringPlainify(stringA.toLowerCase())
-    );
+    return stringPlainify(stringB.toLowerCase()).localeCompare(stringPlainify(stringA.toLowerCase()));
   };
 
 /**
@@ -163,21 +155,18 @@ export const STRING_NATURAL_COMPARATOR_ASC = stringGetNaturalComparator("asc");
 /**
  * An descendent natural string comparator.
  */
-export const STRING_NATURAL_COMPARATOR_DESC =
-  stringGetNaturalComparator("desc");
+export const STRING_NATURAL_COMPARATOR_DESC = stringGetNaturalComparator("desc");
 
 /**
  * An ascendent natural string comparator from extracted values.
  */
-export const STRING_NATURAL_VALUE_COMPARATOR_ASC = <T>(
-  extractor: Function1<T, string>
-) => stringGetNaturalValueComparator("asc", extractor);
+export const STRING_NATURAL_VALUE_COMPARATOR_ASC = <T>(extractor: Function1<T, string>) =>
+  stringGetNaturalValueComparator("asc", extractor);
 /**
  * An descendent natural string comparator from extracted values.
  */
-export const STRING_NATURAL_VALUE_COMPARATOR_DESC = <T>(
-  extractor: Function1<T, string>
-) => stringGetNaturalValueComparator("desc", extractor);
+export const STRING_NATURAL_VALUE_COMPARATOR_DESC = <T>(extractor: Function1<T, string>) =>
+  stringGetNaturalValueComparator("desc", extractor);
 
 /**
  * Test whether the given string is strictly equal to an empty string.
@@ -219,6 +208,19 @@ export const stringCamelCaseToSnakeCase = (text: string): string => {
   return text
     .split(/(?=[A-Z])/)
     .join("_")
+    .toLowerCase();
+};
+
+/**
+ * Converts the given camel case formatted string into a kebab case format.
+ *
+ * @param text The string to convert.
+ * @returns the converted string result.
+ */
+export const stringCamelCaseToKebabCase = (text: string): string => {
+  return text
+    .split(/(?=[A-Z])/)
+    .join("-")
     .toLowerCase();
 };
 
@@ -284,9 +286,7 @@ export const stringCamelize = (value: string) => {
  * @param input The boolean-string to parse.
  * @returns the boolean value corresponding to the given string. If the given input is `null`, this methid resturns `undefined`.
  */
-export const stringParseBoolean = (
-  input?: string | null
-): boolean | undefined => {
+export const stringParseBoolean = (input?: string | null): boolean | undefined => {
   if (!input) return;
   try {
     return JSON.parse(input.toLowerCase());
@@ -304,11 +304,7 @@ export const stringParseBoolean = (
  * @param paddingCharacter The padding character.
  * @returns the formatted result.
  */
-export const stringPad = (
-  value: string,
-  nbOfCharacters: number,
-  paddingCharacter = EMPTY
-) => {
+export const stringPad = (value: string, nbOfCharacters: number, paddingCharacter = EMPTY) => {
   const val = value;
   if (Math.abs(nbOfCharacters) <= val.length) {
     return val;
@@ -368,9 +364,7 @@ export const stringCapitalize = (string: string): string => {
  * @returns the result string.
  */
 export const stringCapitalizeEachWord = (string: string): string => {
-  const eachWord = string
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+  const eachWord = string.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
 
   return eachWord.join(" ");
 };
@@ -397,6 +391,13 @@ export const StringHelpers = {
    * @returns the converted string result.
    */
   snakeCaseToCamelCase: stringSnakeCaseToCamelCase,
+  /**
+   * Converts the given camel case formatted string into a kebab case format.
+   *
+   * @param text The string to convert.
+   * @returns the converted string result.
+   */
+  camelCaseToKebabCase: stringCamelCaseToKebabCase,
   /**
    * Converts the given kebab case formatted string into a camel case format.
    *
@@ -548,7 +549,7 @@ export const StringRegexs = {
   /**
    * Regex pattern that matches an email addess.
    */
-  email: STRING_EMAIL_VALIDATION_REGEXP
+  email: STRING_EMAIL_VALIDATION_REGEXP,
 };
 
 export const StringSymbols = {
