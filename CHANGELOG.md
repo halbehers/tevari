@@ -1,5 +1,11 @@
 # tevari
 
+## 1.10.1
+
+### Patch Changes
+
+- 3f67c27: Add string camel case to kebab case helper
+
 ## 1.10.0
 
 ### Minor Changes
