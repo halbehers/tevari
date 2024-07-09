@@ -1,5 +1,11 @@
 # tevari
 
+## 1.12.0
+
+### Minor Changes
+
+- bf15486: Types: recursive partial and partial exept types
+
 ## 1.11.0
 
 ### Minor Changes
