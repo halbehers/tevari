@@ -13,6 +13,8 @@ export type DateFormat =
   | "short-date-us"
   | "short-date-time-fr"
   | "short-date-time-us"
+  | "basic-date"
+  | "basic-date-time"
   | "reverse";
 
 /**
@@ -32,16 +34,13 @@ export interface DateFormatOptions {
 const DATE_TO_FORMATED: {
   [format: string]: (moment: moment.Moment, separator?: string) => string;
 } = {
-  ["short-date-fr"]: (moment, separator) =>
-    moment.format(`DD${separator}MM${separator}YYYY`),
-  ["short-date-us"]: (moment, separator) =>
-    moment.format(`MM${separator}DD${separator}YYYY`),
-  ["short-date-time-fr"]: (moment, separator) =>
-    moment.format(`DD${separator}MM${separator}YYYY HH:mm`),
-  ["short-date-time-us"]: (moment, separator) =>
-    moment.format(`MM${separator}DD${separator}YYYY HH:mm`),
-  ["reverse"]: (moment, separator) =>
-    moment.format(`YYYY${separator}MM${separator}DD`),
+  ["short-date-fr"]: (moment, separator) => moment.format(`DD${separator}MM${separator}YYYY`),
+  ["short-date-us"]: (moment, separator) => moment.format(`MM${separator}DD${separator}YYYY`),
+  ["short-date-time-fr"]: (moment, separator) => moment.format(`DD${separator}MM${separator}YYYY HH:mm`),
+  ["short-date-time-us"]: (moment, separator) => moment.format(`MM${separator}DD${separator}YYYY HH:mm`),
+  ["basic-date"]: (moment, separator) => moment.format(`YYYY${separator}MMdd`),
+  ["basic-date-time"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}dd'T'HH:mm:ss.SSSZ`),
+  ["reverse"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}DD`),
 };
 
 /**
@@ -51,12 +50,8 @@ const DATE_TO_FORMATED: {
  * @param options Options.
  * @returns The given date formated accordingly to the given options.
  */
-export const dateFormat = (
-  date?: Date,
-  options?: DateFormatOptions
-): string => {
-  const { separator = DATE_DEFAULT_SEPARATOR, format = "short-date-fr" } =
-    options ?? {};
+export const dateFormat = (date?: Date, options?: DateFormatOptions): string => {
+  const { separator = DATE_DEFAULT_SEPARATOR, format = "short-date-fr" } = options ?? {};
 
   if (!date) {
     return "-";
@@ -177,10 +172,7 @@ export const dateTomorrow = (): Date => dateInDays();
  * @param date The second date to compare.
  * @returns `true` if the first given date is before the second given date, `false` otherwise.
  */
-export const dateIsBefore = (
-  date1: Date | number,
-  date2: Date | number
-): boolean => date1 < date2;
+export const dateIsBefore = (date1: Date | number, date2: Date | number): boolean => date1 < date2;
 
 /**
  * Tests whether the first given date is after the second given date.
@@ -189,10 +181,7 @@ export const dateIsBefore = (
  * @param date The second date to compare.
  * @returns `true` if the first given date is after the second given date, `false` otherwise.
  */
-export const dateIsAfter = (
-  date1: Date | number,
-  date2: Date | number
-): boolean => date1 > date2;
+export const dateIsAfter = (date1: Date | number, date2: Date | number): boolean => date1 > date2;
 
 /**
  * Tests whether the first given date is the same as the second given date.
@@ -226,8 +215,7 @@ export const dateIsBeforeInDays = (date: Date, nbOfDays: number = 1): boolean =>
  * @param nbOfDays The number of days in the future.
  * @returns `true` if the given date happens after `today + nbOfDays`, `false` otherwise.
  */
-export const dateIsAfterInDays = (date: Date, nbOfDays: number = 1): boolean =>
-  dateIsAfter(date, dateInDays(nbOfDays));
+export const dateIsAfterInDays = (date: Date, nbOfDays: number = 1): boolean => dateIsAfter(date, dateInDays(nbOfDays));
 
 /**
  * Tests whether the given date happened before the given number of days in the past relatively to today.
@@ -236,10 +224,8 @@ export const dateIsAfterInDays = (date: Date, nbOfDays: number = 1): boolean =>
  * @param nbOfDays The number of days in the future.
  * @returns `true` if the given date happened before `today - nbOfDays`, `false` otherwise.
  */
-export const dateIsBeforeDaysAgo = (
-  date: Date,
-  nbOfDays: number = 1
-): boolean => dateIsBefore(date, dateDaysAgo(nbOfDays));
+export const dateIsBeforeDaysAgo = (date: Date, nbOfDays: number = 1): boolean =>
+  dateIsBefore(date, dateDaysAgo(nbOfDays));
 
 /**
  * Tests whether the given date happens after the given number of days in the past relatively to today.
@@ -257,8 +243,7 @@ export const dateIsAfterDaysAgo = (date: Date, nbOfDays: number = 1): boolean =>
  * @param date The date to compare.
  * @returns `true` if the given date happens today, `false` otherwise.
  */
-export const dateIsToday = (date: Date): boolean =>
-  dateIsSameDay(date, dateNow());
+export const dateIsToday = (date: Date): boolean => dateIsSameDay(date, dateNow());
 
 /**
  * Tests whether the given date happened before today.
@@ -266,8 +251,7 @@ export const dateIsToday = (date: Date): boolean =>
  * @param date The date to compare.
  * @returns `true` if the given date happened before today, `false` otherwise.
  */
-export const dateIsPast = (date: Date): boolean =>
-  !dateIsToday(date) && dateIsBefore(date, dateNow());
+export const dateIsPast = (date: Date): boolean => !dateIsToday(date) && dateIsBefore(date, dateNow());
 
 /**
  * Tests whether the given date happens after today.
@@ -275,8 +259,7 @@ export const dateIsPast = (date: Date): boolean =>
  * @param date The date to compare.
  * @returns `true` if the given date happens after today, `false` otherwise.
  */
-export const dateIsFuture = (date: Date): boolean =>
-  !dateIsToday(date) && dateIsAfter(date, dateNow());
+export const dateIsFuture = (date: Date): boolean => !dateIsToday(date) && dateIsAfter(date, dateNow());
 
 /**
  * Tests whether the given date happens tomorrow.
@@ -284,8 +267,7 @@ export const dateIsFuture = (date: Date): boolean =>
  * @param date The date to compare.
  * @returns `true` if the given date happens tomorrow, `false` otherwise.
  */
-export const dateIsTomorrow = (date: Date) =>
-  dateIsSameDay(date, dateTomorrow());
+export const dateIsTomorrow = (date: Date) => dateIsSameDay(date, dateTomorrow());
 
 /**
  * Tests whether the given date happened yesterday.
@@ -293,8 +275,7 @@ export const dateIsTomorrow = (date: Date) =>
  * @param date The date to compare.
  * @returns `true` if the given date happened yesterday, `false` otherwise.
  */
-export const dateIsYesterday = (date: Date) =>
-  dateIsSameDay(date, dateYesterday());
+export const dateIsYesterday = (date: Date) => dateIsSameDay(date, dateYesterday());
 
 /**
  * Tests whether the given date happened the given number of days in the past.
@@ -302,8 +283,7 @@ export const dateIsYesterday = (date: Date) =>
  * @param date The date to compare.
  * @returns `true` if the given date happened `today - nbOfDays`, `false` otherwise.
  */
-export const dateIsDaysAgo = (date: Date, nbOfDays: number = 1) =>
-  dateIsSameDay(date, dateDaysAgo(nbOfDays));
+export const dateIsDaysAgo = (date: Date, nbOfDays: number = 1) => dateIsSameDay(date, dateDaysAgo(nbOfDays));
 
 /**
  * Tests whether the given date happens the given number of days in the future.
@@ -311,8 +291,7 @@ export const dateIsDaysAgo = (date: Date, nbOfDays: number = 1) =>
  * @param date The date to compare.
  * @returns `true` if the given date happens `today + nbOfDays`, `false` otherwise.
  */
-export const dateIsInDays = (date: Date, nbOfDays: number = 1) =>
-  dateIsSameDay(date, dateInDays(nbOfDays));
+export const dateIsInDays = (date: Date, nbOfDays: number = 1) => dateIsSameDay(date, dateInDays(nbOfDays));
 
 export const DateHelpers = {
   /**
