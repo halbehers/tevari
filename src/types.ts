@@ -8,6 +8,12 @@ export type Spread<Type> = {
   [K in keyof Type]: Type[K];
 };
 
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
+export type PartialExcept<T, K extends keyof T> = RecursivePartial<T> & Pick<T, K>;
+
 export type Equal<X, Y> = X extends Y ? (Y extends X ? true : false) : false;
 
 declare const __brand: unique symbol;
