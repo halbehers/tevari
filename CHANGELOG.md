@@ -1,5 +1,11 @@
 # tevari
 
+## 1.12.1
+
+### Patch Changes
+
+- c375e00: Fix basic date formating
+
 ## 1.12.0
 
 ### Minor Changes
