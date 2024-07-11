@@ -39,7 +39,7 @@ const DATE_TO_FORMATED: {
   ["short-date-time-fr"]: (moment, separator) => moment.format(`DD${separator}MM${separator}YYYY HH:mm`),
   ["short-date-time-us"]: (moment, separator) => moment.format(`MM${separator}DD${separator}YYYY HH:mm`),
   ["basic-date"]: (moment, separator) => moment.format(`YYYY${separator}MMdd`),
-  ["basic-date-time"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}dd'T'HH:mm:ss.SSSZ`),
+  ["basic-date-time"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}DDTHH:mm:ss.SSSZ`),
   ["reverse"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}DD`),
 };
 
