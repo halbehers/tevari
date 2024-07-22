@@ -4,6 +4,7 @@ import {
   Consumer,
   Supplier,
   Function2,
+  Procedure,
 } from "./functions";
 import { NoSuchElementException } from "./exceptions";
 
@@ -42,7 +43,7 @@ export class Optional<T> {
   public static of<T>(value?: T) {
     if (value === undefined || value === null) return Optional.empty<T>();
 
-    return new Optional<T>(value as T);
+    return new Optional<T>(value!!);
   }
 
   /**
@@ -54,7 +55,7 @@ export class Optional<T> {
    */
   public equals(other: T, comparator?: Function2<T, T, boolean>): boolean {
     if (this.isEmpty()) return false;
-    if (comparator) return comparator(this.value as T, other);
+    if (comparator) return comparator(this.value!!, other);
 
     return this.value === other;
   }
@@ -89,7 +90,7 @@ export class Optional<T> {
         "[Optional] You are trying to get an empty value."
       );
 
-    return this.value as T;
+    return this.value!!;
   }
 
   /**
@@ -99,7 +100,7 @@ export class Optional<T> {
    * @returns a filled Optional if a value is present and it matches the given predicate, and emlpty Optional otherwise.
    */
   public filter(predicate: Predicate<T>): Optional<T> {
-    if (this.isEmpty() || !predicate(this.value as T)) return Optional.empty();
+    if (this.isEmpty() || !predicate(this.value!!)) return Optional.empty();
 
     return Optional.of(this.value);
   }
@@ -113,7 +114,7 @@ export class Optional<T> {
   public map<U>(mapper: Function1<T, U>): Optional<U> {
     if (this.isEmpty()) return Optional.empty();
 
-    return Optional.of(mapper(this.value as T));
+    return Optional.of(mapper(this.value!!));
   }
 
   /**
@@ -125,7 +126,7 @@ export class Optional<T> {
   public flatMap<U>(mapper: Function1<T, Optional<U>>): Optional<U> {
     if (this.isEmpty()) return Optional.empty();
 
-    return mapper(this.value as T);
+    return mapper(this.value!!);
   }
 
   /**
@@ -154,11 +155,13 @@ export class Optional<T> {
    * If a value is present, invoke the specified consumer with the value, otherwise do nothing.
    *
    * @param consumer The consumer to invoke if a value is present.
+   * @returns itself for chaining purposes.
    */
-  public ifPresent(consumer: Consumer<T>): void {
-    if (!this.value) return;
+  public ifPresent(consumer: Consumer<T>): Optional<T> {
+    if (this.isEmpty()) return this;
 
-    consumer(this.value);
+    consumer(this.value!!);
+    return this;
   }
 
   /**
@@ -170,7 +173,20 @@ export class Optional<T> {
   public orElse(other: T): T {
     if (this.isEmpty()) return other;
 
-    return this.value as T;
+    return this.value!!;
+  }
+
+  /**
+   * If the optional is empty, invokes the specified supplier, otherwise do nothing.
+   *
+   * @param other The default value to return if this Optional is empty.
+   * @returns itself for chaining purposes.
+   */
+  public orElseInvoke(procedure: Procedure): Optional<T> {
+    if (this.isPresent()) return this;
+
+    procedure();
+    return this;
   }
 
   /**
@@ -181,7 +197,7 @@ export class Optional<T> {
   public orUndefined(): T | undefined {
     if (this.isEmpty()) return undefined;
 
-    return this.value as T;
+    return this.value!!;
   }
 
   /**
@@ -192,7 +208,7 @@ export class Optional<T> {
   public orNull(): T | null {
     if (this.isEmpty()) return null;
 
-    return this.value as T;
+    return this.value!!;
   }
 
   /**
@@ -204,7 +220,7 @@ export class Optional<T> {
   public orElseGet(supplier: Supplier<T>): T {
     if (this.isEmpty()) return supplier();
 
-    return this.value as T;
+    return this.value!!;
   }
 
   /**
@@ -216,7 +232,7 @@ export class Optional<T> {
   public orElseThrow<U extends Error>(exceptionSupplier: Supplier<U>): T {
     if (this.isEmpty()) throw exceptionSupplier();
 
-    return this.value as T;
+    return this.value!!;
   }
 
   /**
@@ -229,6 +245,6 @@ export class Optional<T> {
   public resolve<U>(resolver: Function1<T, U>, other: U): U {
     if (this.isEmpty()) return other;
 
-    return resolver(this.value as T);
+    return resolver(this.value!!);
   }
 }
