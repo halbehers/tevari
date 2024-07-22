@@ -1,5 +1,11 @@
 # tevari
 
+## 1.13.0
+
+### Minor Changes
+
+- 8df922e: Add orElseInvoke to Optional
+
 ## 1.12.1
 
 ### Patch Changes
