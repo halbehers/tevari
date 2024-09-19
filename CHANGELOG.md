@@ -1,5 +1,11 @@
 # tevari
 
+## 1.14.2
+
+### Patch Changes
+
+- ed4fcd5: Numbers: add ability to force display sign in formatting
+
 ## 1.14.1
 
 ### Patch Changes
