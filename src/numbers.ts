@@ -110,6 +110,18 @@ export interface INumberFormatOptions {
 }
 
 /**
+ * Number percentage formatter options.
+ */
+export interface INumberFormatPercentageOptions {
+  /**
+   * Whether you want the formating to display negative values.
+   * If `false`, negative values will be displayed as 0%.
+   * Default: false
+   */
+  withNegativeValues?: boolean;
+}
+
+/**
  * Formats the given number into a percentage string representation.
  *
  * @param percentage The number to format.
@@ -118,13 +130,14 @@ export interface INumberFormatOptions {
  */
 export const numberFormatPercentage = (
   percentage: number,
-  options?: INumberFormatOptions
+  options?: INumberFormatOptions & INumberFormatPercentageOptions
 ) => {
-  const { nbOfDecimals = 1, separator = DOT } = options ?? {};
+  const { nbOfDecimals = 1, separator = DOT, withNegativeValues = false } = options ?? {};
 
   const fixedPercentage = Number(percentage.toFixed(nbOfDecimals));
 
-  if (Number.isNaN(fixedPercentage) || fixedPercentage <= 0) return "0%";
+  if (Number.isNaN(fixedPercentage)) return "0%";
+  if (!withNegativeValues && fixedPercentage <= 0) return "0%";
   if (fixedPercentage >= 100) return "100%";
   if (Number.isInteger(fixedPercentage))
     return `${numberFormatInteger(Math.round(percentage), options)}%`;

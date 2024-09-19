@@ -104,6 +104,8 @@ describe("#Numbers.comparator.valueDesc", () => {
 describe("#Numbers.formatter.percentage", () => {
   it("should format correctly", () => {
     expect(Numbers.formatter.percentage(-56)).toEqual("0%");
+    expect(Numbers.formatter.percentage(-56, { withNegativeValues: true })).toEqual("-56%");
+    expect(Numbers.formatter.percentage(-56.5, { nbOfDecimals: 1, withNegativeValues: true })).toEqual("-56.5%");
     expect(Numbers.formatter.percentage(4514)).toEqual("100%");
     expect(Numbers.formatter.percentage(45)).toEqual("45%");
     expect(Numbers.formatter.percentage(45, { minDigits: 3 })).toEqual("045%");
