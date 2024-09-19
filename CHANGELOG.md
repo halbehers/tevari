@@ -1,5 +1,11 @@
 # tevari
 
+## 1.14.1
+
+### Patch Changes
+
+- 1a3ea55: Numbers: add ability to format negative percentages
+
 ## 1.14.0
 
 ### Minor Changes
