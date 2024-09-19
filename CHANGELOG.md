@@ -1,5 +1,11 @@
 # tevari
 
+## 1.14.3
+
+### Patch Changes
+
+- 8bf20d2: Number tests: lint
+
 ## 1.14.2
 
 ### Patch Changes
