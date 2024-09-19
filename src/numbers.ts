@@ -1,6 +1,6 @@
 import { Function1 } from "./functions";
 import { Order } from "./misc";
-import { DOT, SPACE } from "./strings";
+import { DOT, SPACE, stringValueOrEmpty } from "./strings";
 
 /**
  * Calculates the average of all numbers given in the array.
@@ -11,9 +11,7 @@ import { DOT, SPACE } from "./strings";
  */
 export const numberAverage = (numbers: number[], rounded = false): number => {
   if (numbers.length === 0) return 0;
-  const total = numbers
-    .filter((v) => v !== null)
-    .reduce((total, current) => total + current, 0);
+  const total = numbers.filter((v) => v !== null).reduce((total, current) => total + current, 0);
   const average = total / numbers.length;
   const finalAverage = rounded ? Math.round(average) : average;
   return finalAverage >= 0 ? finalAverage : 0;
@@ -41,7 +39,7 @@ export const numberGetComparator =
  */
 export const numberGetValueComparator =
   <T>(order: Order = "desc", extractor: Function1<T, number>) =>
-  (a: T, b: T, ): number => {
+  (a: T, b: T): number => {
     const numberA = extractor(a);
     const numberB = extractor(b);
     if (order === "asc") return numberA - numberB;
@@ -61,11 +59,13 @@ export const NUMBER_COMPARATOR_DESC = numberGetComparator("desc");
 /**
  * An ascendent number comparator from extracted values.
  */
-export const NUMBER_VALUE_COMPARATOR_ASC = <T> ( extractor: Function1<T, number>) => numberGetValueComparator("asc", extractor);
+export const NUMBER_VALUE_COMPARATOR_ASC = <T>(extractor: Function1<T, number>) =>
+  numberGetValueComparator("asc", extractor);
 /**
  * An descendent number comparator from extracted values.
  */
-export const NUMBER_VALUE_COMPARATOR_DESC = <T> ( extractor: Function1<T, number>) => numberGetValueComparator("desc", extractor);
+export const NUMBER_VALUE_COMPARATOR_DESC = <T>(extractor: Function1<T, number>) =>
+  numberGetValueComparator("desc", extractor);
 
 /**
  * Returns a random number contained between the given mion and max values inclusively.
@@ -107,6 +107,11 @@ export interface INumberFormatOptions {
    * Minimun number of digit to display on the integer side (before the decimals).
    */
   minDigits?: number;
+  /**
+   * Whether the sign should alwaws be displayed ("+42%").
+   * Default: false
+   */
+  forceDisplaySign?: boolean;
 }
 
 /**
@@ -130,19 +135,18 @@ export interface INumberFormatPercentageOptions {
  */
 export const numberFormatPercentage = (
   percentage: number,
-  options?: INumberFormatOptions & INumberFormatPercentageOptions
+  options?: INumberFormatOptions & INumberFormatPercentageOptions,
 ) => {
-  const { nbOfDecimals = 1, separator = DOT, withNegativeValues = false } = options ?? {};
+  const { nbOfDecimals = 1, withNegativeValues = false, forceDisplaySign = false } = options ?? {};
 
   const fixedPercentage = Number(percentage.toFixed(nbOfDecimals));
 
   if (Number.isNaN(fixedPercentage)) return "0%";
   if (!withNegativeValues && fixedPercentage <= 0) return "0%";
-  if (fixedPercentage >= 100) return "100%";
-  if (Number.isInteger(fixedPercentage))
-    return `${numberFormatInteger(Math.round(percentage), options)}%`;
+  if (fixedPercentage >= 100) return `${stringValueOrEmpty(forceDisplaySign && "+")}100%`;
+  if (Number.isInteger(fixedPercentage)) return `${numberFormatInteger(Math.round(percentage), options)}%`;
 
-  return `${`${fixedPercentage}`.replace(DOT, separator)}%`;
+  return `${numberFormatFloatWithDecimals(fixedPercentage, options)}%`;
 };
 
 /**
@@ -152,10 +156,7 @@ export const numberFormatPercentage = (
  * @param options The formatter options.
  * @returns a float string representation of the given number.
  */
-export const numberFormatFloatWithDecimals = (
-  float?: number,
-  options?: INumberFormatOptions
-) => {
+export const numberFormatFloatWithDecimals = (float?: number, options?: INumberFormatOptions) => {
   const { separator = DOT, nbOfDecimals = 1 } = options ?? {};
   if (!float || Number.isNaN(float)) return `0${separator}0`;
   return numberFormatLarge(float, { ...options, nbOfDecimals });
@@ -168,10 +169,7 @@ export const numberFormatFloatWithDecimals = (
  * @param options The formatter options.
  * @returns either a float or integer string representation of the given number.
  */
-export const numberFormatFloat = (
-  float?: number,
-  options?: INumberFormatOptions
-): string => {
+export const numberFormatFloat = (float?: number, options?: INumberFormatOptions): string => {
   const { nbOfDecimals = 1 } = options ?? {};
   if (!float || Number.isNaN(float)) return "0";
   const fixed = Number(float.toFixed(nbOfDecimals));
@@ -189,14 +187,13 @@ export const numberFormatFloat = (
  * @param options The formatter options.
  * @returns either a float or integer string representation of the given number.
  */
-export const numberFormatInteger = (
-  integer: number,
-  options?: INumberFormatOptions
-): string => {
-  const { minDigits = 1 } = options ?? {};
+export const numberFormatInteger = (integer: number, options?: INumberFormatOptions): string => {
+  const { minDigits = 1, forceDisplaySign = false } = options ?? {};
 
   const rounded = Math.round(integer);
-  if (minDigits > 1) return String(rounded).padStart(minDigits, "0");
+  if (minDigits > 1) {
+    return `${stringValueOrEmpty(forceDisplaySign && rounded > 0 && "+")}${String(rounded).padStart(minDigits, "0")}`;
+  }
 
   return `${numberFormatLarge(rounded, options)}`;
 };
@@ -208,20 +205,18 @@ export const numberFormatInteger = (
  * @param options The formatter options.
  * @returns the string representation of the given number.
  */
-export const numberFormatLarge = (
-  value: number,
-  options?: INumberFormatOptions
-) => {
+export const numberFormatLarge = (value: number, options?: INumberFormatOptions) => {
   const {
     nbOfDecimals = Number.isInteger(value) ? 0 : 1,
     separator = DOT,
     thousandSeparator = SPACE,
+    forceDisplaySign = false,
   } = options ?? {};
 
-  return value
+  return `${stringValueOrEmpty(forceDisplaySign && value > 0 && "+")}${value
     .toFixed(nbOfDecimals)
     .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandSeparator)
-    .replace(DOT, separator);
+    .replace(DOT, separator)}`;
 };
 
 export const NumberHelpers = {

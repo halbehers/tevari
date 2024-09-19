@@ -110,6 +110,7 @@ describe("#Numbers.formatter.percentage", () => {
     expect(Numbers.formatter.percentage(45)).toEqual("45%");
     expect(Numbers.formatter.percentage(45, { minDigits: 3 })).toEqual("045%");
     expect(Numbers.formatter.percentage(45.678)).toEqual("45.7%");
+    expect(Numbers.formatter.percentage(45.678, { forceDisplaySign: true })).toEqual("+45.7%");
     expect(Numbers.formatter.percentage(45.678, { nbOfDecimals: 3 })).toEqual(
       "45.678%"
     );
