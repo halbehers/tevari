@@ -1,5 +1,11 @@
 # tevari
 
+## 1.14.4
+
+### Patch Changes
+
+- 3f40816: Strings: add three dots character
+
 ## 1.14.3
 
 ### Patch Changes
