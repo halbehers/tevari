@@ -20,6 +20,7 @@ export const QUESTION_MARK = "?";
 export const UNIT_NORMAL_METRIC = "Nm";
 export const UNIT_MASS = "g/m²";
 export const UNIT_WEIGHT = "g";
+export const THREE_DOTS = "…";
 
 /**
  * Regex pattern that matches string containing only alpha characters.
@@ -78,6 +79,7 @@ const SPECIALS_TO_PLAIN_CHARS: Map<string, string> = new Map([
   ["ú", "u"],
   ["ū", "u"],
   ["ÿ", "y"],
+  ["…", "..."],
 ]);
 
 /**
@@ -569,6 +571,7 @@ export const StringSymbols = {
   UNIT_NORMAL_METRIC,
   UNIT_MASS,
   UNIT_WEIGHT,
+  THREE_DOTS,
 };
 
 export const Strings = {
