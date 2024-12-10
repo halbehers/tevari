@@ -360,7 +360,6 @@ export const stringHumanize = (value: string) => {
  */
 export const stringCamelize = (value: string, options?: ICamelCaseConverterOptions) => {
   const { firstLetter = "lower" } = options ?? {};
-  // const result = value.replace(/-./g, (x) => x[1].toUpperCase());
   const result = value
     .replace(/[_-]+/g, " ")
     .replace(/\s./g, (x) => x[1].toUpperCase())
