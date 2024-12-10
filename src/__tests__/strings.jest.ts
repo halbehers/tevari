@@ -153,17 +153,156 @@ describe("#Strings.helper.humanize", () => {
   );
 });
 
-const TEST_CASES_CAMELIZE = [
+const TEST_CASES_CAMELIZE_LOWER = [
   ["", ""],
   ["hello world", "helloWorld"],
   ["capitalized name", "capitalizedName"],
+  ["string-in-kebab-case", "stringInKebabCase"],
+  ["string_in_snake_case", "stringInSnakeCase"],
+  ["stringInCamelCase", "stringInCamelCase"],
+];
+const TEST_CASES_CAMELIZE_UPPER = [
+  ["", ""],
+  ["hello world", "HelloWorld"],
+  ["capitalized name", "CapitalizedName"],
+  ["string-in-kebab-case", "StringInKebabCase"],
+  ["string_in_snake_case", "StringInSnakeCase"],
+  ["stringInCamelCase", "StringInCamelCase"],
 ];
 
 describe("#Strings.helper.camelize", () => {
-  test.each(TEST_CASES_CAMELIZE)(
+  test.each(TEST_CASES_CAMELIZE_LOWER)(
     "given %s string, returns %s camelCased",
     (inputStr, camelCaseExpectedStr) =>
       expect(Strings.helper.camelize(inputStr)).toEqual(camelCaseExpectedStr)
+  );
+  test.each(TEST_CASES_CAMELIZE_UPPER)(
+    "given %s string, returns %s PascalCased",
+    (inputStr, camelCaseExpectedStr) =>
+      expect(Strings.helper.camelize(inputStr, { firstLetter: "upper" })).toEqual(camelCaseExpectedStr)
+  );
+});
+
+const TEST_CASES_PASCALIZE = [
+  ["", ""],
+  ["hello world", "HelloWorld"],
+  ["capitalized name", "CapitalizedName"],
+  ["string-in-kebab-case", "StringInKebabCase"],
+  ["string_in_snake_case", "StringInSnakeCase"],
+  ["stringInCamelCase", "StringInCamelCase"],
+];
+
+describe("#Strings.helper.pascalize", () => {
+  test.each(TEST_CASES_PASCALIZE)(
+    "given %s string, returns %s PascalCased",
+    (inputStr, camelCaseExpectedStr) =>
+      expect(Strings.helper.pascalize(inputStr)).toEqual(camelCaseExpectedStr)
+  );
+});
+
+const TEST_CASES_SNAKIZE = [
+  ["", ""],
+  ["hello world", "hello_world"],
+  ["capitalized name", "capitalized_name"],
+  ["string-in-kebab-case", "string_in_kebab_case"],
+  ["string_in_snake_case", "string_in_snake_case"],
+  ["stringInCamelCase", "string_in_camel_case"],
+];
+
+describe("#Strings.helper.snakize", () => {
+  test.each(TEST_CASES_SNAKIZE)(
+    "given %s string, returns %s camelCased",
+    (inputStr, camelCaseExpectedStr) =>
+      expect(Strings.helper.snakize(inputStr)).toEqual(camelCaseExpectedStr)
+  );
+});
+
+const TEST_CASES_KEBABIZE = [
+  ["", ""],
+  ["hello world", "hello-world"],
+  ["capitalized name", "capitalized-name"],
+  ["string-in-kebab-case", "string-in-kebab-case"],
+  ["string_in_snake_case", "string-in-snake-case"],
+  ["stringInCamelCase", "string-in-camel-case"],
+];
+
+describe("#Strings.helper.kebabize", () => {
+  test.each(TEST_CASES_KEBABIZE)(
+    "given %s string, returns %s camelCased",
+    (inputStr, camelCaseExpectedStr) =>
+      expect(Strings.helper.kebabize(inputStr)).toEqual(camelCaseExpectedStr)
+  );
+});
+
+const TEST_CASES_IS_CAMEL_CASE = [
+  ["", true],
+  ["hello world", false],
+  ["capitalized name", false],
+  ["string-in-kebab-case", false],
+  ["string_in_snake_case", false],
+  ["stringInCamelCase", true],
+  ["StringInCamelCase", true],
+];
+
+describe("#Strings.helper.isCamelCase", () => {
+  test.each(TEST_CASES_IS_CAMEL_CASE)(
+    "given %s string, returns the correct result",
+    (inputStr, expectedResult) =>
+      expect(Strings.helper.isCamelCase(inputStr as string)).toEqual(expectedResult)
+  );
+});
+
+const TEST_CASES_IS_PASCAL_CASE = [
+  ["", true],
+  ["hello world", false],
+  ["capitalized name", false],
+  ["string-in-kebab-case", false],
+  ["string_in_snake_case", false],
+  ["stringInCamelCase", false],
+  ["StringInCamelCase", true],
+];
+
+describe("#Strings.helper.isPascalCase", () => {
+  test.each(TEST_CASES_IS_PASCAL_CASE)(
+    "given %s string, returns the correct result",
+    (inputStr, expectedResult) =>
+      expect(Strings.helper.isPascalCase(inputStr as string)).toEqual(expectedResult)
+  );
+});
+
+const TEST_CASES_IS_SNAKE_CASE = [
+  ["", true],
+  ["hello world", false],
+  ["capitalized name", false],
+  ["string-in-kebab-case", false],
+  ["string_in_snake_case", true],
+  ["stringInCamelCase", false],
+  ["StringInCamelCase", false],
+];
+
+describe("#Strings.helper.isSnakeCase", () => {
+  test.each(TEST_CASES_IS_SNAKE_CASE)(
+    "given %s string, returns the correct result",
+    (inputStr, expectedResult) =>
+      expect(Strings.helper.isSnakeCase(inputStr as string)).toEqual(expectedResult)
+  );
+});
+
+const TEST_CASES_IS_KEBAB_CASE = [
+  ["", true],
+  ["hello world", false],
+  ["capitalized name", false],
+  ["string-in-kebab-case", true],
+  ["string_in_snake_case", false],
+  ["stringInCamelCase", false],
+  ["StringInCamelCase", false],
+];
+
+describe("#Strings.helper.isKebabCase", () => {
+  test.each(TEST_CASES_IS_KEBAB_CASE)(
+    "given %s string, returns the correct result",
+    (inputStr, expectedResult) =>
+      expect(Strings.helper.isKebabCase(inputStr as string)).toEqual(expectedResult)
   );
 });
 

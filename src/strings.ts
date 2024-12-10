@@ -201,11 +201,33 @@ export const stringIsFilled = (value?: string | null): boolean => {
 };
 
 /**
+ * Replace all occurrences.
+ *
+ * @param value The string to compute.
+ * @param pattern The pattern to look for.
+ * @param replaceValue The replacer.
+ * @returns the result.
+ */
+export const stringReplaceAll = (
+  value: string,
+  pattern: RegExp | string,
+  replaceValue: (substring: string, ...args: any[]) => string | string,
+) => {
+  return value.replace(new RegExp(pattern, "g"), replaceValue);
+};
+
+export interface ICamelCaseConverterOptions {
+  firstLetter?: "lower" | "upper";
+}
+
+/**
  * Converts the given camel case formatted string into a snake case format.
  *
  * @param text The string to convert.
  * @returns the converted string result.
+ * @deprecated use `stringSnakize` instead.
  */
+
 export const stringCamelCaseToSnakeCase = (text: string): string => {
   return text
     .split(/(?=[A-Z])/)
@@ -218,6 +240,7 @@ export const stringCamelCaseToSnakeCase = (text: string): string => {
  *
  * @param text The string to convert.
  * @returns the converted string result.
+ * @deprecated use `stringKebabize` instead.
  */
 export const stringCamelCaseToKebabCase = (text: string): string => {
   return text
@@ -230,20 +253,80 @@ export const stringCamelCaseToKebabCase = (text: string): string => {
  * Converts the given snake case formatted string into a camel case format.
  *
  * @param text The string to convert.
+ * @param options The converter options.
  * @returns the converted string result.
+ * @deprecated use `stringCamelize` instead.
  */
-export const stringSnakeCaseToCamelCase = (text: string): string => {
-  return text.replace(/(?!^)_(.)/g, (_, char) => char.toUpperCase());
+export const stringSnakeCaseToCamelCase = (text: string, options?: ICamelCaseConverterOptions): string => {
+  const { firstLetter = "lower" } = options ?? {};
+  const result = text.replace(/(?!^)_(.)/g, (_, char) => char.toUpperCase());
+
+  return firstLetter === "lower" ? result : stringCapitalize(result);
 };
 
 /**
  * Converts the given kebab case formatted string into a camel case format.
  *
  * @param text The string to convert.
+ * @param options The converter options.
  * @returns the converted string result.
+ * @deprecated use `stringCamelize` instead.
  */
-export const stringKebabCaseToCamelCase = (text: string): string => {
-  return text.replace(/-./g, (x) => x[1].toUpperCase());
+export const stringKebabCaseToCamelCase = (text: string, options?: ICamelCaseConverterOptions): string => {
+  const { firstLetter = "lower" } = options ?? {};
+  const result = text.replace(/-./g, (x) => x[1].toUpperCase());
+
+  return firstLetter === "lower" ? result : stringCapitalize(result);
+};
+
+/**
+ * Tests whether the given data parameter is a camel case formatted string.
+ *
+ * @param data The string to test.
+ * @returns `true` if the given data is camel case, `false` otherwise.
+ */
+export const stringIsCamelCase = (value: string): boolean => {
+  const lowerCamelCase = stringCamelize(value);
+
+  if (value === lowerCamelCase) return true;
+
+  return value === stringCapitalize(lowerCamelCase);
+};
+
+/**
+ * Tests whether the given data parameter is a pascal case formatted string.
+ *
+ * @param data The string to test.
+ * @returns `true` if the given data is camel case, `false` otherwise.
+ */
+export const stringIsPascalCase = (value: string): boolean => {
+  const pascalized = stringPascalize(value);
+
+  return value === pascalized;
+};
+
+/**
+ * Tests whether the given data parameter is a kebab case formatted string.
+ *
+ * @param data The string to test.
+ * @returns `true` if the given data is kebab case, `false` otherwise.
+ */
+export const stringIsKebabCase = (value: string): boolean => {
+  const kebabized = stringKebabize(value);
+
+  return value === kebabized;
+};
+
+/**
+ * Tests whether the given data parameter is a snake case formatted string.
+ *
+ * @param data The string to test.
+ * @returns `true` if the given data is snake case, `false` otherwise.
+ */
+export const stringIsSnakeCase = (value: string): boolean => {
+  const snakized = stringSnakize(value);
+
+  return value === snakized;
 };
 
 /**
@@ -271,15 +354,58 @@ export const stringHumanize = (value: string) => {
 /**
  * Camelize the given string.
  *
- * @param value the string to camelize.
+ * @param value the string to convert to camelCaqse format.
+ * @param options The converter options.
  * @returns the formatted result.
  */
-export const stringCamelize = (value: string) => {
-  return value
+export const stringCamelize = (value: string, options?: ICamelCaseConverterOptions) => {
+  const { firstLetter = "lower" } = options ?? {};
+  const result = value
+    .replace(/[_-]+/g, " ")
     .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
       return index === 0 ? word.toLowerCase() : word.toUpperCase();
     })
     .replace(/\s+/g, "");
+
+  return firstLetter === "lower" ? result : stringCapitalize(result);
+};
+
+/**
+ * Pascalize the given string.
+ *
+ * @param value the string to convert to PascalCase format.
+ * @returns the formatted result.
+ */
+export const stringPascalize = (value: string) => {
+  return stringCamelize(value, { firstLetter: "upper" });
+};
+
+/**
+ * Converts the given string into a kebab-case format.
+ *
+ * @param text The string to convert.
+ * @returns the converted string result.
+ */
+export const stringKebabize = (text: string): string => {
+  return text
+    .replace(/[\s_]+/g, "-")
+    .split(/(?=[A-Z])/)
+    .join("-")
+    .toLowerCase();
+};
+
+/**
+ * Converts the given string into a snake_case format.
+ *
+ * @param text The string to convert.
+ * @returns the converted string result.
+ */
+export const stringSnakize = (text: string): string => {
+  return text
+    .replace(/[\s-]+/g, "_")
+    .split(/(?=[A-Z])/)
+    .join("_")
+    .toLowerCase();
 };
 
 /**
@@ -350,13 +476,23 @@ export const stringExtractEmailDomain = (email: string): string | undefined => {
 };
 
 /**
+ * Capitalizes the first letter of the given string and lower everything else.
+ *
+ * @param string the string to compute.
+ * @returns the result string.
+ */
+export const stringCapitalizeAll = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
+/**
  * Capitalizes the first letter of the given string.
  *
  * @param string the string to compute.
  * @returns the result string.
  */
 export const stringCapitalize = (string: string): string => {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 /**
@@ -387,10 +523,21 @@ export const StringHelpers = {
    */
   isString: stringIsString,
   /**
+   * Replace all occurrences.
+   *
+   * @param value The string to compute.
+   * @param pattern The pattern to look for.
+   * @param replaceValue The replacer.
+   * @returns the result.
+   */
+  replaceAll: stringReplaceAll,
+  /**
    * Converts the given snake case formatted string into a camel case format.
    *
    * @param text The string to convert.
+   * @param options The converter options.
    * @returns the converted string result.
+   * @deprecated use `camelize` instead.
    */
   snakeCaseToCamelCase: stringSnakeCaseToCamelCase,
   /**
@@ -398,13 +545,16 @@ export const StringHelpers = {
    *
    * @param text The string to convert.
    * @returns the converted string result.
+   * @deprecated use `kebabize` instead.
    */
   camelCaseToKebabCase: stringCamelCaseToKebabCase,
   /**
    * Converts the given kebab case formatted string into a camel case format.
    *
    * @param text The string to convert.
+   * @param options The converter options.
    * @returns the converted string result.
+   * @deprecated use `camelize` instead.
    */
   kebabCaseToCamelCase: stringKebabCaseToCamelCase,
   /**
@@ -412,6 +562,7 @@ export const StringHelpers = {
    *
    * @param text The string to convert.
    * @returns the converted string result.
+   * @deprecated use `snakize` instead.
    */
   camelCaseToSnakeCase: stringCamelCaseToSnakeCase,
   /**
@@ -425,9 +576,59 @@ export const StringHelpers = {
    * Camelize the given string.
    *
    * @param value the string to camelize.
+   * @param options The converter options.
    * @returns the formatted result.
    */
   camelize: stringCamelize,
+  /**
+   * Pascalize the given string.
+   *
+   * @param value the string to convert to PascalCase format.
+   * @returns the formatted result.
+   */
+  pascalize: stringPascalize,
+  /**
+   * Converts the given string into a kebab-case format.
+   *
+   * @param text The string to convert.
+   * @returns the converted string result.
+   */
+  kebabize: stringKebabize,
+  /**
+   * Converts the given string into a snake_case format.
+   *
+   * @param text The string to convert.
+   * @returns the converted string result.
+   */
+  snakize: stringSnakize,
+  /**
+   * Tests whether the given data parameter is a camel case formatted string.
+   *
+   * @param data The string to test.
+   * @returns `true` if the given data is camel case, `false` otherwise.
+   */
+  isCamelCase: stringIsCamelCase,
+  /**
+   * Tests whether the given data parameter is a pascal case formatted string.
+   *
+   * @param data The string to test.
+   * @returns `true` if the given data is camel case, `false` otherwise.
+   */
+  isPascalCase: stringIsPascalCase,
+  /**
+   * Tests whether the given data parameter is a kebab case formatted string.
+   *
+   * @param data The string to test.
+   * @returns `true` if the given data is kebab case, `false` otherwise.
+   */
+  isKebabCase: stringIsKebabCase,
+  /**
+   * Tests whether the given data parameter is a snake case formatted string.
+   *
+   * @param data The string to test.
+   * @returns `true` if the given data is snake case, `false` otherwise.
+   */
+  isSnakeCase: stringIsSnakeCase,
   /**
    * Tests whether the given string contains only alpha characters.
    *
@@ -494,6 +695,13 @@ export const StringHelpers = {
    * @returns the corresponding domain name.
    */
   extractEmailDomain: stringExtractEmailDomain,
+  /**
+   * Capitalizes the first letter of the given string and lower everything else.
+   *
+   * @param string the string to compute.
+   * @returns the result string.
+   */
+  capitalizeAll: stringCapitalizeAll,
   /**
    * Capitalizes the first letter of the given string.
    *
@@ -596,3 +804,296 @@ export const Strings = {
    */
   regex: StringRegexs,
 };
+
+export class TString<T> {
+  public constructor(private readonly value: string | T) {}
+
+  /**
+   * Tests whether the given data parameter is a string.
+   *
+   * @returns `true` if the given data is a string, `false` otherwise.
+   */
+  public isString() {
+    return stringIsString(this.value);
+  }
+
+  /**
+   * Gets the value as plain string.
+   *
+   * @returns the string value.
+   */
+  public get(): string {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return this.value as string;
+  }
+
+  /**
+   * Plainify the given string, converting every special character into its plain brother.
+   *
+   * @returns a plainified string.
+   */
+  public plainify() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringPlainify(this.value as string));
+  }
+
+  /**
+   * Replace all occurrences.
+   *
+   * @param pattern The pattern to look for.
+   * @param replaceValue The replacer.
+   * @returns the result.
+   */
+  public replaceAll(pattern: RegExp | string, replaceValue: (substring: string, ...args: any[]) => string | string) {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringReplaceAll(this.value as string, pattern, replaceValue));
+  }
+
+  /**
+   * Humanize the given string.
+   *
+   * @returns the formatted result.
+   */
+  public humanize() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringHumanize(this.value as string));
+  }
+
+  /**
+   * Camelize the given string.
+   *
+   * @param options The converter options.
+   * @returns the formatted result.
+   */
+  public camelize(options?: ICamelCaseConverterOptions) {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringCamelize(this.value as string, options));
+  }
+
+  /**
+   * Pascalize the given string.
+   *
+   * @returns the formatted result.
+   */
+  public pascalize() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringPascalize(this.value as string));
+  }
+
+  /**
+   * Converts the given string into a kebab-case format.
+   *
+   * @returns the formatted result.
+   */
+  public kebabize() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringKebabize(this.value as string));
+  }
+
+  /**
+   * Converts the given string into a snake_case format.
+   *
+   * @returns the formatted result.
+   */
+  public snakize() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringSnakize(this.value as string));
+  }
+
+  /**
+   * Tests whether the given data parameter is a camel case formatted string.
+   *
+   * @returns `true` if the given data is camel case, `false` otherwise.
+   */
+  public isCamelCase() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsCamelCase(this.value as string);
+  }
+
+  /**
+   * Tests whether the given data parameter is a pascal case formatted string.
+   *
+   * @returns `true` if the given data is spacal case, `false` otherwise.
+   */
+  public isPascalCase() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsPascalCase(this.value as string);
+  }
+
+  /**
+   * Tests whether the given data parameter is a kebab case formatted string.
+   *
+   * @returns `true` if the given data is kebab case, `false` otherwise.
+   */
+  public isKebabCase() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsKebabCase(this.value as string);
+  }
+
+  /**
+   * Tests whether the given data parameter is a snake case formatted string.
+   *
+   * @returns `true` if the given data is snake case, `false` otherwise.
+   */
+  public isSnakeCase() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsSnakeCase(this.value as string);
+  }
+
+  /**
+   * Tests whether the given string contains only alpha characters.
+   *
+   * @returns `true` if the given string only contains alpha characters, `false` otherwise.
+   */
+  public isAlpha() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsAlpha(this.value as string);
+  }
+
+  /**
+   * Tests whether the given string contains only numeric characters.
+   *
+   * @returns `true` if the given string only contains numeric characters, `false` otherwise.
+   */
+  public isNumeric() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsNumeric(this.value as string);
+  }
+
+  /**
+   * Test whether the given string is strictly equal to an empty string.
+   *
+   * @returns `true` if the given string is empty, `false` otherwise.
+   */
+  public isEmpty() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsEmpty(this.value as string);
+  }
+
+  /**
+   * Test whether the given string is either `undefined`, `null` or equal to an empty string.
+   *
+   * @returns `true` if the given string is blank, `false` otherwise.
+   */
+  public isBlank() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsBlank(this.value as string);
+  }
+
+  /**
+   * Test whether the given string is neither `undefined`, `null` nor equal to an empty string.
+   *
+   * @returns `true` if the given string is filled, `false` otherwise.
+   */
+  public isFilled() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringIsFilled(this.value as string);
+  }
+
+  /**
+   * Test whether the two given string trimed value are equal.
+   *
+   * @param value The value to compare with.
+   * @returns `true` if the two values are equal once trimed, `false` otherwise.
+   */
+  public equals(value: string) {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringEquals(this.value as string, value);
+  }
+
+  /**
+   * Converted any given blank values to an empty string (""). If the given value contains a string, the method will return it unarmed.
+   *
+   * @returns the exact given string if not blank, an empty string otherwise.
+   */
+  public valueOrEmpty() {
+    return new TString(stringValueOrEmpty(this.value as string | false));
+  }
+
+  /**
+   * Formats the given string value to contain at least the given number of characters,
+   * adding the given padding character at the end of the value if needed.
+   *
+   * @param nbOfCharacters The desired minimum number of characters.
+   * @param paddingCharacter The padding character.
+   * @returns the formatted result.
+   */
+  public pad(nbOfCharacters: number, paddingCharacter = EMPTY) {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringPad(this.value as string, nbOfCharacters, paddingCharacter));
+  }
+
+  /**
+   * Extract the domain name from the given email address.
+   *
+   * @returns the corresponding domain name.
+   */
+  public extractEmailDomain() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringExtractEmailDomain(this.value as string));
+  }
+
+  /**
+   * Capitalizes the first letter of the given string and lower everything else.
+   *
+   * @returns the result string.
+   */
+  public capitalizeAll() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringCapitalizeAll(this.value as string));
+  }
+
+  /**
+   * Capitalizes the first letter of the given string.
+   *
+   * @returns the result string.
+   */
+  public capitalize() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringCapitalize(this.value as string));
+  }
+
+  /**
+   * Capitalizes the first letter of each word of the given string.
+   *
+   * @returns the result string.
+   */
+  public capitalizeEachWord() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return new TString(stringCapitalizeEachWord(this.value as string));
+  }
+
+  /**
+   * Extract a boolean value from the given string.
+   *
+   * @returns the boolean value corresponding to the given string. If the given input is `null`, this methid resturns `undefined`.
+   */
+  public parseBoolean() {
+    if (!this.isString()) throw Error("[TString] value is not a string.");
+
+    return stringParseBoolean(this.value as string);
+  }
+}
