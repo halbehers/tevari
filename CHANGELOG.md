@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.1
+
+### Patch Changes
+
+- eff842a: Fix string camelize method
+
 ## 2.0.0
 
 ### Major Changes
