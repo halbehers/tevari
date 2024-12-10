@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.0
+
+### Major Changes
+
+- 7d37bc0: TString object and cleaned string format modifications
+
 ## 1.14.4
 
 ### Patch Changes
