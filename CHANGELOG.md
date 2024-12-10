@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.2
+
+### Patch Changes
+
+- 5a02064: Clean Strings code
+
 ## 2.0.1
 
 ### Patch Changes
