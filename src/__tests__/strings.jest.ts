@@ -157,9 +157,11 @@ const TEST_CASES_CAMELIZE_LOWER = [
   ["", ""],
   ["hello world", "helloWorld"],
   ["capitalized name", "capitalizedName"],
+  ["capitalized    Name", "capitalizedName"],
   ["string-in-kebab-case", "stringInKebabCase"],
   ["string_in_snake_case", "stringInSnakeCase"],
   ["stringInCamelCase", "stringInCamelCase"],
+  ["clothing/sewing-machine", "clothing/sewingMachine"],
 ];
 const TEST_CASES_CAMELIZE_UPPER = [
   ["", ""],
