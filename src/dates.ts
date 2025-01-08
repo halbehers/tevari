@@ -41,6 +41,7 @@ const DATE_TO_FORMATED: {
   ["basic-date"]: (moment, separator) => moment.format(`YYYY${separator}MMdd`),
   ["basic-date-time"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}DDTHH:mm:ss.SSSZ`),
   ["reverse"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}DD`),
+  ["time"]: (moment, separator) => moment.format(`HH${separator}mm`),
 };
 
 /**

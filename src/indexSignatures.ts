@@ -2,6 +2,8 @@ import { arraysAreSame } from "./arrays";
 import { Function1 } from "./functions";
 import { stringIsString } from "./strings";
 
+export const EMPTY_INDEX_SIGNATURE = {};
+
 /**
  * Creates an index signature from the given array.
  *
@@ -9,11 +11,8 @@ import { stringIsString } from "./strings";
  * @param idExtractor A function to extract the id from each array elements.
  * @returns the created index signature.
  */
-export const indexSignatureFromArray = <T>(
-  array: T[],
-  idExtractor: (element: T) => string
-): { [id: string]: T } => {
-  const result: { [id: string]: T } = {};
+export const indexSignatureFromArray = <T>(array: T[], idExtractor: (element: T) => string): { [id: string]: T } => {
+  const result: { [id: string]: T } = EMPTY_INDEX_SIGNATURE;
   for (const element of array) {
     result[idExtractor(element)] = element;
   }
@@ -31,9 +30,9 @@ export const indexSignatureFromArray = <T>(
 export const indexSignatureFromArrayValues = <T, U>(
   array: T[],
   idExtractor: (element: T) => string,
-  valueExtractor: (element: T) => U
+  valueExtractor: (element: T) => U,
 ): { [id: string]: U } => {
-  const result: { [id: string]: U } = {};
+  const result: { [id: string]: U } = EMPTY_INDEX_SIGNATURE;
   for (const element of array) {
     result[idExtractor(element)] = valueExtractor(element);
   }
@@ -51,11 +50,11 @@ export const indexSignatureFromArrayValues = <T, U>(
 export const indexSignatureMapToArray = <T, U>(
   indexSignature: { [id: string]: T },
   mapper: (key: string, element: T) => U,
-  filter?: (key: string, element: T) => boolean
+  filter?: (key: string, element: T) => boolean,
 ): U[] => {
   const result: U[] = [];
   for (const [id, element] of Object.entries(indexSignature).filter(
-    ([id, element]) => !filter || filter(id, element)
+    ([id, element]) => !filter || filter(id, element),
   )) {
     result.push(mapper(id, element));
   }
@@ -73,12 +72,10 @@ export const indexSignatureMapToArray = <T, U>(
 export const indexSignatureMapValues = <T, U>(
   indexSignature: { [id: string]: T },
   mapper: (element: T) => U,
-  filter?: (element: T) => boolean
+  filter?: (element: T) => boolean,
 ): { [id: string]: U } => {
   const result: { [id: string]: U } = {};
-  for (const [id, element] of Object.entries(indexSignature).filter(
-    ([, element]) => !filter || filter(element)
-  )) {
+  for (const [id, element] of Object.entries(indexSignature).filter(([, element]) => !filter || filter(element))) {
     result[id] = mapper(element);
   }
   return result;
@@ -93,19 +90,10 @@ export const indexSignatureMapValues = <T, U>(
  */
 export const indexSignaturesAreSame = <T>(
   indexSignature1: { [id: string]: T },
-  indexSignature2: { [id: string]: T }
+  indexSignature2: { [id: string]: T },
 ): boolean => {
-  if (
-    !arraysAreSame(Object.keys(indexSignature1), Object.keys(indexSignature2))
-  )
-    return false;
-  if (
-    !arraysAreSame(
-      Object.values(indexSignature1),
-      Object.values(indexSignature2)
-    )
-  )
-    return false;
+  if (!arraysAreSame(Object.keys(indexSignature1), Object.keys(indexSignature2))) return false;
+  if (!arraysAreSame(Object.values(indexSignature1), Object.values(indexSignature2))) return false;
   return true;
 };
 
@@ -118,7 +106,7 @@ export const indexSignaturesAreSame = <T>(
  */
 export const indexSignatureIncludes = <T>(
   indexSignature: { [id: string]: T },
-  indexSignatures: { [id: string]: T }[]
+  indexSignatures: { [id: string]: T }[],
 ): boolean => {
   for (const iSig of indexSignatures) {
     if (indexSignaturesAreSame(iSig, indexSignature)) {
@@ -138,9 +126,7 @@ export const indexSignatureIncludes = <T>(
  * @param indexSignature The index signature to convert.
  * @returns a string representation of the given index signature.
  */
-export const indexSignatureToString = <T>(indexSignature: {
-  [id: string]: T;
-}): string => {
+export const indexSignatureToString = <T>(indexSignature: { [id: string]: T }): string => {
   const resultArray = [];
   for (const [id, element] of Object.entries(indexSignature)) {
     const value = stringIsString(element) ? `'${element}'` : `${element}`;
@@ -155,9 +141,7 @@ export const indexSignatureToString = <T>(indexSignature: {
  * @param indexSignature The index signature to convert.
  * @returns an array of all values of the given index signature.
  */
-export const indexSignatureToArray = <T>(indexSignature: {
-  [id: string]: T;
-}): T[] => {
+export const indexSignatureToArray = <T>(indexSignature: { [id: string]: T }): T[] => {
   const result: T[] = [];
   for (const element of Object.values(indexSignature)) result.push(element);
   return result;
@@ -172,11 +156,10 @@ export const indexSignatureToArray = <T>(indexSignature: {
  */
 export const indexSignatureEntriesToArray = <T, U>(
   indexSignature: { [id: string]: T },
-  mapper: (key: string, value: T) => U
+  mapper: (key: string, value: T) => U,
 ): U[] => {
   const result: U[] = [];
-  for (const [id, element] of Object.entries(indexSignature))
-    result.push(mapper(id, element));
+  for (const [id, element] of Object.entries(indexSignature)) result.push(mapper(id, element));
   return result;
 };
 
@@ -186,9 +169,7 @@ export const indexSignatureEntriesToArray = <T, U>(
  * @param indexSignature The index signature to convert.
  * @returns an array of all keys of the given index signature.
  */
-export const indexSignatureKeysToArray = <T>(indexSignature: {
-  [id: string]: T;
-}): string[] => {
+export const indexSignatureKeysToArray = <T>(indexSignature: { [id: string]: T }): string[] => {
   const result: string[] = [];
   for (const element of Object.keys(indexSignature)) result.push(element);
   return result;
@@ -203,7 +184,7 @@ export const indexSignatureKeysToArray = <T>(indexSignature: {
  */
 export const indexSignatureFilter = <T>(
   indexSignature: { [id: string]: T },
-  filter: (id: string, element: T) => boolean
+  filter: (id: string, element: T) => boolean,
 ): { [id: string]: T } => {
   const result: { [id: string]: T } = {};
   for (const [id, element] of Object.entries(indexSignature)) {
@@ -223,7 +204,7 @@ export const indexSignatureFilter = <T>(
  */
 export const indexSignatureGroupBy = <T>(
   array: T[],
-  indexExtractor: Function1<T, string>
+  indexExtractor: Function1<T, string>,
 ): { [index: string]: T[] } => {
   const result: { [index: string]: T[] } = {};
   for (const value of array) {
@@ -246,7 +227,7 @@ export const indexSignatureGroupBy = <T>(
 export const indexSignatureGroupByAndMap = <T, U>(
   array: T[],
   indexExtractor: Function1<T, string>,
-  mapper: (element: T) => U
+  mapper: (element: T) => U,
 ) => {
   const result: { [index: string]: U[] } = {};
   for (const value of array) {
