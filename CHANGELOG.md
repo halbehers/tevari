@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.4
+
+### Patch Changes
+
+- 39d205e: fix date format typing
+
 ## 2.0.3
 
 ### Patch Changes
