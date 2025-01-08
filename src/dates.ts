@@ -15,7 +15,8 @@ export type DateFormat =
   | "short-date-time-us"
   | "basic-date"
   | "basic-date-time"
-  | "reverse";
+  | "reverse"
+  | "time";
 
 /**
  * Options for date fomatters.
