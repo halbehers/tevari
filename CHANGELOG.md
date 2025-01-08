@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.5
+
+### Patch Changes
+
+- b1ad1c7: date: dedicated time default separator
+
 ## 2.0.4
 
 ### Patch Changes
