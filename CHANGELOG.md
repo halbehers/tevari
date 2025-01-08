@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.3
+
+### Patch Changes
+
+- 21a2517: date: time only formating
+
 ## 2.0.2
 
 ### Patch Changes
