@@ -1,9 +1,10 @@
 import moment from "moment";
 
-import { FORWARD_SLASH } from "./strings";
+import { COLON, FORWARD_SLASH } from "./strings";
 import { Order } from "./misc";
 
 export const DATE_DEFAULT_SEPARATOR = FORWARD_SLASH;
+export const TIME_DEFAULT_SEPARATOR = COLON;
 
 /**
  * Type of handled date formats.
@@ -53,12 +54,15 @@ const DATE_TO_FORMATED: {
  * @returns The given date formated accordingly to the given options.
  */
 export const dateFormat = (date?: Date, options?: DateFormatOptions): string => {
-  const { separator = DATE_DEFAULT_SEPARATOR, format = "short-date-fr" } = options ?? {};
+  const { separator, format = "short-date-fr" } = options ?? {};
 
   if (!date) {
     return "-";
   }
-  return DATE_TO_FORMATED[format](moment(date), separator);
+  return DATE_TO_FORMATED[format](
+    moment(date),
+    separator ?? (format === "time" ? TIME_DEFAULT_SEPARATOR : DATE_DEFAULT_SEPARATOR),
+  );
 };
 
 /**

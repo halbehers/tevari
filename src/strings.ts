@@ -13,6 +13,7 @@ export const MINUS = "-";
 export const PLUS = "+";
 export const DOT = ".";
 export const COLON = ":";
+export const SEMI_COLON = ";";
 export const WILDCARD = "*";
 export const PERCENTAGE = "%";
 export const COMMA = ",";
