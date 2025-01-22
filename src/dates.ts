@@ -26,6 +26,16 @@ export interface DateFormatOptions {
   /**
    * The separator between day, month and year.
    */
+  dateSeparator?: string;
+  /**
+   * The separator between hours and minutes.
+   */
+  timeSeparator?: string;
+  /**
+   * The separator between day, month and year.
+   *
+   * @deprecated Use `dateSeparator` or `timeSeparator` instead.
+   */
   separator?: string;
   /**
    * The desired date format.
@@ -34,16 +44,19 @@ export interface DateFormatOptions {
 }
 
 const DATE_TO_FORMATED: {
-  [format: string]: (moment: moment.Moment, separator?: string) => string;
+  [format: string]: (moment: moment.Moment, dateSeparator?: string, timeSeparator?: string) => string;
 } = {
-  ["short-date-fr"]: (moment, separator) => moment.format(`DD${separator}MM${separator}YYYY`),
-  ["short-date-us"]: (moment, separator) => moment.format(`MM${separator}DD${separator}YYYY`),
-  ["short-date-time-fr"]: (moment, separator) => moment.format(`DD${separator}MM${separator}YYYY HH:mm`),
-  ["short-date-time-us"]: (moment, separator) => moment.format(`MM${separator}DD${separator}YYYY HH:mm`),
-  ["basic-date"]: (moment, separator) => moment.format(`YYYY${separator}MMdd`),
-  ["basic-date-time"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}DDTHH:mm:ss.SSSZ`),
-  ["reverse"]: (moment, separator) => moment.format(`YYYY${separator}MM${separator}DD`),
-  ["time"]: (moment, separator) => moment.format(`HH${separator}mm`),
+  ["short-date-fr"]: (moment, dateSeparator) => moment.format(`DD[${dateSeparator}]MM[${dateSeparator}]YYYY`),
+  ["short-date-us"]: (moment, dateSeparator) => moment.format(`MM[${dateSeparator}]DD[${dateSeparator}]YYYY`),
+  ["short-date-time-fr"]: (moment, dateSeparator, timeSeparator) =>
+    moment.format(`DD[${dateSeparator}]MM[${dateSeparator}]YYYY HH[${timeSeparator}]mm`),
+  ["short-date-time-us"]: (moment, dateSeparator, timeSeparator) =>
+    moment.format(`MM[${dateSeparator}]DD[${dateSeparator}]YYYY HH[${timeSeparator}]mm`),
+  ["basic-date"]: (moment, dateSeparator) => moment.format(`YYYY[${dateSeparator}]MM[${dateSeparator}]dd`),
+  ["basic-date-time"]: (moment, dateSeparator, timeSeparator) =>
+    moment.format(`YYYY[${dateSeparator}]MM[${dateSeparator}]DDTHH[${timeSeparator}]mm[${timeSeparator}]ss.SSSZ`),
+  ["reverse"]: (moment, dateSeparator) => moment.format(`YYYY[${dateSeparator}]MM[${dateSeparator}]DD`),
+  ["time"]: (moment, _, timeSeparator) => moment.format(`HH[${timeSeparator}]mm`),
 };
 
 /**
@@ -54,21 +67,22 @@ const DATE_TO_FORMATED: {
  * @returns The given date formated accordingly to the given options.
  */
 export const dateFormat = (date?: Date, options?: DateFormatOptions): string => {
-  const { separator, format = "short-date-fr" } = options ?? {};
+  const { separator, dateSeparator, timeSeparator, format = "short-date-fr" } = options ?? {};
 
   if (!date) {
     return "-";
   }
   return DATE_TO_FORMATED[format](
     moment(date),
-    separator ?? (format === "time" ? TIME_DEFAULT_SEPARATOR : DATE_DEFAULT_SEPARATOR),
+    dateSeparator ?? separator ?? DATE_DEFAULT_SEPARATOR,
+    timeSeparator ?? separator ?? TIME_DEFAULT_SEPARATOR,
   );
 };
 
 /**
  * Gets today's date as a string formated in the format specified in the given options parameter
  *
- * @param separator The separator between day, month and year.
+ * @param options Options.
  * @returns today's date as a string.
  */
 export const dateTodayAsString = (options?: DateFormatOptions): string => {
