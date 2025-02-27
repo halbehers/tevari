@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.7
+
+### Patch Changes
+
+- 8fdeaea: bugfix: remove index signature empty constant
+
 ## 2.0.6
 
 ### Patch Changes
