@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.8
+
+### Patch Changes
+
+- d0ee4ec: chore: remove array empty constant
+
 ## 2.0.7
 
 ### Patch Changes
