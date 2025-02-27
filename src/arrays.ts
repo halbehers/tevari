@@ -9,10 +9,7 @@ import { stringIsBlank } from "./strings";
  * @param predicate The predicate used to test each element of the given array
  * @returns `true` if at leat one element matches the given predicate, `false` otherwise.
  */
-export const arrayMatchOneOrMore = <T>(
-  array: T[],
-  predicate: Predicate<T>
-): boolean => {
+export const arrayMatchOneOrMore = <T>(array: T[], predicate: Predicate<T>): boolean => {
   return array.filter((value) => !!value).filter(predicate).length > 0;
 };
 
@@ -23,10 +20,7 @@ export const arrayMatchOneOrMore = <T>(
  * @param predicate The predicate used to test each element of the given array
  * @returns `true` if one element only matches the given predicate, `false` otherwise.
  */
-export const arrayMatchOneExactly = <T>(
-  array: T[],
-  predicate: Predicate<T>
-): boolean => {
+export const arrayMatchOneExactly = <T>(array: T[], predicate: Predicate<T>): boolean => {
   return array.filter((value) => !!value).filter(predicate).length === 1;
 };
 
@@ -37,16 +31,10 @@ export const arrayMatchOneExactly = <T>(
  * @param predicate The predicate used to test each element of the given array
  * @returns `true` if all of the elements match the given predicate, `false` otherwise.
  */
-export const arrayMatchAll = <T>(
-  array: T[],
-  predicate: Predicate<T>
-): boolean => {
+export const arrayMatchAll = <T>(array: T[], predicate: Predicate<T>): boolean => {
   const cleanedArray = array.filter((value) => !!value);
 
-  return (
-    cleanedArray.length > 0 &&
-    cleanedArray.filter(predicate).length === cleanedArray.length
-  );
+  return cleanedArray.length > 0 && cleanedArray.filter(predicate).length === cleanedArray.length;
 };
 
 /**
@@ -58,17 +46,11 @@ export const arrayMatchAll = <T>(
  * @param comparator The predicate used to compare each element of the given arrays.
  * @returns `true` if both arrays are equal, `false` otherwise.
  */
-export const arraysAreSame = <T>(
-  array1: T[],
-  array2: T[],
-  comparator?: Function2<T, T, boolean>
-): boolean => {
+export const arraysAreSame = <T>(array1: T[], array2: T[], comparator?: Function2<T, T, boolean>): boolean => {
   return (
     array1.length == array2.length &&
     array1.every((element, index) =>
-      comparator !== undefined
-        ? comparator(element, array2[index])
-        : element === array2[index]
+      comparator !== undefined ? comparator(element, array2[index]) : element === array2[index],
     )
   );
 };
@@ -80,15 +62,9 @@ export const arraysAreSame = <T>(
  * @param offset The starting offset of the suite to be created. `1` is set by default.
  * @returns the suite array from `offset` to `offset + (length * step)`.
  */
-export const arrayCreateSuite = (
-  length: number,
-  offset = 1,
-  step = 1
-): number[] => {
+export const arrayCreateSuite = (length: number, offset = 1, step = 1): number[] => {
   return Array.from({ length }, (_, i) => offset + i * step);
 };
-
-export const EMPTY_ARRAY = [];
 
 /**
  * Strips the given string array of any blank values (either `null`, `undefined` of empty string).
@@ -96,9 +72,7 @@ export const EMPTY_ARRAY = [];
  * @param array The string array to be cleaned.
  * @returns `undefined` if the given array was undefined, the cleaned up array otherwise.
  */
-export const arrayCleanStringArray = (
-  array?: (string | undefined | null)[]
-): string[] | undefined => {
+export const arrayCleanStringArray = (array?: (string | undefined | null)[]): string[] | undefined => {
   if (!array) return;
 
   return array.filter((value) => !stringIsBlank(value)) as string[];
@@ -147,15 +121,12 @@ export const arrayUniq = <T>(array: T[]): T[] => {
 export const arrayUniqObjectsByProperty = <T extends { [id: string]: any }>(
   array: T[],
   property: string,
-  comparator?: Function2<T, T, boolean>
+  comparator?: Function2<T, T, boolean>,
 ): T[] => {
   return array.filter(
     (obj, i) =>
-      array.findIndex((a) =>
-        comparator
-          ? comparator(a[property], obj[property])
-          : a[property] === obj[property]
-      ) === i
+      array.findIndex((a) => (comparator ? comparator(a[property], obj[property]) : a[property] === obj[property])) ===
+      i,
   );
 };
 
@@ -206,15 +177,12 @@ export const arrayFirst = <T>(array: T[]): T | undefined => {
  * @param valueExtractor The extractor used to retrieve values to be sum up.
  * @returns the total.
  */
-export const arraySum = <T>(
-  array: T[],
-  valueExtractor?: (item: T) => number
-) => {
+export const arraySum = <T>(array: T[], valueExtractor?: (item: T) => number) => {
   if (array.length === 0) return 0;
 
   return array
     .filter((v) => v !== null && v !== undefined)
-    .map((value) => valueExtractor ? valueExtractor(value) : Number(value))
+    .map((value) => (valueExtractor ? valueExtractor(value) : Number(value)))
     .reduce((total, current) => total + current, 0);
 };
 
@@ -225,11 +193,7 @@ export const arraySum = <T>(
  * @param valueExtractor The extractor used to retrieve values to be averaged up.
  * @returns the average.
  */
-export const arrayAverage = <T>(
-  array: T[],
-  valueExtractor?: (item: T) => number,
-  rounded: boolean = true
-) => {
+export const arrayAverage = <T>(array: T[], valueExtractor?: (item: T) => number, rounded: boolean = true) => {
   if (array.length === 0) return 0;
 
   const total = arraySum(array, valueExtractor);
@@ -257,21 +221,13 @@ export const arrayFirstOptional = <T>(array: T[]): Optional<T> => {
  * @param newValue The new value to insert.
  * @param valueComparator The comparator used to compare values from the array.
  */
-export const arrayPushNewValue = <T>(
-  array: T[],
-  newValue: T,
-  valueComparator?: (value1: T, value2: T) => boolean
-) => {
+export const arrayPushNewValue = <T>(array: T[], newValue: T, valueComparator?: (value1: T, value2: T) => boolean) => {
   if (array.length === 0) {
     array.push(newValue);
     return;
   }
 
-  if (
-    !array.find((value) =>
-      valueComparator ? valueComparator(value, newValue) : value === newValue
-    )
-  ) {
+  if (!array.find((value) => (valueComparator ? valueComparator(value, newValue) : value === newValue))) {
     array.push(newValue);
   }
 };
@@ -287,7 +243,7 @@ export const arrayPushNewValue = <T>(
 export const arrayPushNewValues = <T>(
   array: T[],
   newValues: T[],
-  valueComparator?: (value1: T, value2: T) => boolean
+  valueComparator?: (value1: T, value2: T) => boolean,
 ) => {
   if (array.length === 0) {
     array.push(...newValues);
@@ -435,20 +391,9 @@ export const ArrayHelpers = {
   pushNewValues: arrayPushNewValues,
 };
 
-export const ArraySymbols = {
-  /**
-   * An empty array.
-   */
-  empty: EMPTY_ARRAY,
-};
-
 export const Arrays = {
   /**
    * Array helper methods.
    */
   helper: ArrayHelpers,
-  /**
-   * Array symbols.
-   */
-  symbol: ArraySymbols,
 };
