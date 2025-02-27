@@ -2,8 +2,6 @@ import { arraysAreSame } from "./arrays";
 import { Function1 } from "./functions";
 import { stringIsString } from "./strings";
 
-export const EMPTY_INDEX_SIGNATURE = {};
-
 /**
  * Creates an index signature from the given array.
  *
@@ -12,7 +10,7 @@ export const EMPTY_INDEX_SIGNATURE = {};
  * @returns the created index signature.
  */
 export const indexSignatureFromArray = <T>(array: T[], idExtractor: (element: T) => string): { [id: string]: T } => {
-  const result: { [id: string]: T } = EMPTY_INDEX_SIGNATURE;
+  const result: { [id: string]: T } = {};
   for (const element of array) {
     result[idExtractor(element)] = element;
   }
@@ -32,7 +30,7 @@ export const indexSignatureFromArrayValues = <T, U>(
   idExtractor: (element: T) => string,
   valueExtractor: (element: T) => U,
 ): { [id: string]: U } => {
-  const result: { [id: string]: U } = EMPTY_INDEX_SIGNATURE;
+  const result: { [id: string]: U } = {};
   for (const element of array) {
     result[idExtractor(element)] = valueExtractor(element);
   }
