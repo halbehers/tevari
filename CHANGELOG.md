@@ -1,5 +1,11 @@
 # tevari
 
+## 2.0.9
+
+### Patch Changes
+
+- 28acd87: Bugfix(array): revert empty constant removal
+
 ## 2.0.8
 
 ### Patch Changes
